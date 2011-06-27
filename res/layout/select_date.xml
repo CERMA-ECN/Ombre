@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:gravity="center">
+    <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/textView1" android:layout_height="wrap_content" android:text="Veuilez selectionner l'heure et le jour pour lesquel vous souhaitez visioner l'ombre" android:gravity="center" android:layout_margin="5dip"></TextView>
+    <DatePicker android:layout_height="wrap_content" android:id="@+id/datePicker1" android:layout_width="wrap_content" android:layout_margin="5dip"></DatePicker>
+    <TimePicker android:id="@+id/timePicker1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_margin="5dip"></TimePicker>
+    <Button android:text="@android:string/ok" android:layout_width="wrap_content" android:id="@+id/button1" android:layout_height="wrap_content" android:layout_margin="5dip"></Button>
+    
+</LinearLayout>
