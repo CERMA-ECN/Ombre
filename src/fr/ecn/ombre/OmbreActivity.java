@@ -14,6 +14,7 @@ import fr.ecn.ombre.utils.ExifReader;
 
 public class OmbreActivity extends Activity {
 	private static final int ACTIVITY_LOAD = 0;
+	private static final int ACTIVITY_INFOS = 1;
 	
     /** Called when the activity is first created. */
     @Override
@@ -33,22 +34,34 @@ public class OmbreActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-			case ACTIVITY_LOAD:
-				if (resultCode == Activity.RESULT_OK) {
-					//Finding the image absolute file path
-					Cursor cursor = this.getContentResolver().query(data.getData(), null, null, null, null);
-					cursor.moveToFirst();
-					int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-					String absoluteFilePath = cursor.getString(idx);
-					
-					ImageInfos imageInfos = new ImageInfos(absoluteFilePath);
-					
-					//Read data from the exif
-					ExifReader.readExif(imageInfos);
-					
-					Log.i("Ombre", imageInfos.toString());
-				}
-				break;
+		case ACTIVITY_LOAD:
+			if (resultCode == Activity.RESULT_OK) {
+				//Finding the image absolute file path
+				Cursor cursor = this.getContentResolver().query(data.getData(), null, null, null, null);
+				cursor.moveToFirst();
+				int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+				String absoluteFilePath = cursor.getString(idx);
+				
+				ImageInfos imageInfos = new ImageInfos(absoluteFilePath);
+				
+				//Read data from the exif
+				ExifReader.readExif(imageInfos);
+				
+				Log.i("Ombre", imageInfos.toString());
+				
+				Intent i = new Intent(this, ImageInfosActivity.class);
+				i.putExtra("ImageInfos", imageInfos);
+				this.startActivityForResult(i, ACTIVITY_INFOS);
+			}
+			break;
+		case ACTIVITY_INFOS:
+			if (resultCode == Activity.RESULT_OK) {
+				Bundle extras = data.getExtras();
+				ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
+
+				Log.i("Ombre", imageInfos.toString());
+			}
+			break;
 		}
 	}
 }	

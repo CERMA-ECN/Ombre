@@ -1,6 +1,13 @@
 package fr.ecn.ombre.model;
 
-public class ImageInfos {
+import java.io.Serializable;
+
+public class ImageInfos implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected String path = null;
 
 	protected Double latitude    = null;
