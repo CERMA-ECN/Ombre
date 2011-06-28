@@ -39,4 +39,10 @@ public class ImageInfos {
 	public void setOrientation(Double orientation) {
 		this.orientation = orientation;
 	}
+
+	@Override
+	public String toString() {
+		return "ImageInfos [path=" + path + ", latitude=" + latitude + ", longitude=" + longitude
+				+ ", orientation=" + orientation + "]";
+	}
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -44,6 +45,8 @@ public class OmbreActivity extends Activity {
 					
 					//Read data from the exif
 					ExifReader.readExif(imageInfos);
+					
+					Log.i("Ombre", imageInfos.toString());
 				}
 				break;
 		}
