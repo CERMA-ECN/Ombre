@@ -12,6 +12,7 @@ import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.GpsDescriptor;
 import com.drew.metadata.exif.GpsDirectory;
 
+import fr.ecn.ombre.model.Coordinate;
 import fr.ecn.ombre.model.ImageInfos;
 
 /**
@@ -59,19 +60,8 @@ public class ExifReader {
 	 * @throws ExifReaderException 
 	 */
 	public double getLongitude() throws ExifReaderException {
-		String longitudeDescription;
-		try {
-			longitudeDescription = this.gpsDescriptor.getGpsLongitudeDescription();
-		} catch (MetadataException e) {
-			throw new ExifReaderException("Unknown longitude", e);
-		}
-		
-		if (longitudeDescription == null) {
-			throw new ExifReaderException("Unknown longitude");
-		}
-		
 		// Get the longitude data, in degrees, minutes and seconds and convert it into decimal
-		Double longitude = this.convertHourToDecimal(longitudeDescription);
+		Double longitude = this.convertHourToDecimal(this.getLongitudeDescription());
 		
 		// All the numbers will be positive, so get the longitude reference, and if it's oriented west "W", return the opposite
 		if (getLongitudeRef().equals("W")) {
@@ -93,23 +83,31 @@ public class ExifReader {
 	}
 	
 	/**
+	 * @return the longitude as a string
+	 * @throws ExifReaderException
+	 */
+	public String getLongitudeDescription() throws ExifReaderException {
+		String longitudeDescription;
+		try {
+			longitudeDescription = this.gpsDescriptor.getGpsLongitudeDescription();
+		} catch (MetadataException e) {
+			throw new ExifReaderException("Unknown longitude", e);
+		}
+		
+		if (longitudeDescription == null) {
+			throw new ExifReaderException("Unknown longitude");
+		}
+		
+		return longitudeDescription;
+	}
+	
+	/**
 	 * @return the absolute latitude (can be negative) from the Exif of a JPEG picture
 	 * @throws ExifReaderException 
 	 */
 	public double getLatitude() throws ExifReaderException {
-		String latitudeDescription;
-		try {
-			latitudeDescription = this.gpsDescriptor.getGpsLatitudeDescription();
-		} catch (MetadataException e) {
-			throw new ExifReaderException("Unknown latitude", e);
-		}
-		
-		if (latitudeDescription == null) {
-			throw new ExifReaderException("Unknown latitude");
-		}
-		
 		// Get the latitude data, in degrees, minutes and seconds and convert it into decimal
-		double latitude = this.convertHourToDecimal(latitudeDescription);
+		double latitude = this.convertHourToDecimal(this.getLatitudeDescription());
 		// All the numbers will be positive, so get the latitude reference, and if it's oriented south "S", return the opposite
 		if (getLatitudeRef().equals("S")) {
 			latitude =- latitude;
@@ -130,6 +128,25 @@ public class ExifReader {
 	}
 	
 	/**
+	 * @return the latitude as a string
+	 * @throws ExifReaderException
+	 */
+	public String getLatitudeDescription() throws ExifReaderException {
+		String latitudeDescription;
+		try {
+			latitudeDescription = this.gpsDescriptor.getGpsLatitudeDescription();
+		} catch (MetadataException e) {
+			throw new ExifReaderException("Unknown latitude", e);
+		}
+		
+		if (latitudeDescription == null) {
+			throw new ExifReaderException("Unknown latitude");
+		}
+		
+		return latitudeDescription;
+	}
+	
+	/**
 	 * Get the latitude and longitude from the Exif and save them in the ImageInfos object.
 	 * 
 	 * @param image
@@ -139,14 +156,14 @@ public class ExifReader {
 			ExifReader reader = new ExifReader(image);
 			
 			try {
-				image.setLatitude(reader.getLatitude());
+				image.setLatitude(new Coordinate(reader.getLatitudeDescription(), reader.getLatitudeRef()));
 			} catch (ExifReaderException e) {
 				// Latitude can't be read
 				Log.w("Ombre", e);
 			}
 			
 			try {
-				image.setLongitude(reader.getLongitude());
+				image.setLongitude(new Coordinate(reader.getLongitudeDescription(), reader.getLongitudeRef()));
 			} catch (ExifReaderException e) {
 				// Logitude can't be read
 				Log.w("Ombre", e);

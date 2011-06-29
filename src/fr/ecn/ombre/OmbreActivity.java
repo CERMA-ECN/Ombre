@@ -58,7 +58,7 @@ public class OmbreActivity extends Activity {
 			if (resultCode == Activity.RESULT_OK) {
 				Bundle extras = data.getExtras();
 				ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
-
+				
 				Log.i("Ombre", imageInfos.toString());
 			}
 			break;

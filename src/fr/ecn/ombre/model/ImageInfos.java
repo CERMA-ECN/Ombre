@@ -10,8 +10,9 @@ public class ImageInfos implements Serializable {
 
 	protected String path = null;
 
-	protected Double latitude    = null;
-	protected Double longitude   = null;
+	protected Coordinate latitude  = null;
+	protected Coordinate longitude = null;
+	
 	protected Double orientation = null;
 	
 	public ImageInfos(String path) {
@@ -22,23 +23,35 @@ public class ImageInfos implements Serializable {
 	public String getPath() {
 		return path;
 	}
-
-	public Double getLatitude() {
+	
+	/**
+	 * @return the latitude
+	 */
+	public Coordinate getLatitude() {
 		return latitude;
 	}
-	
-	public void setLatitude(Double latitude) {
+
+	/**
+	 * @param latitude the latitude to set
+	 */
+	public void setLatitude(Coordinate latitude) {
 		this.latitude = latitude;
 	}
-	
-	public Double getLongitude() {
+
+	/**
+	 * @return the longitude
+	 */
+	public Coordinate getLongitude() {
 		return longitude;
 	}
-	
-	public void setLongitude(Double longitude) {
+
+	/**
+	 * @param longitude the longitude to set
+	 */
+	public void setLongitude(Coordinate longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	public Double getOrientation() {
 		return orientation;
 	}
