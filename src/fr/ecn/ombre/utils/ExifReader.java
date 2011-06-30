@@ -156,14 +156,14 @@ public class ExifReader {
 			ExifReader reader = new ExifReader(image);
 			
 			try {
-				image.setLatitude(new Coordinate(reader.getLatitudeDescription(), reader.getLatitudeRef()));
+				image.setLatitude(Coordinate.parseCoordinate(reader.getLatitudeDescription(), reader.getLatitudeRef()));
 			} catch (ExifReaderException e) {
 				// Latitude can't be read
 				Log.w("Ombre", e);
 			}
 			
 			try {
-				image.setLongitude(new Coordinate(reader.getLongitudeDescription(), reader.getLongitudeRef()));
+				image.setLongitude(Coordinate.parseCoordinate(reader.getLongitudeDescription(), reader.getLongitudeRef()));
 			} catch (ExifReaderException e) {
 				// Logitude can't be read
 				Log.w("Ombre", e);

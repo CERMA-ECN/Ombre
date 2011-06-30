@@ -3,8 +3,6 @@
  */
 package fr.ecn.ombre;
 
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -53,12 +51,12 @@ public class ImageInfosActivity extends Activity {
 		
 	    if (imageInfos != null) {
 			if (imageInfos.getLatitude() != null) {
-				editLat.setText(imageInfos.getLatitude().getCoordinate());
+				editLat.setText(imageInfos.getLatitude().getDMSString());
 				latitudeRefSpinner.setSelection(latitudeAdapter.getPosition(imageInfos.getLatitude().getRef()));
 			}
 	    	
 	    	if (imageInfos.getLongitude() != null) {
-	    		editLong.setText(imageInfos.getLongitude().getCoordinate());
+	    		editLong.setText(imageInfos.getLongitude().getDMSString());
 				longitudeRefSpinner.setSelection(longitudeAdapter.getPosition(imageInfos.getLongitude().getRef()));
 	    	}
 	    	
@@ -88,20 +86,22 @@ public class ImageInfosActivity extends Activity {
 				if ("".equals(coordinate)) {
 					throw new ValidationException("Latitude must be set");
 				}
-				if (!Pattern.matches("\\d+\"\\d+\'[\\d\\.]+", coordinate)) {
-					throw new ValidationException("Invalid latitude");
+				try {
+					return Coordinate.parseCoordinate(coordinate, ref);
+				} catch (IllegalArgumentException e) {
+					throw new ValidationException("Invalid latitude", e);
 				}
-				return new Coordinate(coordinate, ref);
 			}
 			
 			protected Coordinate validateLongitude(String coordinate, String ref) throws ValidationException {
 				if ("".equals(coordinate)) {
 					throw new ValidationException("Longitude must be set");
 				}
-				if (!Pattern.matches("\\d+\"\\d+\'[\\d\\.]+", coordinate)) {
-					throw new ValidationException("Invalid longitude");
+				try {
+					return Coordinate.parseCoordinate(coordinate, ref);
+				} catch (IllegalArgumentException e) {
+					throw new ValidationException("Invalid longitude", e);
 				}
-				return new Coordinate(coordinate, ref);
 			}
 			
 			protected Double validateOrientation(String orientationString) throws ValidationException {
@@ -109,7 +109,11 @@ public class ImageInfosActivity extends Activity {
 					throw new ValidationException("Orientation must be set");
 				}
 				
-				return Double.parseDouble(orientationString);
+				try {
+					return Double.parseDouble(orientationString);
+				} catch (NumberFormatException e) {
+					throw new ValidationException("Invalid orientation", e);
+				}
 			}
 		});
 	}

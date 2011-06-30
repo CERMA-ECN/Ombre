@@ -15,32 +15,25 @@ public class Coordinate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	protected String coordinate;
+	
+	protected double degrees;
+	protected double minutes;
+	protected double seconds;
+	
 	protected String ref;
 	
 	/**
-	 * @param coordinate
+	 * @param degrees
+	 * @param minutes
+	 * @param seconds
 	 * @param ref
 	 */
-	public Coordinate(String coordinate, String ref) {
+	public Coordinate(double degrees, double minutes, double seconds, String ref) {
 		super();
-		this.coordinate = coordinate;
+		this.degrees = degrees;
+		this.minutes = minutes;
+		this.seconds = seconds;
 		this.ref = ref;
-	}
-
-	/**
-	 * @return the coordinate
-	 */
-	public String getCoordinate() {
-		return coordinate;
-	}
-
-	/**
-	 * @param coordinate the coordinate to set
-	 */
-	public void setCoordinate(String coordinate) {
-		this.coordinate = coordinate;
 	}
 
 	/**
@@ -58,16 +51,25 @@ public class Coordinate implements Serializable {
 	}
 	
 	/**
-	 * Return the coordinate as a double
+	 * Return the decimal degrees representation of this coordinate.
+	 * 
 	 * @return
 	 */
-	public double toDouble() {
-		String[] strArray = this.coordinate.split("[\"']");
-		double d = Double.parseDouble(strArray[0])+Double.parseDouble(strArray[1])/60+Double.parseDouble(strArray[2])/3600;
+	public double getDecimalDegrees() {
+		double degrees = this.degrees + this.minutes/60 + this.seconds/3600;
 		if (this.ref.equals("W") || this.ref.equals("S")) {
-			d = -d;
+			degrees = -degrees;
 		}
-		return d;
+		return degrees;
+	}
+	
+	/**
+	 * Return the DMS representation of this coordinate as a string
+	 * 
+	 * @return
+	 */
+	public String getDMSString() {
+		return (int)this.degrees + "°" + (int)this.minutes + "'" + this.seconds + "\"";
 	}
 	
 	/* (non-Javadoc)
@@ -75,6 +77,34 @@ public class Coordinate implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return coordinate + " " + ref;
+		return this.getDMSString() + ref;
+	}
+	
+	/**
+	 * Parse the specified string as a Coordinate object.
+	 * 
+	 * @param coordinate the string representation of the coordinate.
+	 * @param reference the reference for this coordinate
+	 * @return the Coordinate object represented by this string
+	 */
+	public static Coordinate parseCoordinate(String coordinate, String reference) {
+		String[] coordinateParts = coordinate.split("[°'\"]");
+		
+		int length = coordinateParts.length;
+		
+		if (coordinateParts[length-1].equals("")) {
+			length -= 1;
+		}
+		
+		switch (length) {
+		case 1:
+			return new Coordinate(Double.parseDouble(coordinateParts[0]), 0, 0, reference);
+		case 2:
+			return new Coordinate(Double.parseDouble(coordinateParts[0]), Double.parseDouble(coordinateParts[1]), 0, reference);
+		case 3:
+			return new Coordinate(Double.parseDouble(coordinateParts[0]), Double.parseDouble(coordinateParts[1]), Double.parseDouble(coordinateParts[2]), reference);
+		default:
+			throw new IllegalArgumentException("Invalid coordinate String");
+		}
 	}
 }

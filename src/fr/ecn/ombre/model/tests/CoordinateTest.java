@@ -14,12 +14,12 @@ public class CoordinateTest {
 	@Before
 	public void setUp() throws Exception {
 		//Create a test Coordinate object
-		this.coordinate = new Coordinate("47\"14'56", "N");
+		this.coordinate = new Coordinate(47, 14, 56, "N");
 	}
 
 	@Test
-	public void testToDouble() {
-		assertEquals(47.24888888888889, this.coordinate.toDouble(), 0.000001);
+	public void testGetDecimalDegrees() {
+		assertEquals(47.24888888888889, this.coordinate.getDecimalDegrees(), 0.000001);
 	}
 
 }
