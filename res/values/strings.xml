@@ -2,4 +2,14 @@
 <resources>
     <string name="hello">Hello World, OmbreActivity!</string>
     <string name="app_name">Ombre</string>
+    <string-array name="latitude_refs">
+        <item>N</item>
+        <item>S</item>
+    </string-array>
+    <string-array name="longitude_refs">
+        <item>E</item>
+        <item>W</item>
+    </string-array>
+	<string name="latitude_ref">Latitude Reference</string>
+	<string name="longitude_ref">Longitude Reference</string>
 </resources>

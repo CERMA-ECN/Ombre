@@ -5,12 +5,19 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <TextView android:layout_height="wrap_content" android:text="Latitude" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/textView1"></TextView>
-    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/editText1" android:inputType="numberDecimal">
-        <requestFocus></requestFocus>
-    </EditText>
+	<LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:layout_height="wrap_content">
+		<EditText android:layout_height="wrap_content" android:id="@+id/image_infos_lat" android:layout_width="wrap_content" android:layout_weight="1">
+			<requestFocus></requestFocus>
+		</EditText>
+		<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:prompt="@string/latitude_ref" android:id="@+id/image_infos_latitude_ref"></Spinner>
+	</LinearLayout>
     <TextView android:layout_height="wrap_content" android:text="Longitude" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/textView2"></TextView>
-    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/editText2" android:inputType="numberDecimal"></EditText>
+	<LinearLayout android:layout_width="fill_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content">
+		<EditText android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/image_infos_long" android:layout_weight="1"></EditText>
+		<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:prompt="@string/longitude_ref" android:id="@+id/image_infos_longitude_ref"></Spinner>
+	</LinearLayout>
     <TextView android:layout_height="wrap_content" android:text="Orientation" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:id="@+id/textView3"></TextView>
-    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/editText3" android:inputType="numberDecimal"></EditText>
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:inputType="numberDecimal" android:id="@+id/image_infos_orient"></EditText>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@android:string/ok" android:layout_gravity="center" android:id="@+id/image_infos_ok"></Button>
     
 </LinearLayout>
