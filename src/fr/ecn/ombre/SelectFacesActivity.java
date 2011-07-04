@@ -3,13 +3,13 @@
  */
 package fr.ecn.ombre;
 
-import fr.ecn.ombre.model.ImageInfos;
 import android.app.Activity;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import fr.ecn.ombre.cissor.CissorController;
+import fr.ecn.ombre.model.ImageInfos;
 
 /**
  * @author jerome
@@ -20,6 +20,8 @@ public class SelectFacesActivity extends Activity {
 	private static final int MENU_ADDFACE     = Menu.FIRST;
 	private static final int MENU_REMOVEFACES = Menu.FIRST + 1;
 	private static final int MENU_VALIDATE    = Menu.FIRST + 2;
+	
+	CissorController controller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,8 @@ public class SelectFacesActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
-		image.setImageBitmap(BitmapFactory.decodeFile(imageInfos.getPath()));
+		controller = new CissorController(imageInfos);
+		controller.setUp(image);
 	}
 	
 	@Override
