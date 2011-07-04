@@ -15,6 +15,7 @@ import fr.ecn.ombre.utils.ExifReader;
 public class OmbreActivity extends Activity {
 	private static final int ACTIVITY_LOAD = 0;
 	private static final int ACTIVITY_INFOS = 1;
+	private static final int ACTIVITY_FACES = 2;
 	
     /** Called when the activity is first created. */
     @Override
@@ -60,6 +61,10 @@ public class OmbreActivity extends Activity {
 				ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 				
 				Log.i("Ombre", imageInfos.toString());
+				
+				Intent i = new Intent(this, SelectFacesActivity.class);
+				i.putExtra("ImageInfos", imageInfos);
+				this.startActivityForResult(i, ACTIVITY_FACES);
 			}
 			break;
 		}

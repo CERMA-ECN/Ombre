@@ -14,5 +14,6 @@
             </intent-filter>
         </activity>
 		<activity android:name=".ImageInfosActivity" />
+		<activity android:name=".SelectFacesActivity" />
     </application>
 </manifest>

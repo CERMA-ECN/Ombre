@@ -12,4 +12,8 @@
     </string-array>
 	<string name="latitude_ref">Latitude Reference</string>
 	<string name="longitude_ref">Longitude Reference</string>
+	
+	<string name="menu_addface">Add face</string>
+	<string name="menu_removefaces">Remove all faces</string>
+	<string name="menu_validate">Validate</string>
 </resources>
