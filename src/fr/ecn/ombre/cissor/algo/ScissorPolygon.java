@@ -1,7 +1,6 @@
 package fr.ecn.ombre.cissor.algo;
 
 import android.graphics.Point;
-import java.awt.Polygon;
 
 /**
  * ScissorPolygon inherts from Polygon class. It provides additional
