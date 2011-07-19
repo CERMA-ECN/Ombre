@@ -1,17 +1,28 @@
 /**
  * 
  */
-package fr.ecn.ombre.cissor;
+package fr.ecn.ombre.scissor;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
+import fr.ecn.ombre.scissor.algo.Scissor;
 
 /**
  * @author jerome
  *
  */
 public class CissorDrawable extends Drawable {
+	
+	protected Scissor scissor;
+
+	/**
+	 * @param scissor
+	 */
+	public CissorDrawable(Scissor scissor) {
+		super();
+		this.scissor = scissor;
+	}
 
 	/* (non-Javadoc)
 	 * @see android.graphics.drawable.Drawable#draw(android.graphics.Canvas)

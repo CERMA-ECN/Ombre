@@ -1,4 +1,4 @@
-package fr.ecn.ombre.cissor.algo;
+package fr.ecn.ombre.scissor.algo;
 
 /**
  * Vertex of graph with comparable minimum weight sum used in Dijkstra algorithm.

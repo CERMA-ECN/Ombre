@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import fr.ecn.ombre.cissor.CissorController;
 import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.scissor.CissorController;
 
 /**
  * @author jerome

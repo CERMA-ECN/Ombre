@@ -1,4 +1,4 @@
-package fr.ecn.ombre.cissor;
+package fr.ecn.ombre.scissor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import android.graphics.drawable.LayerDrawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import fr.ecn.ombre.cissor.algo.SCISSOR_STATE;
-import fr.ecn.ombre.cissor.algo.Scissor;
-import fr.ecn.ombre.cissor.algo.ScissorLine;
 import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.scissor.algo.SCISSOR_STATE;
+import fr.ecn.ombre.scissor.algo.Scissor;
+import fr.ecn.ombre.scissor.algo.ScissorLine;
 
 public class CissorController implements View.OnTouchListener {
 	
@@ -62,7 +62,7 @@ public class CissorController implements View.OnTouchListener {
 		
 		//this.scissor = new Scissor();
 		
-		Drawable[] drawables = {new BitmapDrawable(bitmap), new CissorDrawable()}; 
+		Drawable[] drawables = {new BitmapDrawable(bitmap), new CissorDrawable(this.scissor)}; 
 		imageView.setImageDrawable(new LayerDrawable(drawables));
 		imageView.setOnTouchListener(this);
 	}

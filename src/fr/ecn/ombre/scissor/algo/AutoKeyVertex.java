@@ -1,4 +1,4 @@
-package fr.ecn.ombre.cissor.algo;
+package fr.ecn.ombre.scissor.algo;
 
 import android.graphics.Point;
 
