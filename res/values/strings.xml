@@ -15,5 +15,6 @@
 	
 	<string name="menu_addface">Add face</string>
 	<string name="menu_removefaces">Remove all faces</string>
+	<string name="menu_resetface">Reset face</string>
 	<string name="menu_validate">Validate</string>
 </resources>

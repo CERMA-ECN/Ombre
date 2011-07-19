@@ -1,5 +1,9 @@
 package fr.ecn.ombre.cissor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,12 +12,19 @@ import android.graphics.drawable.LayerDrawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import fr.ecn.ombre.cissor.algo.SCISSOR_STATE;
+import fr.ecn.ombre.cissor.algo.Scissor;
+import fr.ecn.ombre.cissor.algo.ScissorLine;
 import fr.ecn.ombre.model.ImageInfos;
 
 public class CissorController implements View.OnTouchListener {
 	
 	protected ImageInfos imageInfos;
 	protected ImageView  imageView;
+	
+	protected Scissor scissor;
+	protected ScissorLine currentScissorLine;
+	protected List<ScissorLine> scissorLines = new ArrayList<ScissorLine>();
 
 	/**
 	 * @param imageInfos
@@ -23,12 +34,36 @@ public class CissorController implements View.OnTouchListener {
 		this.imageInfos = imageInfos;
 	}
 
+	/**
+	 * Tell this controller to generate a new scissor line.
+	 */
+	public void newLine() {
+		if (this.currentScissorLine != null) {
+			if (this.currentScissorLine.getState() != SCISSOR_STATE.HOLD) {
+				this.currentScissorLine.endScissor();
+			}
+		}
+
+		this.currentScissorLine = new ScissorLine(this.scissor);
+
+		this.scissorLines.add(this.currentScissorLine);
+
+		this.currentScissorLine.setActive();
+	}
+
+	public void resetCurrentLine() {
+		this.currentScissorLine.reset();
+	}
+
 	public void setUp(ImageView imageView) {
 		this.imageView = imageView;
 		
-		final Drawable[] drawables = {new BitmapDrawable(BitmapFactory.decodeFile(imageInfos.getPath())), new CissorDrawable()}; 
-		imageView.setImageDrawable(new LayerDrawable(drawables));
+		Bitmap bitmap = BitmapFactory.decodeFile(imageInfos.getPath());
 		
+		//this.scissor = new Scissor();
+		
+		Drawable[] drawables = {new BitmapDrawable(bitmap), new CissorDrawable()}; 
+		imageView.setImageDrawable(new LayerDrawable(drawables));
 		imageView.setOnTouchListener(this);
 	}
 
@@ -44,7 +79,7 @@ public class CissorController implements View.OnTouchListener {
 		//Converting the point in image coordinate system
 		matrix.mapPoints(point);
 		
-		System.out.println(point[0] + ":" + point[1]);
+		this.currentScissorLine.setMovePoint((int) point[0], (int) point[1]);
 		
 		return true;
 	}

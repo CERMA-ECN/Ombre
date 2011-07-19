@@ -17,9 +17,9 @@ import fr.ecn.ombre.model.ImageInfos;
  */
 public class SelectFacesActivity extends Activity {
 
-	private static final int MENU_ADDFACE     = Menu.FIRST;
-	private static final int MENU_REMOVEFACES = Menu.FIRST + 1;
-	private static final int MENU_VALIDATE    = Menu.FIRST + 2;
+	private static final int MENU_ADDFACE   = Menu.FIRST;
+	private static final int MENU_RESETFACE = Menu.FIRST + 1;
+	private static final int MENU_VALIDATE  = Menu.FIRST + 2;
 	
 	CissorController controller;
 
@@ -41,7 +41,7 @@ public class SelectFacesActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean result = super.onCreateOptionsMenu(menu);
 		menu.add(0, MENU_ADDFACE, 0, R.string.menu_addface);
-		menu.add(0, MENU_REMOVEFACES, 0, R.string.menu_removefaces);
+		menu.add(0, MENU_RESETFACE, 0, R.string.menu_resetface);
 		menu.add(0, MENU_VALIDATE, 0, R.string.menu_validate);
 		return result;
 	}
@@ -50,7 +50,10 @@ public class SelectFacesActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_ADDFACE:
-			//TODO: do something with intelligent scissors
+			this.controller.newLine();
+			return true;
+		case MENU_RESETFACE:
+			this.controller.resetCurrentLine();
 			return true;
 		}
 		
