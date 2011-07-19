@@ -1,6 +1,6 @@
 package fr.ecn.ombre.cissor.algo;
 
-import java.awt.Point;
+import android.graphics.Point;
 
 /**
  * AutoKeyVertex is a countable point, which help to determine whether 

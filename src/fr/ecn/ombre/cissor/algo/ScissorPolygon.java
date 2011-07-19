@@ -1,6 +1,6 @@
 package fr.ecn.ombre.cissor.algo;
 
-import java.awt.Point;
+import android.graphics.Point;
 import java.awt.Polygon;
 
 /**
@@ -123,7 +123,7 @@ class ScissorPolygon extends Polygon
 		while (i<p.npoints-n && !containVertex(p.xpoints[i],p.ypoints[i]))
 			i++;
 		if (i<p.npoints-n)
-			point.setLocation(p.xpoints[i],p.ypoints[i]);
+			point.set(p.xpoints[i],p.ypoints[i]);
 		else
 			point=null;
 		return point;
