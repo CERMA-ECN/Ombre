@@ -3,25 +3,25 @@
  */
 package fr.ecn.ombre.scissor;
 
+import fr.ecn.ombre.scissor.algo.ScissorLine;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
-import fr.ecn.ombre.scissor.algo.Scissor;
 
 /**
  * @author jerome
  *
  */
-public class CissorDrawable extends Drawable {
+public class ScissorDrawable extends Drawable {
 	
-	protected Scissor scissor;
+	protected ScissorController scissor;
 
 	/**
-	 * @param scissor
+	 * @param cissorController
 	 */
-	public CissorDrawable(Scissor scissor) {
+	public ScissorDrawable(ScissorController scissorController) {
 		super();
-		this.scissor = scissor;
+		this.scissor = scissorController;
 	}
 
 	/* (non-Javadoc)
@@ -29,8 +29,9 @@ public class CissorDrawable extends Drawable {
 	 */
 	@Override
 	public void draw(Canvas canvas) {
-		// TODO Auto-generated method stub
-
+		for (ScissorLine scissorLine : this.scissor.scissorLines) {
+			
+		}
 	}
 
 	/* (non-Javadoc)

@@ -17,7 +17,7 @@ import fr.ecn.ombre.scissor.algo.SCISSOR_STATE;
 import fr.ecn.ombre.scissor.algo.Scissor;
 import fr.ecn.ombre.scissor.algo.ScissorLine;
 
-public class CissorController implements View.OnTouchListener {
+public class ScissorController implements View.OnTouchListener {
 	
 	protected ImageInfos imageInfos;
 	protected ImageView  imageView;
@@ -29,7 +29,7 @@ public class CissorController implements View.OnTouchListener {
 	/**
 	 * @param imageInfos
 	 */
-	public CissorController(ImageInfos imageInfos) {
+	public ScissorController(ImageInfos imageInfos) {
 		super();
 		this.imageInfos = imageInfos;
 	}
@@ -62,7 +62,7 @@ public class CissorController implements View.OnTouchListener {
 		
 		//this.scissor = new Scissor();
 		
-		Drawable[] drawables = {new BitmapDrawable(bitmap), new CissorDrawable(this.scissor)}; 
+		Drawable[] drawables = {new BitmapDrawable(bitmap), new ScissorDrawable(this)}; 
 		imageView.setImageDrawable(new LayerDrawable(drawables));
 		imageView.setOnTouchListener(this);
 	}

@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import fr.ecn.ombre.model.ImageInfos;
-import fr.ecn.ombre.scissor.CissorController;
+import fr.ecn.ombre.scissor.ScissorController;
 
 /**
  * @author jerome
@@ -21,7 +21,7 @@ public class SelectFacesActivity extends Activity {
 	private static final int MENU_RESETFACE = Menu.FIRST + 1;
 	private static final int MENU_VALIDATE  = Menu.FIRST + 2;
 	
-	CissorController controller;
+	ScissorController controller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class SelectFacesActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
-		controller = new CissorController(imageInfos);
+		controller = new ScissorController(imageInfos);
 		controller.setUp(image);
 	}
 	
