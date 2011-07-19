@@ -30,7 +30,7 @@ public class ScissorDrawable extends Drawable {
 	@Override
 	public void draw(Canvas canvas) {
 		for (ScissorLine scissorLine : this.scissor.scissorLines) {
-			
+			scissorLine.draw(canvas);
 		}
 	}
 

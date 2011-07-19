@@ -5,10 +5,9 @@ package fr.ecn.ombre.scissor.algo;
 import ij.gui.PolygonRoi;
 //import ij.process.ImageProcessor;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import java.util.ArrayList;
@@ -29,8 +28,8 @@ public class ScissorLine{
 	private ScissorPolygon currentScissorLine;
 	private ArrayList<ScissorPolygon> scissorLine; //this array list stores polygons from one key point to next key point
 	
-	private Color currentLineColor;
-	private Color lineColor;
+	private int currentLineColor;
+	private int lineColor;
 	private double magnification;	//scale parameter
 	private Rect srcRect;		//translation parameter
 	private Scissor scissor;		//each polygon is obtained from the result of algorithm in class Scissor 
@@ -50,8 +49,8 @@ public class ScissorLine{
 	 */
 	public ScissorLine(Scissor s){
 		scissor=s;
-		lineColor=Color.yellow;
-		currentLineColor=Color.red;
+		lineColor=Color.YELLOW;
+		currentLineColor=Color.RED;
 		srcRect=new Rect(0,0,0,0);
 		magnification=1;
 		scissorLine=new ArrayList<ScissorPolygon>();
@@ -209,35 +208,32 @@ public class ScissorLine{
 		currentScissorLine=null;
 		this.state=SCISSOR_STATE.HOLD;
 	}
+	
 	/**
 	 * Paint all tracks,  default color is yellow for tracks and
 	 * red for changeable part. A square is also painted at every
 	 * key point.
-	 * @param g Of type Graphics
+	 * @param canvas Canvas
 	 */
-	public void paint(Graphics g)
-	{
-
-	    Graphics2D g2 = (Graphics2D)g;
-	    g2.setColor(lineColor);
-	    g2.setStroke(new BasicStroke(1f));
-	    
-	    Iterator<ScissorPolygon> i=scissorLine.iterator();
-	    while (i.hasNext())
-	    {
-	    	Polygon pg=(Polygon) i.next();
-	    	pg=newReOffScreenPoly(pg);
-	    	g2.drawRect(pg.xpoints[0]-2, pg.ypoints[0]-2,4,4);
-	    	g2.drawPolyline(pg.xpoints, pg.ypoints,pg.npoints);
-	    }
-	    g2.setColor(currentLineColor);
-	    if (currentScissorLine!=null)
-	    {
-	    	Polygon pg=newReOffScreenPoly(currentScissorLine);
-	    	g2.drawPolyline(pg.xpoints, pg.ypoints,pg.npoints);
-	    }
-	    
+	public void draw(Canvas canvas)  {
+		Paint paint = new Paint();
+		
+		paint.setColor(this.lineColor);
+		for (ScissorPolygon pg : this.scissorLine) {
+			canvas.drawRect(pg.xpoints[0]-2, pg.ypoints[0]-2, pg.xpoints[0]+2, pg.ypoints[0]+2, paint);
+			for (int i=1;i<pg.npoints;i++) {
+				canvas.drawLine(pg.xpoints[i-1], pg.ypoints[i-1], pg.xpoints[i], pg.ypoints[i], paint);
+			}
+		}
+		
+		paint.setColor(this.currentLineColor);
+		if (currentScissorLine != null) {
+			for (int i=1;i<currentScissorLine.npoints;i++) {
+				canvas.drawLine(currentScissorLine.xpoints[i-1], currentScissorLine.ypoints[i-1], currentScissorLine.xpoints[i], currentScissorLine.ypoints[i], paint);
+			}
+		}
 	}
+	
     public Polygon newReOffScreenPoly(Polygon poly)
     {
     	Polygon poly2=new Polygon();
@@ -364,7 +360,7 @@ public class ScissorLine{
 	 * Set color of scissor track
 	 * @param c A color
 	 */
-	public void setLineColor(Color c)
+	public void setLineColor(int c)
 	{
 		this.lineColor=c;
 	}
@@ -372,7 +368,7 @@ public class ScissorLine{
 	 * Set color of changeable part of track line
 	 * @param c A color
 	 */
-	public void setCurrentLineColor(Color c)
+	public void setCurrentLineColor(int c)
 	{
 		this.currentLineColor=c;
 	}

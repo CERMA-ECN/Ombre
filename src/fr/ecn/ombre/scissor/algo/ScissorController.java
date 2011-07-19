@@ -3,8 +3,8 @@ package fr.ecn.ombre.scissor.algo;
 import ij.gui.PolygonRoi;
 import ij.process.ImageProcessor;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import android.graphics.Color;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -109,20 +109,18 @@ public class ScissorController extends Scissor {
 		if (currentScissor!=null)
 			currentScissor.reset();
 	}
+
 	/**
 	 * Paint all scissor lines in the array list.
-	 * @param g Graphics
+	 * @param canvas Canvas
 	 */
-	public void paint(Graphics g)
-	{
-		Iterator<ScissorElement> i =arrScissor.iterator();
-		while (i.hasNext())
-		{
-			ScissorElement se=i.next();
+	public void draw(Canvas canvas)  {
+		for (ScissorElement se : this.arrScissor) {
 			if (se.getVisible())
-				se.paint(g);
-		}		
+				se.draw(canvas);
+		}
 	}
+	
 	/**
 	 * Clear all scissor lines
 	 */
@@ -267,7 +265,7 @@ public class ScissorController extends Scissor {
 	 * Set color of current scissor line.
 	 * @param c Color to set
 	 */
-	public void setTypeColor(Color c)
+	public void setTypeColor(int c)
 	{
 		Iterator<ScissorElement> i =arrScissor.iterator();
 		while (i.hasNext())
@@ -282,7 +280,7 @@ public class ScissorController extends Scissor {
 	 * @param type	int number, indicate the type of scissor lines
 	 * @param c	Color to set
 	 */
-	public void setTypeColor(int type,Color c)
+	public void setTypeColor(int type,int c)
 	{
 		Iterator<ScissorElement> i =arrScissor.iterator();
 		while (i.hasNext())
