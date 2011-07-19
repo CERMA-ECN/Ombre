@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import android.graphics.Point;
-import java.awt.Rectangle;
+import android.graphics.Rect;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -32,7 +32,7 @@ public class ScissorLine{
 	private Color currentLineColor;
 	private Color lineColor;
 	private double magnification;	//scale parameter
-	private Rectangle srcRect;		//translation parameter
+	private Rect srcRect;		//translation parameter
 	private Scissor scissor;		//each polygon is obtained from the result of algorithm in class Scissor 
 	
 	/*
@@ -52,7 +52,7 @@ public class ScissorLine{
 		scissor=s;
 		lineColor=Color.yellow;
 		currentLineColor=Color.red;
-		srcRect=new Rectangle(0,0,0,0);
+		srcRect=new Rect(0,0,0,0);
 		magnification=1;
 		scissorLine=new ArrayList<ScissorPolygon>();
 		state=SCISSOR_STATE.HOLD;
@@ -129,10 +129,10 @@ public class ScissorLine{
 	    			{
 	    				if (v.count())
 	    				{
-	    					Rectangle r=currentScissorLine.getBounds();
+	    					Rect r=currentScissorLine.getBounds();
 	    					this.addNewKeyPoint(reOffScreenX(v.getX()), reOffScreenY(v.getY()));
-	    					scissor.setActiveRegion(r.x, r.y);
-	    					scissor.setActiveRegion(r.x+r.width, r.y+r.height);
+	    					scissor.setActiveRegion(r.left, r.top);
+	    					scissor.setActiveRegion(r.right, r.bottom);
 	    					autoKeyVertexList.remove(v);
 	    				}
 	    				i++;
@@ -252,7 +252,7 @@ public class ScissorLine{
      */
     public int offScreenX(int x)
     {
-		return (int) (x/magnification +srcRect.x);
+		return (int) (x/magnification +srcRect.left);
     }
     /**
      * Translation from screen view coordinate to image coordinate 
@@ -261,7 +261,7 @@ public class ScissorLine{
      */
     public int offScreenY(int y)
     {
-		return (int) (y/magnification +srcRect.y);
+		return (int) (y/magnification +srcRect.top);
     }
     /**
      * Translation from image coordinate to screen view coordinate
@@ -270,7 +270,7 @@ public class ScissorLine{
      */
     public int reOffScreenX(int x)
     {
-		return (int) ( (x-srcRect.x)*magnification);
+		return (int) ( (x-srcRect.left)*magnification);
     }
     /**
      * Translation from image coordinate to screen view coordinate
@@ -279,7 +279,7 @@ public class ScissorLine{
      */
     public int reOffScreenY(int y)
     {
-		return (int) ((y-srcRect.y)*magnification);
+		return (int) ((y-srcRect.top)*magnification);
     }  
     /**
      * Set zoom parameter.
@@ -291,9 +291,9 @@ public class ScissorLine{
     }
     /**
      * Set screen rectangle which defines translation parameter.
-     * @param r Rectangle
+     * @param r Rect
      */
-    public void setSrcRect(Rectangle r)
+    public void setSrcRect(Rect r)
     {
     	this.srcRect=r;
     } 

@@ -5,7 +5,7 @@ import ij.process.ImageProcessor;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import android.graphics.Rect;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -168,9 +168,9 @@ public class ScissorController extends Scissor {
     }
     /**
      * Update translation parameter.
-     * @param srcRect Rectangle, translation parameter
+     * @param srcRect Rect, translation parameter
      */
-    public void updateMagnification(Rectangle srcRect)
+    public void updateMagnification(Rect srcRect)
     {
     	Iterator<ScissorElement> i =arrScissor.iterator();
 		while (i.hasNext())
@@ -182,9 +182,9 @@ public class ScissorController extends Scissor {
     /**
      * Update zoom parameter and translation parameter.
      * @param magnification Double number, zoom parameter 
-     * @param srcRect	Rectangle, translation parameter
+     * @param srcRect	Rect, translation parameter
      */
-    public void updateMagnification(double magnification,Rectangle srcRect)
+    public void updateMagnification(double magnification,Rect srcRect)
     {
     	Iterator<ScissorElement> i =arrScissor.iterator();
 		while (i.hasNext())
