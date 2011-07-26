@@ -1,13 +1,13 @@
 package fr.ecn.ombre.scissor.algo;
 
-import ij.gui.PolygonRoi;
-import ij.process.ImageProcessor;
+//import ij.gui.PolygonRoi;
 
-import android.graphics.Color;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import jjil.core.Gray8Image;
 
 
 /**
@@ -24,11 +24,11 @@ public class ScissorController extends Scissor {
 	private ArrayList<ScissorElement> arrScissor;
 	private int currentType;
 	/**
-	 * Constructor of ScissorController, sent an ImageProcessor
+	 * Constructor of ScissorController, sent an Image
 	 * to its parent and initial current type to zero.
 	 * @param ip
 	 */
-	public ScissorController(ImageProcessor ip) {
+	public ScissorController(Gray8Image ip) {
 		super(ip);
 		arrScissor=new ArrayList<ScissorElement>();
 		currentType=0;
@@ -139,18 +139,18 @@ public class ScissorController extends Scissor {
 	 * Convert current scissor line to a ROI of ImageJ.
 	 * @return A PolygonRoi copy of current scissor line 
 	 */
-	public PolygonRoi getRoiOfCurrentScissor()
-	{
-		return getRoi(currentLayerID);
-	}
+//	public PolygonRoi getRoiOfCurrentScissor()
+//	{
+//		return getRoi(currentLayerID);
+//	}
 	/**
 	 * Convert scissor line whom id is n to a ROI of ImageJ.
 	 * @return A PolygonRoi copy of No.n scissor line 
 	 */
-	public PolygonRoi getRoi(int n)
-	{
-		return arrScissor.get(n).toRoi();
-	}
+//	public PolygonRoi getRoi(int n)
+//	{
+//		return arrScissor.get(n).toRoi();
+//	}
 	/**
 	 * Update zoom parameter 
 	 * @param magnification Double number, zoom parameter 
@@ -224,26 +224,26 @@ public class ScissorController extends Scissor {
 	 * Get the area enclosed by type 0 scissor line
 	 * @return int pixels number of this area
 	 */
-	public int getSurface()
-	{
-		return getSurface(0);
-	}
+//	public int getSurface()
+//	{
+//		return getSurface(0);
+//	}
 	/**
 	 * Get the area enclosed by a scissor line of specified type
 	 * @return int pixels number of this area
 	 */
-	public int getSurface(int type)
-	{
-		int surface=0;
-		Iterator<ScissorElement> i =arrScissor.iterator();
-		while (i.hasNext())
-		{
-			ScissorElement se=i.next();
-			if (se.getType()==type)
-				surface+=se.getSurface();
-		}
-		return surface;
-	}
+//	public int getSurface(int type)
+//	{
+//		int surface=0;
+//		Iterator<ScissorElement> i =arrScissor.iterator();
+//		while (i.hasNext())
+//		{
+//			ScissorElement se=i.next();
+//			if (se.getType()==type)
+//				surface+=se.getSurface();
+//		}
+//		return surface;
+//	}
 	/**
 	 * Set current type, follow scissor lines will be of this type. 
 	 * @param t int number, indicate the type

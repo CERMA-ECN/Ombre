@@ -2,8 +2,7 @@ package fr.ecn.ombre.scissor.algo;
 
 //import ij.IJ;
 //import ij.ImagePlus;
-import ij.gui.PolygonRoi;
-//import ij.process.ImageProcessor;
+//import ij.gui.PolygonRoi;
 
 import android.graphics.Color;
 import android.graphics.Canvas;
@@ -11,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Class for control one track of scissor tool from begin to end.
@@ -335,27 +333,27 @@ public class ScissorLine{
 	 * Convert scissor track to a free ROI of ImageJ
 	 * @return A PolygonRoi 
 	 */
-	public PolygonRoi toRoi()
-	{
-		ScissorPolygon pg=new ScissorPolygon();
-		for (int i=0;i<this.scissorLine.size();i++)
-			pg.appends(scissorLine.get(i));
-		PolygonRoi pr=new PolygonRoi(pg, PolygonRoi.FREEROI);
-		return pr;
-	}
+//	public PolygonRoi toRoi()
+//	{
+//		ScissorPolygon pg=new ScissorPolygon();
+//		for (int i=0;i<this.scissorLine.size();i++)
+//			pg.appends(scissorLine.get(i));
+//		PolygonRoi pr=new PolygonRoi(pg, PolygonRoi.FREEROI);
+//		return pr;
+//	}
 	/**
 	 * Get the area in the scissor track
 	 * @return int area
 	 */
-	public int getSurface()
-	{
-		int surface=0;
-		byte[] b=(byte[]) toRoi().getMask().getPixels();
-		for (int i=0;i<b.length;i++)
-			if (b[i]!=0)
-				surface++;
-		return surface;
-	}
+//	public int getSurface()
+//	{
+//		int surface=0;
+//		byte[] b=(byte[]) toRoi().getMask().getPixels();
+//		for (int i=0;i<b.length;i++)
+//			if (b[i]!=0)
+//				surface++;
+//		return surface;
+//	}
 	/**
 	 * Set color of scissor track
 	 * @param c A color

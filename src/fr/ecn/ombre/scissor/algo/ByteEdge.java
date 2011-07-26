@@ -1,7 +1,8 @@
 
 package fr.ecn.ombre.scissor.algo;
 
-import ij.process.*;
+import jjil.core.Gray8Image;
+import jjil.core.Image;
 
 /**
  * Class ByteEdge provides some basic 8-bit graphic operations like convolution operation, absolute value of a graph array and so on.
@@ -19,10 +20,10 @@ public class ByteEdge{
     protected int width,height;
     protected byte[] pixels;
     
-    public ByteEdge(ImageProcessor ip){
+    public ByteEdge(Gray8Image ip){
     	width=ip.getWidth();
     	height=ip.getHeight();
-    	pixels=(byte[]) ip.getPixels();
+    	pixels = ip.getData();
     } 
     public ByteEdge(int w,int h, byte[] p){
     	width=w;
@@ -156,51 +157,54 @@ public class ByteEdge{
     /**
      * Convert an array to a 8-bit graph with absolute value operation
      * @param arr int pixels array
-     * @return	ByteProcessor with pixels value from input array 
+     * @return	Gray8Image with pixels value from input array 
      */
-    public ByteProcessor showArrayInGraph(int[] arr)
+    public Gray8Image showArrayInGraph(int[] arr)
     {
-    	ByteProcessor bp=new ByteProcessor(this.width,this.height);
+    	Gray8Image bp=new Gray8Image(this.width,this.height);
+    	byte[] imageData = bp.getData();
     	for (int i=0;i<arr.length;i++)
     		if (arr[i]<-255)
-    			bp.set(i,255);
+    			imageData[i] = (byte) 255;
     		else if (arr[i]<0)
-    			bp.set(i,-arr[i]);
+    			imageData[i] = (byte) -arr[i];
     		else if (arr[i]>255)
-    			bp.set(i,255);
+    			imageData[i] = (byte) 255;
     		else 
-    			bp.set(i,arr[i]); 
+    			imageData[i] = (byte) arr[i]; 
     	
     	return bp;
     }
     /**
      * Convert an array to a 8-bit graph with a scale to 0-255, negative values are ignore.
      * @param arr int pixels array
-     * @return	ByteProcessor with pixels value from input array 
+     * @return	Gray8Image with pixels value from input array 
      */
-    public ByteProcessor showArrayInGraph2(int[] arr)
+    public Gray8Image showArrayInGraph2(int[] arr)
     {
     	int max=0;
     	for (int i=0;i<arr.length;i++)
     		max=Math.max(max, arr[i]);
-    	ByteProcessor bp=new ByteProcessor(this.width,this.height);
+    	Gray8Image bp=new Gray8Image(this.width,this.height);
+    	byte[] imageData = bp.getData();
     	for (int i=0;i<arr.length;i++)
-    		bp.set(i,255*arr[i]/max);
+    		imageData[i] = (byte) (255*arr[i]/max);
     	return bp;
     }
     /**
      * Convert an array to a 8-bit graph with a scale to 0-255, negative values are ignore.
      * @param arr double pixels array
-     * @return	ByteProcessor with pixels value from input array 
+     * @return	Gray8Image with pixels value from input array 
      */
-	public ByteProcessor showArrayInGraph2(double[] arr)
+	public Gray8Image showArrayInGraph2(double[] arr)
     {
     	double max=0;
     	for (int i=0;i<arr.length;i++)
     		max=Math.max(max, arr[i]);
-    	ByteProcessor bp=new ByteProcessor(this.width,this.height);
+    	Gray8Image bp=new Gray8Image(this.width,this.height);
+    	byte[] imageData = bp.getData();
     	for (int i=0;i<arr.length;i++)
-    		bp.set(i,(int) (255*arr[i]/max));
+    		imageData[i] = (byte) (255*arr[i]/max);
     	return bp;
     }
     

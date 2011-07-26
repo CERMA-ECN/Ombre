@@ -1,8 +1,7 @@
 
 package fr.ecn.ombre.scissor.algo;
 
-import ij.process.ByteProcessor;
-import ij.process.ImageProcessor;
+import jjil.core.Gray8Image;
 /**
  * Calculate the gradient of a 8 bit gray graph, using Sobel kernel<br>
  * |-1 0 1|&emsp&emsp&nbsp |-1 -2 -1|<br>
@@ -25,7 +24,7 @@ public class ByteGradient extends ByteEdge {
 	 * Tangent of gradient vector  
 	 */
 	//private int[] gradAng;
-	public ByteGradient(ImageProcessor ip) {
+	public ByteGradient(Gray8Image ip) {
 		super(ip);
 		//Take the mask
 		maskSys=9;
@@ -85,7 +84,7 @@ public class ByteGradient extends ByteEdge {
 //	/**
 //	 *@return A 8 bit graph with the value of x component of gradient vector  
 //	 */
-//    public ByteProcessor getIpX(){
+//    public Gray8Image getIpX(){
 //		this.abs(gradX);
 //		this.setPixelArr(gradX);
 //		return this;
@@ -94,7 +93,7 @@ public class ByteGradient extends ByteEdge {
 //     * 
 //     * @return A 8 bit graph with the value of y component of gradient vector
 //     */
-//    public ByteProcessor getIpY(){
+//    public Gray8Image getIpY(){
 //		this.abs(gradY);
 //		this.setPixelArr(gradY);
 //		return this;
@@ -103,7 +102,7 @@ public class ByteGradient extends ByteEdge {
      * @return A 8 bit graph with the value of the norm of gradient vector
      */
    
-	public ByteProcessor getIpN(){
+	public Gray8Image getIpN(){
 		return showArrayInGraph2(gradN);
 	}
 }
