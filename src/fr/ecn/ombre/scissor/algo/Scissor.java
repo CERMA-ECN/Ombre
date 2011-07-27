@@ -5,6 +5,7 @@ import fr.ecn.ombre.utils.ImageUtils;
 import jjil.algorithm.Gray8Threshold;
 import jjil.core.Error;
 import jjil.core.Gray8Image;
+import jjil.core.Image;
 /**
  * Scissor algorithm using Dijkstra algorithm to calculate the lowest cost path. 
  * The weight of each pixel is obtained by Laplacian and Gradient value of the graph.
@@ -97,7 +98,11 @@ public class Scissor extends Dijkstra {
 
 		wd=4;
 		initPara(30,20,0,0);
-	}	
+	}
+	
+	public Scissor(Image image) {
+		this(ImageUtils.convertToGray8(image));
+	}
 	/**
 	 * Define weight and start point coordinates
 	 * @param wg		weight of gradient

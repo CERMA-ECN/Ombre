@@ -1,7 +1,11 @@
 package fr.ecn.ombre.utils;
 
 import jjil.algorithm.Gray8Hist;
+import jjil.algorithm.RgbAvgGray;
+import jjil.core.Error;
 import jjil.core.Gray8Image;
+import jjil.core.Image;
+import jjil.core.RgbImage;
 
 public class ImageUtils {
     public static int getAutoThreshold(Gray8Image image) {
@@ -45,4 +49,22 @@ public class ImageUtils {
         level = (int)Math.round(result);
         return level;
     }
+
+	public static Gray8Image convertToGray8(Image image) {
+		if (image instanceof Gray8Image) {
+			return (Gray8Image) image;
+		} else if (image instanceof RgbImage) {
+			RgbAvgGray convertor = new RgbAvgGray();
+			try {
+				convertor.push(image);
+				return (Gray8Image) convertor.getFront();
+			} catch (Error e) {
+				//Shouldn't append
+				return null;
+			}
+		} else {
+			//TODO
+			return null;
+		}
+	}
 }

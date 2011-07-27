@@ -3,6 +3,8 @@ package fr.ecn.ombre.scissor;
 import java.util.ArrayList;
 import java.util.List;
 
+import jjil.android.RgbImageAndroid;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -53,6 +55,8 @@ public class ScissorController implements View.OnTouchListener {
 
 	public void resetCurrentLine() {
 		this.currentScissorLine.reset();
+		this.currentScissorLine.setActive();
+		this.imageView.invalidate();
 	}
 
 	public void setUp(ImageView imageView) {
@@ -60,7 +64,15 @@ public class ScissorController implements View.OnTouchListener {
 		
 		Bitmap bitmap = BitmapFactory.decodeFile(imageInfos.getPath());
 		
-		//this.scissor = new Scissor();
+		//AUTO Redimentionement
+		if (bitmap.getHeight() > 1000 || bitmap.getWidth() > 1000) {
+			Matrix matrix = new Matrix();
+			matrix.postScale(0.25f, 0.25f);
+			
+			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		}
+		
+		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
 		
 		Drawable[] drawables = {new BitmapDrawable(bitmap), new ScissorDrawable(this)}; 
 		imageView.setImageDrawable(new LayerDrawable(drawables));
@@ -68,7 +80,11 @@ public class ScissorController implements View.OnTouchListener {
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		System.out.println("Touch : " + event);
+		if (this.currentScissorLine == null) {
+			return true;
+		}
+		
+		//System.out.println("Touch : " + event);
 		
 		//Creating the transform matrix from screen coordinates to image coordinates
 		Matrix matrix = new Matrix();
@@ -79,7 +95,14 @@ public class ScissorController implements View.OnTouchListener {
 		//Converting the point in image coordinate system
 		matrix.mapPoints(point);
 		
-		this.currentScissorLine.setMovePoint((int) point[0], (int) point[1]);
+		System.out.println(point[0] + " " + point[1]);
+		if (this.currentScissorLine.isDoing()) {
+			this.currentScissorLine.setMovePoint((int) Math.round(point[0]), (int) Math.round(point[1]));
+		} else {
+			this.currentScissorLine.addNewKeyPoint((int) Math.round(point[0]), (int) Math.round(point[1]));
+		}
+		
+		this.imageView.invalidate();
 		
 		return true;
 	}

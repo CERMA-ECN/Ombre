@@ -98,8 +98,8 @@ public class ScissorLine{
 	 */
 	public void setMovePoint(int x,int y)
 	{
-        x = offScreenX(x);
-        y = offScreenY(y);
+//		x = offScreenX(x);
+//		y = offScreenY(y);
         //Check current state
 		if (state==SCISSOR_STATE.DOING)
 		{	
