@@ -64,9 +64,10 @@ public class ScissorController implements View.OnTouchListener {
 		
 		Bitmap bitmap = BitmapFactory.decodeFile(imageInfos.getPath());
 		
-		//AUTO Redimentionement
+		//Auto resize
 		if (bitmap.getHeight() > 1000 || bitmap.getWidth() > 1000) {
 			Matrix matrix = new Matrix();
+			//TODO: calculate scale values
 			matrix.postScale(0.25f, 0.25f);
 			
 			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
@@ -95,11 +96,11 @@ public class ScissorController implements View.OnTouchListener {
 		//Converting the point in image coordinate system
 		matrix.mapPoints(point);
 		
-		System.out.println(point[0] + " " + point[1]);
-		if (this.currentScissorLine.isDoing()) {
-			this.currentScissorLine.setMovePoint((int) Math.round(point[0]), (int) Math.round(point[1]));
-		} else {
+		//System.out.println(point[0] + " " + point[1]);
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			this.currentScissorLine.addNewKeyPoint((int) Math.round(point[0]), (int) Math.round(point[1]));
+		} else {
+			this.currentScissorLine.setMovePoint((int) Math.round(point[0]), (int) Math.round(point[1]));
 		}
 		
 		this.imageView.invalidate();
