@@ -155,7 +155,7 @@ public class ScissorLine{
 	    		if(endCounter<10)
 	    		{
 	    			ScissorPolygon sp=scissorLine.get(0);
-	        		if (x-sp.getBeginX()<5 && sp.getBeginX()-x<5 && sp.getBeginY()-y<5 && y-sp.getBeginY()<5)
+	        		if (x-sp.getBeginX()<10 && sp.getBeginX()-x<10 && sp.getBeginY()-y<10 && y-sp.getBeginY()<10)
 	        			endCounter++;
 	    		}
 	    		else
