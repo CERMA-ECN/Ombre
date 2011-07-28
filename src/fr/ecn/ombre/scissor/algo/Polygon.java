@@ -98,12 +98,12 @@ public class Polygon implements Serializable {
 	 */
 	public void addPoint(int x, int y) {
 		if (npoints + 1 > xpoints.length) {
-			int[] newx = new int[npoints + 1];
+			int[] newx = new int[npoints + 10];//More place for grow
 			System.arraycopy(xpoints, 0, newx, 0, npoints);
 			xpoints = newx;
 		}
 		if (npoints + 1 > ypoints.length) {
-			int[] newy = new int[npoints + 1];
+			int[] newy = new int[npoints + 10];//More place for grow
 			System.arraycopy(ypoints, 0, newy, 0, npoints);
 			ypoints = newy;
 		}
