@@ -14,9 +14,9 @@ public class ImageUtils {
         int maxValue = histogram.length - 1;
         double result, sum1, sum2, sum3, sum4;
         
-        int count0 = histogram[0];
+		//int count0 = histogram[0];
         histogram[0] = 0; //set to zero so erased areas aren't included
-        int countMax = histogram[maxValue];
+		//int countMax = histogram[maxValue];
         histogram[maxValue] = 0;
         int min = 0;
         while ((histogram[min]==0) && (min<maxValue))
@@ -25,7 +25,7 @@ public class ImageUtils {
         while ((histogram[max]==0) && (max>0))
             max--;
         if (min>=max) {
-            histogram[0]= count0; histogram[maxValue]=countMax;
+			//histogram[0]= count0; histogram[maxValue]=countMax;
             level = histogram.length/2;
             return level;
         }
@@ -45,7 +45,7 @@ public class ImageUtils {
             movingIndex++;
         } while ((movingIndex+1)<=result && movingIndex<max-1);
         
-        histogram[0]= count0; histogram[maxValue]=countMax;
+		//histogram[0]= count0; histogram[maxValue]=countMax;
         level = (int)Math.round(result);
         return level;
     }

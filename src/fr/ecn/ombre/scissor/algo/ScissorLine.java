@@ -65,8 +65,8 @@ public class ScissorLine{
 	 */
 	public void addNewKeyPoint(int x,int y)
 	{
-        x = offScreenX(x);
-        y = offScreenY(y);
+		//x = offScreenX(x);
+		//y = offScreenY(y);
         
 		if (state==SCISSOR_STATE.BEGIN)	//just after the scissor tool begin 	
     	{
@@ -98,8 +98,8 @@ public class ScissorLine{
 	 */
 	public void setMovePoint(int x,int y)
 	{
-//		x = offScreenX(x);
-//		y = offScreenY(y);
+		//x = offScreenX(x);
+		//y = offScreenY(y);
         //Check current state
 		if (state==SCISSOR_STATE.DOING)
 		{	

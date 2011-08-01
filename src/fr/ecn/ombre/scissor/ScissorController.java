@@ -27,6 +27,9 @@ public class ScissorController implements View.OnTouchListener {
 	protected Scissor scissor;
 	protected ScissorLine currentScissorLine;
 	protected List<ScissorLine> scissorLines = new ArrayList<ScissorLine>();
+	
+	protected Matrix matrix = null;
+	protected Matrix invMatrix = null;
 
 	/**
 	 * @param imageInfos
@@ -87,14 +90,10 @@ public class ScissorController implements View.OnTouchListener {
 		
 		//System.out.println("Touch : " + event);
 		
-		//Creating the transform matrix from screen coordinates to image coordinates
-		Matrix matrix = new Matrix();
-		this.imageView.getImageMatrix().invert(matrix);
-		
 		float[] point = {event.getX(), event.getY()};
 		
 		//Converting the point in image coordinate system
-		matrix.mapPoints(point);
+		this.getInvMatrix().mapPoints(point);
 		
 		//System.out.println(point[0] + " " + point[1]);
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -106,6 +105,23 @@ public class ScissorController implements View.OnTouchListener {
 		this.imageView.invalidate();
 		
 		return true;
+	}
+	
+	/**
+	 * Creates and return the transformation matrix from screen coordinates to image coordinates.
+	 * 
+	 * @return
+	 */
+	public Matrix getInvMatrix() {
+		Matrix matrix = this.imageView.getImageMatrix();
+		
+		if (this.invMatrix == null || !this.matrix.equals(matrix))  {
+			this.invMatrix = new Matrix();
+			matrix.invert(this.invMatrix);
+			this.matrix = matrix;
+		}
+		
+		return this.invMatrix;
 	}
 
 }

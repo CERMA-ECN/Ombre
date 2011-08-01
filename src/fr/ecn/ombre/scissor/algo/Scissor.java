@@ -36,23 +36,22 @@ public class Scissor extends Dijkstra {
 		
 		//Calculation of Laplacian and gradient of the graph
 		//ByteGradient grad=new ByteGradient(ip.duplicate());
-		Gray8Image tempIp = (Gray8Image) ip.clone();
+		Gray8Image tempIp = null;
 		
 		try {
-			smooth.push(tempIp);
+			smooth.push(ip);
 			tempIp = (Gray8Image) smooth.getFront();
 		} catch (Error e) {
 			//This shouldn't happens
 		}
 		
-		ByteGradient grad=new ByteGradient((Gray8Image) tempIp.clone());
-		arrGradN=grad.getGradN();
-		arrGradX=grad.getGradX();
-		arrGradY=grad.getGradY();
-		arrIntGradN=grad.inverNormalize(arrGradN, grad.getGradNMax());
-		
-		grad=null;
-		System.gc();
+		{
+			ByteGradient grad=new ByteGradient((Gray8Image) tempIp.clone());
+			arrGradN=grad.getGradN();
+			arrGradX=grad.getGradX();
+			arrGradY=grad.getGradY();
+			arrIntGradN=grad.inverNormalize(arrGradN, grad.getGradNMax());
+		}
 		
 		ByteLaplacien lapla=new ByteLaplacien((Gray8Image) tempIp.clone());
 		

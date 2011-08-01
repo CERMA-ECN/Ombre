@@ -2,7 +2,6 @@
 package fr.ecn.ombre.scissor.algo;
 
 import jjil.core.Gray8Image;
-import jjil.core.Image;
 
 /**
  * Class ByteEdge provides some basic 8-bit graphic operations like convolution operation, absolute value of a graph array and so on.
