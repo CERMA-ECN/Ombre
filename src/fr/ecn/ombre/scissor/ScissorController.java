@@ -21,22 +21,36 @@ import fr.ecn.ombre.scissor.algo.ScissorLine;
 
 public class ScissorController implements View.OnTouchListener {
 	
-	protected ImageInfos imageInfos;
 	protected ImageView  imageView;
+	
+	protected Bitmap bitmap;
 	
 	protected Scissor scissor;
 	protected ScissorLine currentScissorLine;
 	protected List<ScissorLine> scissorLines = new ArrayList<ScissorLine>();
 	
 	protected Matrix matrix = null;
-	protected Matrix invMatrix = null;
 
 	/**
 	 * @param imageInfos
 	 */
 	public ScissorController(ImageInfos imageInfos) {
 		super();
-		this.imageInfos = imageInfos;
+		
+		Bitmap bitmap = BitmapFactory.decodeFile(imageInfos.getPath());
+		
+		//Auto resize
+		if (bitmap.getHeight() > 1000 || bitmap.getWidth() > 1000) {
+			Matrix matrix = new Matrix();
+			//TODO: calculate scale values
+			matrix.postScale(0.25f, 0.25f);
+			
+			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		}
+		
+		this.bitmap = bitmap;
+		
+		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
 	}
 
 	/**
@@ -64,19 +78,7 @@ public class ScissorController implements View.OnTouchListener {
 
 	public void setUp(ImageView imageView) {
 		this.imageView = imageView;
-		
-		Bitmap bitmap = BitmapFactory.decodeFile(imageInfos.getPath());
-		
-		//Auto resize
-		if (bitmap.getHeight() > 1000 || bitmap.getWidth() > 1000) {
-			Matrix matrix = new Matrix();
-			//TODO: calculate scale values
-			matrix.postScale(0.25f, 0.25f);
-			
-			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-		}
-		
-		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
+		this.matrix = null;
 		
 		Drawable[] drawables = {new BitmapDrawable(bitmap), new ScissorDrawable(this)}; 
 		imageView.setImageDrawable(new LayerDrawable(drawables));
@@ -115,13 +117,12 @@ public class ScissorController implements View.OnTouchListener {
 	public Matrix getInvMatrix() {
 		Matrix matrix = this.imageView.getImageMatrix();
 		
-		if (this.invMatrix == null || !this.matrix.equals(matrix))  {
-			this.invMatrix = new Matrix();
-			matrix.invert(this.invMatrix);
-			this.matrix = matrix;
+		if (this.matrix == null)  {
+			this.matrix = new Matrix();
+			matrix.invert(this.matrix);
 		}
 		
-		return this.invMatrix;
+		return this.matrix;
 	}
 
 }

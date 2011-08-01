@@ -21,7 +21,7 @@ public class SelectFacesActivity extends Activity {
 	private static final int MENU_RESETFACE = Menu.FIRST + 1;
 	private static final int MENU_VALIDATE  = Menu.FIRST + 2;
 	
-	ScissorController controller;
+	protected ScissorController controller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +33,23 @@ public class SelectFacesActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
-		controller = new ScissorController(imageInfos);
+		ScissorController controller = (ScissorController) this.getLastNonConfigurationInstance();
+		if (controller == null) {
+			controller = new ScissorController(imageInfos);
+		}
+		
+		this.controller = controller;
 		controller.setUp(image);
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onRetainNonConfigurationInstance()
+	 */
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		return this.controller;
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean result = super.onCreateOptionsMenu(menu);
