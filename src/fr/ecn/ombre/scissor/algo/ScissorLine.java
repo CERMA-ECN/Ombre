@@ -28,8 +28,6 @@ public class ScissorLine{
 	
 	private int currentLineColor;
 	private int lineColor;
-	private double magnification;	//scale parameter
-	private Rect srcRect;		//translation parameter
 	private Scissor scissor;		//each polygon is obtained from the result of algorithm in class Scissor 
 	
 	/*
@@ -49,8 +47,6 @@ public class ScissorLine{
 		scissor=s;
 		lineColor=Color.YELLOW;
 		currentLineColor=Color.RED;
-		srcRect=new Rect(0,0,0,0);
-		magnification=1;
 		scissorLine=new ArrayList<ScissorPolygon>();
 		state=SCISSOR_STATE.HOLD;
 		mouseCount=0;
@@ -65,9 +61,6 @@ public class ScissorLine{
 	 */
 	public void addNewKeyPoint(int x,int y)
 	{
-		//x = offScreenX(x);
-		//y = offScreenY(y);
-        
 		if (state==SCISSOR_STATE.BEGIN)	//just after the scissor tool begin 	
     	{
 			reset();
@@ -98,8 +91,6 @@ public class ScissorLine{
 	 */
 	public void setMovePoint(int x,int y)
 	{
-		//x = offScreenX(x);
-		//y = offScreenY(y);
         //Check current state
 		if (state==SCISSOR_STATE.DOING)
 		{	
@@ -127,7 +118,7 @@ public class ScissorLine{
 	    				if (v.count())
 	    				{
 	    					Rect r=currentScissorLine.getBounds();
-	    					this.addNewKeyPoint(reOffScreenX(v.getX()), reOffScreenY(v.getY()));
+	    					this.addNewKeyPoint(v.getX(), v.getY());
 	    					scissor.setActiveRegion(r.left, r.top);
 	    					scissor.setActiveRegion(r.right, r.bottom);
 	    					autoKeyVertexList.remove(v);
@@ -231,66 +222,7 @@ public class ScissorLine{
 			}
 		}
 	}
-	
-    public Polygon newReOffScreenPoly(Polygon poly)
-    {
-    	Polygon poly2=new Polygon();
-    	for(int i=0;i<poly.npoints;i++)
-    		poly2.addPoint(reOffScreenX(poly.xpoints[i]), reOffScreenY(poly.ypoints[i]));
-    	return poly2;
-    }
-    /**
-     * Translation from screen view coordinate to image coordinate 
-     * @param x x coordinate in screen view
-     * @return x coordinate in image 
-     */
-    public int offScreenX(int x)
-    {
-		return (int) (x/magnification +srcRect.left);
-    }
-    /**
-     * Translation from screen view coordinate to image coordinate 
-     * @param y y coordinate in screen view
-     * @return y coordinate in image 
-     */
-    public int offScreenY(int y)
-    {
-		return (int) (y/magnification +srcRect.top);
-    }
-    /**
-     * Translation from image coordinate to screen view coordinate
-     * @param x x coordinate in image
-     * @return  x coordinate in screen view
-     */
-    public int reOffScreenX(int x)
-    {
-		return (int) ( (x-srcRect.left)*magnification);
-    }
-    /**
-     * Translation from image coordinate to screen view coordinate
-     * @param y y coordinate in image
-     * @return  y coordinate in screen view
-     */
-    public int reOffScreenY(int y)
-    {
-		return (int) ((y-srcRect.top)*magnification);
-    }  
-    /**
-     * Set zoom parameter.
-     * @param m double number of magnification
-     */
-    public void setMagnification(double m)
-    {
-    	this.magnification=m;
-    }
-    /**
-     * Set screen rectangle which defines translation parameter.
-     * @param r Rect
-     */
-    public void setSrcRect(Rect r)
-    {
-    	this.srcRect=r;
-    } 
+
 	/**
 	 * Set current state to a user defined state.
 	 * @param s state of type SCISSOR_STATE

@@ -115,11 +115,9 @@ public class ScissorController implements View.OnTouchListener {
 	 * @return
 	 */
 	public Matrix getInvMatrix() {
-		Matrix matrix = this.imageView.getImageMatrix();
-		
 		if (this.matrix == null)  {
 			this.matrix = new Matrix();
-			matrix.invert(this.matrix);
+			this.imageView.getImageMatrix().invert(this.matrix);
 		}
 		
 		return this.matrix;

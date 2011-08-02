@@ -3,7 +3,6 @@ package fr.ecn.ombre.scissor.algo;
 //import ij.gui.PolygonRoi;
 
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -151,47 +150,6 @@ public class ScissorController extends Scissor {
 //	{
 //		return arrScissor.get(n).toRoi();
 //	}
-	/**
-	 * Update zoom parameter 
-	 * @param magnification Double number, zoom parameter 
-	 */
-    public void updateMagnification(double magnification)
-    {
-    	Iterator<ScissorElement> i =arrScissor.iterator();
-		while (i.hasNext())
-		{
-			ScissorElement se=i.next();
-			se.setMagnification(magnification);
-		}
-    }
-    /**
-     * Update translation parameter.
-     * @param srcRect Rect, translation parameter
-     */
-    public void updateMagnification(Rect srcRect)
-    {
-    	Iterator<ScissorElement> i =arrScissor.iterator();
-		while (i.hasNext())
-		{
-			ScissorElement se=i.next();
-			se.setSrcRect(srcRect);
-		}
-    }  
-    /**
-     * Update zoom parameter and translation parameter.
-     * @param magnification Double number, zoom parameter 
-     * @param srcRect	Rect, translation parameter
-     */
-    public void updateMagnification(double magnification,Rect srcRect)
-    {
-    	Iterator<ScissorElement> i =arrScissor.iterator();
-		while (i.hasNext())
-		{
-			ScissorElement se=i.next();
-			se.setMagnification(magnification);
-			se.setSrcRect(srcRect);
-		}
-    }  
         
     public void setState(SCISSOR_STATE state)
 	{
