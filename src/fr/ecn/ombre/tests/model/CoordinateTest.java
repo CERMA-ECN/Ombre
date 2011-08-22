@@ -1,4 +1,4 @@
-package fr.ecn.ombre.model.tests;
+package fr.ecn.ombre.tests.model;
 
 import static org.junit.Assert.*;
 
