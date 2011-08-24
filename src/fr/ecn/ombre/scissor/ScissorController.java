@@ -18,6 +18,7 @@ import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.scissor.algo.SCISSOR_STATE;
 import fr.ecn.ombre.scissor.algo.Scissor;
 import fr.ecn.ombre.scissor.algo.ScissorLine;
+import fr.ecn.ombre.utils.ImageUtils;
 
 public class ScissorController implements View.OnTouchListener {
 	
@@ -37,18 +38,7 @@ public class ScissorController implements View.OnTouchListener {
 	public ScissorController(ImageInfos imageInfos) {
 		super();
 		
-		Bitmap bitmap = BitmapFactory.decodeFile(imageInfos.getPath());
-		
-		//Auto resize
-		if (bitmap.getHeight() > 1000 || bitmap.getWidth() > 1000) {
-			Matrix matrix = new Matrix();
-			//TODO: calculate scale values
-			matrix.postScale(0.25f, 0.25f);
-			
-			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-		}
-		
-		this.bitmap = bitmap;
+		this.bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(imageInfos.getPath()), 1000, 1000);
 		
 		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
 	}
