@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.scissor.ScissorController;
+import fr.ecn.ombre.segmentdetection.SegmentDetectionFunction;
 
 /**
  * @author jerome
@@ -33,13 +34,17 @@ public class SelectFacesActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
-		ScissorController controller = (ScissorController) this.getLastNonConfigurationInstance();
-		if (controller == null) {
-			controller = new ScissorController(imageInfos);
-		}
+		//TEST
+		SegmentDetectionFunction sdf = new SegmentDetectionFunction(imageInfos.getPath(), false);
+		image.setImageBitmap(sdf.bitmap);
 		
-		this.controller = controller;
-		controller.setUp(image);
+//		ScissorController controller = (ScissorController) this.getLastNonConfigurationInstance();
+//		if (controller == null) {
+//			controller = new ScissorController(imageInfos);
+//		}
+//		
+//		this.controller = controller;
+//		controller.setUp(image);
 	}
 	
 	/* (non-Javadoc)

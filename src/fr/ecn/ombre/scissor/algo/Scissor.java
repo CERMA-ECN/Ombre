@@ -1,6 +1,6 @@
 package fr.ecn.ombre.scissor.algo;
 
-import fr.ecn.ombre.utils.Gray83x3Average;
+import fr.ecn.ombre.image.filters.Gray83x3Average;
 import fr.ecn.ombre.utils.ImageUtils;
 import jjil.algorithm.Gray8Threshold;
 import jjil.core.Error;
@@ -100,7 +100,7 @@ public class Scissor extends Dijkstra {
 	}
 	
 	public Scissor(Image image) {
-		this(ImageUtils.convertToGray8(image));
+		this(ImageUtils.toGray8(image));
 	}
 	/**
 	 * Define weight and start point coordinates

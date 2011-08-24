@@ -1,6 +1,9 @@
 package fr.ecn.ombre.utils;
 
+import fr.ecn.ombre.image.filters.Gray8toRgb;
+import android.graphics.Bitmap;
 import jjil.algorithm.Gray8Hist;
+import jjil.algorithm.Gray8Rgb;
 import jjil.algorithm.RgbAvgGray;
 import jjil.core.Error;
 import jjil.core.Gray8Image;
@@ -50,7 +53,7 @@ public class ImageUtils {
         return level;
     }
 
-	public static Gray8Image convertToGray8(Image image) {
+	public static Gray8Image toGray8(Image image) {
 		if (image instanceof Gray8Image) {
 			return (Gray8Image) image;
 		} else if (image instanceof RgbImage) {
@@ -66,5 +69,41 @@ public class ImageUtils {
 			//TODO
 			return null;
 		}
+	}
+
+	public static RgbImage toRgb(Image image) {
+		if (image instanceof RgbImage) {
+			return (RgbImage) image;
+		} else if (image instanceof Gray8Image) {
+			Gray8toRgb convertor = new Gray8toRgb();
+			try {
+				convertor.push(image);
+				return (RgbImage) convertor.getFront();
+			} catch (Error e) {
+				//Shouldn't append
+				return null;
+			}
+		} else {
+			//TODO
+			return null;
+		}
+	}
+	
+	public static Bitmap toBitmap(Image image) {
+		RgbImage rgbImage = toRgb(image);
+		
+		int[] data = rgbImage.getData();
+		
+		System.out.println("Data : " + Integer.toHexString(data[45]));
+		
+		Bitmap b =  Bitmap.createBitmap(
+				rgbImage.getData(),
+				rgbImage.getWidth(),
+				rgbImage.getHeight(), 
+                Bitmap.Config.ARGB_8888);
+		
+		System.out.println("Pixel : " + Integer.toHexString(b.getPixel(45, 0)));
+		
+		return b;
 	}
 }
