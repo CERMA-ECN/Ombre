@@ -5,6 +5,8 @@ package fr.ecn.ombre.segmentdetection;
 import java.io.*;
 import java.util.*;
 
+import fr.irstv.kmeans.DataGroup;
+
 import jjil.core.Gray8Image;
 
 import android.graphics.Bitmap;
@@ -56,17 +58,6 @@ public class SegmentDetectionFunction {
 			} else {
 				this.bitmap = Utils.getImageFromImageSegment(is);
 			}
-			
-			String[] splitPath = path.split("/");
-			String fileBaseName;
-			if (splitPath.length >= 1){
-				fileBaseName = splitPath[splitPath.length - 1];
-			} else {
-				fileBaseName = path;
-			}
-			String fileBaseNameWithoutExtension = (fileBaseName != null) ? fileBaseName.substring(0,fileBaseName.indexOf('.')) : "";
-			System.out.println("dszerzger");
-			//exportToXML(is, fileBaseNameWithoutExtension);
 		} catch (NullPointerException fnfe){
 			System.out.println("The file you tried to process cannot be reached.");
 			fnfe.printStackTrace();
@@ -112,26 +103,26 @@ public class SegmentDetectionFunction {
 	 * @param segmentMap
 	 * @param groupsChosen
 	 */
-//	public void segmentDisplayFunction(String file, HashMap<Integer, Vector<Segment>> segmentMap, DataGroup[] dg) {
-//		String path = file;
-//
-//		// creating the color map
-//		int[] colorMap = {
-//				Color.RED,
-//				Color.BLUE,
-//				Color.GREEN,
-//				Color.rgb(255, 200, 0),
-//				Color.YELLOW,
-//				Color.MAGENTA,
-//				Color.CYAN,
-//				Color.WHITE,
-//		};
-//		
-//		ImageSegment is = new ImageSegment(path);
-//		Gray8Image is2 = is.baseImage;
-//		// displaying the image
-//		Utils.getImageFromSegmentMap(is2, segmentMap, colorMap, dg);
-//	}
+	public Bitmap segmentDisplayFunction(String file, HashMap<Integer, Vector<Segment>> segmentMap, DataGroup[] dg) {
+		String path = file;
+
+		// creating the color map
+		int[] colorMap = {
+				Color.RED,
+				Color.BLUE,
+				Color.GREEN,
+				Color.rgb(255, 200, 0),
+				Color.YELLOW,
+				Color.MAGENTA,
+				Color.CYAN,
+				Color.WHITE,
+		};
+		
+		ImageSegment is = new ImageSegment(path);
+		Gray8Image is2 = is.baseImage;
+		// displaying the image
+		return Utils.getImageFromSegmentMap(is2, segmentMap, colorMap, dg);
+	}
 	
 	/**
 	 * Display ONLY CHOSEN segments groups and their vanishing points by color

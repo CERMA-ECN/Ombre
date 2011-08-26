@@ -38,7 +38,7 @@ public class ImageSegment {
 	 * @param	wMax	The maximal desired width of the image
 	 */
 	public ImageSegment(String pathToImage){
-		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(pathToImage), 1000, 1000);
+		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(pathToImage), 500, 500);
 		
 		Image image = RgbImageAndroid.toRgbImage(bitmap);
 		

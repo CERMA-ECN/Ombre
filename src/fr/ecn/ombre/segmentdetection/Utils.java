@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-//import android.graphics.RectF;
+import android.graphics.RectF;
 
 import jjil.core.Error;
 import jjil.core.Gray8Image;
@@ -16,8 +16,8 @@ import jjil.core.Image;
 import fr.ecn.ombre.image.ByteImage;
 import fr.ecn.ombre.image.filters.ByteConvolve;
 import fr.ecn.ombre.utils.ImageUtils;
-//import fr.irstv.dataModel.DataPoint;
-//import fr.irstv.kmeans.DataGroup;
+import fr.irstv.dataModel.DataPoint;
+import fr.irstv.kmeans.DataGroup;
 
 /**
  * Class implementing the useful tools for ImageSegment class.
@@ -190,27 +190,27 @@ public class Utils {
 	 * @param colorMap
 	 * @return 
 	 */
-//	public static Bitmap getImageFromSegmentMap(Image image, HashMap<Integer, Vector<Segment>> map, int[] colorMap, DataGroup[] dg) {
-//		//Creating a bitmap and a canvas to draw into
-//		Bitmap bitmap = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.ARGB_8888);
-//		Canvas canvas = new Canvas(bitmap);
-//		
-//		canvas.drawBitmap(ImageUtils.toBitmap(image), new Matrix(), new Paint());
-//		
-//		for (Map.Entry<Integer, Vector<Segment>> ent : map.entrySet()) {
-//			Paint paint = new Paint();
-//			paint.setColor(colorMap[ent.getKey()]);
-//			
-//			displayVanishingPoints(canvas, dg[ent.getKey()].computeCentroid());
-//			
-//			for (int m=0; m<ent.getValue().size(); m++) {
-//				Segment s = ent.getValue().get(m);
-//				canvas.drawLine(s.getStartPoint().getX(), s.getStartPoint().getY(), s.getEndPoint().getX(), s.getEndPoint().getY(), paint);
-//			}
-//		}
-//		
-//		return bitmap;
-//	}
+	public static Bitmap getImageFromSegmentMap(Image image, HashMap<Integer, Vector<Segment>> map, int[] colorMap, DataGroup[] dg) {
+		//Creating a bitmap and a canvas to draw into
+		Bitmap bitmap = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		
+		canvas.drawBitmap(ImageUtils.toBitmap(image), new Matrix(), new Paint());
+		
+		for (Map.Entry<Integer, Vector<Segment>> ent : map.entrySet()) {
+			Paint paint = new Paint();
+			paint.setColor(colorMap[ent.getKey()]);
+			
+			displayVanishingPoints(canvas, dg[ent.getKey()].computeCentroid(), colorMap[ent.getKey()]);
+			
+			for (int m=0; m<ent.getValue().size(); m++) {
+				Segment s = ent.getValue().get(m);
+				canvas.drawLine(s.getStartPoint().getX(), s.getStartPoint().getY(), s.getEndPoint().getX(), s.getEndPoint().getY(), paint);
+			}
+		}
+		
+		return bitmap;
+	}
 	
 	/**
 	 * @author Elsa Arrou-Vignod, Florent Buisson
@@ -242,12 +242,13 @@ public class Utils {
 		return bitmap;
 	}
 	
-//	public static void displayVanishingPoints(Canvas canvas, DataPoint vp) {
-//		Paint paint = new Paint();
-//		paint.setStyle(Paint.Style.FILL);
-//		
-//		canvas.drawOval(new RectF((int) vp.get(0)*2, (int) vp.get(1)*2, (int) vp.get(0)*2 + 10, (int) vp.get(1)*2 + 10), paint);
-//	}
+	public static void displayVanishingPoints(Canvas canvas, DataPoint vp, int color) {
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setColor(color);
+		
+		canvas.drawOval(new RectF((int) vp.get(0)*2, (int) vp.get(1)*2, (int) vp.get(0)*2 + 10, (int) vp.get(1)*2 + 10), paint);
+	}
 
 	public static Bitmap getImageFromSegmentMap(Image image, HashMap<Integer, Vector<Segment>> map) {
 		//Creating a bitmap and a canvas to draw into

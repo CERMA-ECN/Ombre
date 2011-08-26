@@ -3,14 +3,22 @@
  */
 package fr.ecn.ombre;
 
+import java.util.HashMap;
+import java.util.Vector;
+
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.scissor.ScissorController;
+import fr.ecn.ombre.segmentdetection.Segment;
 import fr.ecn.ombre.segmentdetection.SegmentDetectionFunction;
+import fr.ecn.ombre.segmentdetection.UsefulMethods;
+import fr.irstv.kmeans.DataGroup;
+import fr.irstv.kmeans.RanSacFunction;
 
 /**
  * @author jerome
@@ -35,8 +43,17 @@ public class SelectFacesActivity extends Activity {
 		final ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
 		//TEST
+		UsefulMethods um = new UsefulMethods();
+		
 		SegmentDetectionFunction sdf = new SegmentDetectionFunction(imageInfos.getPath(), false);
-		image.setImageBitmap(sdf.bitmap);
+		RanSacFunction rsf = new RanSacFunction(sdf.segmentsList, 5, 20d, 0.05d);
+		
+		DataGroup[] theDataGroup = rsf.theDataGroup; // cleaned groups of DataPoints
+		
+		HashMap<Integer, Vector<Segment>> segmentMap = um.groupBeforeDisplay(theDataGroup);
+		Bitmap b = sdf.segmentDisplayFunction(imageInfos.getPath(), segmentMap, theDataGroup);
+		
+		image.setImageBitmap(b);
 		
 //		ScissorController controller = (ScissorController) this.getLastNonConfigurationInstance();
 //		if (controller == null) {

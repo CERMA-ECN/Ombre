@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
-//import fr.irstv.dataModel.DataPoint;
-//import fr.irstv.dataModel.MkDataPoint;
+import fr.irstv.dataModel.DataPoint;
+import fr.irstv.dataModel.MkDataPoint;
 
 /**
  * Class implementing the segment data structure.
@@ -36,12 +36,12 @@ public class Segment {
 		this.endPoint = new Point();
 		this.startPoint = new Point();
 	}
-//	public Segment(MkDataPoint dp) {
-//		DataPoint beginPoint = dp.getSeg().getBeginPoint();
-//		DataPoint endPoint = dp.getSeg().getEndPoint();
-//		setStartPoint(new Point((int) beginPoint.get(0),(int) beginPoint.get(1)));
-//		setEndPoint(new Point((int) endPoint.get(0),(int) endPoint.get(1)));
-//	}
+	public Segment(MkDataPoint dp) {
+		DataPoint beginPoint = dp.getSeg().getBeginPoint();
+		DataPoint endPoint = dp.getSeg().getEndPoint();
+		setStartPoint(new Point((int) beginPoint.get(0),(int) beginPoint.get(1)));
+		setEndPoint(new Point((int) endPoint.get(0),(int) endPoint.get(1)));
+	}
 
 	/**
 	 * Add a point into the point vector

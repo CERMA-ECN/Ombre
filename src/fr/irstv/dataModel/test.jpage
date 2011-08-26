@@ -1,0 +1,2 @@
+Syntax error on token "2", invalid VariableDeclaratordouble test = -3.0;
+System.out.println(Math.floor(test));
