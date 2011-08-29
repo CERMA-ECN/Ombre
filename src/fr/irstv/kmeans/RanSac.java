@@ -2,7 +2,6 @@ package fr.irstv.kmeans;
 
 import java.util.LinkedList;
 
-import fr.irstv.dataModel.CircleKDistance;
 import fr.irstv.dataModel.DataKCircle;
 import fr.irstv.dataModel.DataPoint;
 import fr.irstv.dataModel.MkDataPoint;
@@ -85,12 +84,6 @@ public class RanSac {
 			LinkedList<MkDataPoint> bestPossibleFit=null;
 			LinkedList<DataPoint> kBest = null;
 			
-			// debug code
-			if (fctDist instanceof CircleKDistance) {
-				((CircleKDistance)fctDist).setDebugGroupNumber(groupCount);
-				((CircleKDistance)fctDist).setDebugIteration(groupCount);
-			}
-			//System.err.println(remainingPoints.size()+"--debug-- remaining points to handle");
 			for (int s=0 ; s<maxSample ; s++) {
 				LinkedList<MkDataPoint> possibleFit = new LinkedList<MkDataPoint>();
 				
@@ -107,9 +100,7 @@ public class RanSac {
 				k.add(remainingPoints.get(k2));
 				k.add(remainingPoints.get(k3));
 				
-//				((CircleKDistance)fctDist).setScilabCheck(false);
 				DataKCircle z = (DataKCircle)fctDist.centroid(k);
-//				((CircleKDistance)fctDist).setScilabCheck(true);
 				
 				// how many points are close to this circle?
 				for (MkDataPoint point : remainingPoints) {

@@ -57,7 +57,7 @@ public class VanishingPointsController {
 	}
 	
 	protected void computeGroups() {
-		this.groups = new RanSacFunction(this.segments, 10, 20d, 0.05d).theDataGroup;
+		this.groups = new RanSacFunction(this.segments, 10, 20d, 0.01d).theDataGroup;
 	}
 
 	public void reComputeGroups() {

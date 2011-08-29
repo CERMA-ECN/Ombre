@@ -3,12 +3,9 @@ package fr.ecn.ombre;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
-import fr.ecn.ombre.utils.ImageUtils;
 import fr.irstv.dataModel.DataPoint;
 import fr.irstv.dataModel.MkDataPoint;
 import fr.irstv.kmeans.DataGroup;
@@ -37,9 +34,7 @@ public class VanishingPointsDrawable extends Drawable {
 	}
 
 	@Override
-	public void draw(Canvas canvas) {
-//		canvas.drawBitmap(this.controller.bitmap, new Matrix(), null);
-		
+	public void draw(Canvas canvas) {		
 		DataGroup[] groups = this.controller.getGroups();
 		for (int i=0; i<groups.length; i++) {
 			DataGroup group = groups[i];
