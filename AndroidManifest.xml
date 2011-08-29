@@ -15,5 +15,6 @@
         </activity>
 		<activity android:name=".ImageInfosActivity" />
 		<activity android:name=".SelectFacesActivity" />
+		<activity android:name="VanishingPointsActivity"></activity>
     </application>
 </manifest>

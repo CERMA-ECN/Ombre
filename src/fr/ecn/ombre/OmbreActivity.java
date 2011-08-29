@@ -62,7 +62,7 @@ public class OmbreActivity extends Activity {
 				
 				Log.i("Ombre", imageInfos.toString());
 				
-				Intent i = new Intent(this, SelectFacesActivity.class);
+				Intent i = new Intent(this, VanishingPointsActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivityForResult(i, ACTIVITY_FACES);
 			}
