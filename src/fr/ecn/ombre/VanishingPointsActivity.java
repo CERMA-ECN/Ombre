@@ -5,7 +5,10 @@ package fr.ecn.ombre;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
+
 import fr.ecn.ombre.model.ImageInfos;
 
 /**
@@ -15,6 +18,8 @@ import fr.ecn.ombre.model.ImageInfos;
  * 
  */
 public class VanishingPointsActivity extends Activity {
+
+	private static final int MENU_RECOMPUTE   = Menu.FIRST;
 
 	protected VanishingPointsController controller;
 
@@ -47,5 +52,23 @@ public class VanishingPointsActivity extends Activity {
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		return this.controller;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		boolean result = super.onCreateOptionsMenu(menu);
+		menu.add(0, MENU_RECOMPUTE, 0, "Recompute");
+		return result;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_RECOMPUTE:
+			this.controller.reComputeGroups();
+			return true;
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 }

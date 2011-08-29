@@ -112,7 +112,7 @@ public class ImageUtils {
 		int width  = bitmap.getWidth();
 		
 		if (height >= maxHeight || width >= maxWidth) {
-			float scale = Math.max((float)maxHeight / height, (float)maxWidth / width);
+			float scale = Math.min((float)maxHeight / height, (float)maxWidth / width);
 			
 			Matrix matrix = new Matrix();
 			matrix.postScale(scale, scale);

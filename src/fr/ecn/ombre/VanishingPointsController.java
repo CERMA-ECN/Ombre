@@ -1,35 +1,75 @@
 package fr.ecn.ombre;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.widget.ImageView;
+
+import jjil.android.RgbImageAndroid;
+import jjil.core.Image;
 import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.segmentdetection.ImageSegment;
 import fr.ecn.ombre.segmentdetection.Segment;
-import fr.ecn.ombre.segmentdetection.SegmentDetectionFunction;
-import fr.ecn.ombre.segmentdetection.UsefulMethods;
+import fr.ecn.ombre.utils.ImageUtils;
 import fr.irstv.kmeans.DataGroup;
 import fr.irstv.kmeans.RanSacFunction;
 
 public class VanishingPointsController {
 	
-	protected Bitmap b;
+	/**
+	 * Bitmap version of the image (will be used for display)
+	 */
+	protected Bitmap bitmap;
+	
+	protected Map<Integer, Vector<Segment>> segments;
+	protected DataGroup[] groups;
+
+	protected ImageView imageView;
 
 	public VanishingPointsController(ImageInfos imageInfos) {
-		UsefulMethods um = new UsefulMethods();
+		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(imageInfos.getPath()), 750, 750);
 		
-		SegmentDetectionFunction sdf = new SegmentDetectionFunction(imageInfos.getPath(), false);
-		RanSacFunction rsf = new RanSacFunction(sdf.segmentsList, 5, 20d, 0.05d);
+		Image image = ImageUtils.toGray8(RgbImageAndroid.toRgbImage(bitmap));
 		
-		DataGroup[] theDataGroup = rsf.theDataGroup; // cleaned groups of DataPoints
+		this.computeSegments(image);
 		
-		HashMap<Integer, Vector<Segment>> segmentMap = um.groupBeforeDisplay(theDataGroup);
-		b = sdf.segmentDisplayFunction(imageInfos.getPath(), segmentMap, theDataGroup);
+		this.computeGroups();
+		
+		this.bitmap = ImageUtils.toBitmap(image);
 	}
 
-	public void setUp(ImageView image) {
-		image.setImageBitmap(b);
+	public void setUp(ImageView imageView) {
+		this.imageView = imageView;
+		
+		Drawable[] drawables = {new BitmapDrawable(this.bitmap), new VanishingPointsDrawable(this)};
+		imageView.setImageDrawable(new LayerDrawable(drawables));
+	}
+	
+	protected void computeSegments(Image image) {
+		ImageSegment is = new ImageSegment(image);
+		is.getLargeConnectedEdges(false, 8);
+		this.segments = is.getFinalSegmentMap();
+	}
+	
+	protected void computeGroups() {
+		this.groups = new RanSacFunction(this.segments, 10, 20d, 0.05d).theDataGroup;
+	}
+
+	public void reComputeGroups() {
+		this.computeGroups();
+		this.imageView.invalidate();
+	}
+	
+	/**
+	 * @return the groups
+	 */
+	public DataGroup[] getGroups() {
+		return groups;
 	}
 
 }

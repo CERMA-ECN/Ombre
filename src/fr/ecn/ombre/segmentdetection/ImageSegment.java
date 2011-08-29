@@ -5,12 +5,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import jjil.android.RgbImageAndroid;
 import jjil.core.Gray8Image;
 import jjil.core.Image;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import fr.ecn.ombre.image.ByteImage;
 import fr.ecn.ombre.image.FloatImage;
 import fr.ecn.ombre.utils.ImageUtils;
@@ -30,18 +30,26 @@ public class ImageSegment {
 	protected Gray8Image baseImage;
 	protected int MAX_WIDTH;
 	protected HashMap<Integer,Vector<Segment>> finalSegmentMap;
-
+	
 	/**
-	 * Public constructor.
-	 *
-	 * @param	path	The path to where images are located
-	 * @param	wMax	The maximal desired width of the image
+	 * Constructor using an Image object
+	 * 
+	 * @param image the image from which the segments will be extracted
+	 */
+	public ImageSegment(Image image){
+		this.baseImage = ImageUtils.toGray8(image);
+	}
+	
+	/**
+	 * Constructor using a path to an image
+	 * 
+	 * @param path the path to the image from which the segments will be extracted
 	 */
 	public ImageSegment(String pathToImage){
 		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(pathToImage), 500, 500);
-		
+
 		Image image = RgbImageAndroid.toRgbImage(bitmap);
-		
+
 		this.baseImage = ImageUtils.toGray8(image);
 	}
 
