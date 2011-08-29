@@ -119,15 +119,6 @@ public class RanSac {
 					}
 				}
 				
-//				if (possibleFit.size() < 3) {
-//					System.out.println("Lolwut size = " + possibleFit.size());
-//					System.out.println(remainingPoints.size());
-//					System.out.println(remainingPoints.get(k1));
-//					System.out.println(remainingPoints.get(k2));
-//					System.out.println(remainingPoints.get(k3));
-//					System.out.println(z + " - " + z.getRadius());
-//				}
-				
 				if (possibleFit.size() > possibleFitNumber) {
 					possibleFitNumber = possibleFit.size();
 					bestPossibleFit = possibleFit;

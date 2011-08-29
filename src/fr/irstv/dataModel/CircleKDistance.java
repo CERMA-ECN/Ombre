@@ -7,12 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Jama.Matrix;
-import Jama.SingularValueDecomposition;
 
 //import no.uib.cipr.matrix.DenseMatrix;
 //import no.uib.cipr.matrix.NotConvergedException;
 //import no.uib.cipr.matrix.SVD;
-
 
 import fr.irstv.kmeans.EuclidianDistance;
 
@@ -100,7 +98,7 @@ public class CircleKDistance extends EuclidianDistance {
 		/*System.out.println(B.numRows());
 		System.out.println(B.numColumns());
 		*/
-		SingularValueDecomposition svd = B.svd();
+		SingularValueDecomposition svd = new SingularValueDecomposition(B);
 		Matrix V = svd.getV();
 
 		double a = V.get(0,3);
