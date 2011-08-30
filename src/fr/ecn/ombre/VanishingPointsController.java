@@ -16,8 +16,11 @@ import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.segmentdetection.ImageSegment;
 import fr.ecn.ombre.segmentdetection.Segment;
 import fr.ecn.ombre.utils.ImageUtils;
+import fr.irstv.dataModel.CircleKDistance;
+import fr.irstv.kmeans.CleaningDataGroups;
 import fr.irstv.kmeans.DataGroup;
-import fr.irstv.kmeans.RanSacFunction;
+import fr.irstv.kmeans.DataMk;
+import fr.irstv.kmeans.RanSac;
 
 public class VanishingPointsController {
 	
@@ -57,7 +60,20 @@ public class VanishingPointsController {
 	}
 	
 	protected void computeGroups() {
-		this.groups = new RanSacFunction(this.segments, 10, 20d, 0.01d).theDataGroup;
+		CircleKDistance fd = new CircleKDistance();
+
+		DataMk dataSet = new DataMk(this.segments);
+		
+		// here we launch the real job
+		RanSac r = new RanSac(6,dataSet,fd);
+		// param init
+		r.setMaxSample(10);
+		r.setSigma(20d);
+		r.setStopThreshold(0.05d);
+		r.go();
+		
+		//Cleaning the groups
+		this.groups = new CleaningDataGroups().clean(r.getGroups());
 	}
 
 	public void reComputeGroups() {
