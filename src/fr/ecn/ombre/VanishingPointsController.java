@@ -1,7 +1,7 @@
 package fr.ecn.ombre;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,7 +29,7 @@ public class VanishingPointsController {
 	 */
 	protected Bitmap bitmap;
 	
-	protected Map<Integer, Vector<Segment>> segments;
+	protected Map<Integer, List<Segment>> segments;
 	protected DataGroup[] groups;
 
 	protected ImageView imageView;

@@ -1,9 +1,9 @@
 package fr.ecn.ombre.segmentdetection;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,8 +28,7 @@ public class ImageSegment {
 	 * Attributes
 	 */
 	protected Gray8Image baseImage;
-	protected int MAX_WIDTH;
-	protected HashMap<Integer,Vector<Segment>> finalSegmentMap;
+	protected Map<Integer, List<Segment>> finalSegmentMap;
 	
 	/**
 	 * Constructor using an Image object
@@ -125,129 +124,88 @@ public class ImageSegment {
 		 */
 		final double EPSILON = 0.0000000001;
 		final double MAX_ANGLE_VALUE = Math.PI/2 - EPSILON;
-
-		Vector<Integer> vX = new Vector<Integer>();
-		Vector<Integer> vY = new Vector<Integer>();
-		Vector<Point> indexes = new Vector<Point>();
-		HashMap<Integer, Vector<Point>> direction = new HashMap<Integer, Vector<Point>>(num_dir);
-		for (Iterator<Map.Entry<Integer, Vector<Point>>> e = direction.entrySet().iterator(); e.hasNext();){
-			Map.Entry<Integer, Vector<Point>> ent = (Map.Entry<Integer, Vector<Point>>) e.next();
-			ent.setValue(new Vector<Point>());
+		
+		List<Point>[] direction = (List<Point>[]) new List[num_dir];
+		for (int i=0; i<num_dir; i++) {
+			direction[i] = new LinkedList<Point>();
 		}
+		
+		for (int i = 0; i < wCanny; i++) {
+			for (int j = 0; j < hCanny; j++) {
+				if (imageCanny.getPixel(i, j) > 0) {
+					int vX = (int) gradients[0].getPixel(i, j);
+					int vY = (int) gradients[1].getPixel(i, j);
 
-		for (int i=0; i<wCanny; i++){
-			for (int j=0; j<hCanny; j++){
-				if (imageCanny.getPixel(i, j) > 0){
-					vX.add((int)gradients[0].getPixel(i, j));
-					vY.add((int)gradients[1].getPixel(i, j));
-					// Store indexes
-					indexes.addElement(new Point(i, j)); // i = horizontal coordinate ; j = vertical coordinate
+					int angle;
+					double a;
+					if (vX != 0) {
+						a = Math.atan(vY / vX);
+					} else {
+						a = MAX_ANGLE_VALUE;
+					}
+					/**
+					 * Calculate angle value in [|0;num_dir - 1|]
+					 */
+					angle = (int) Math.floor((a / Math.PI + 0.5) * num_dir);
+					/**
+					 * Add point indexes(k), which is on an edge of direction k, into direction hashmap.
+					 */
+					direction[angle].add(new Point(i, j));// i = horizontal coordinate ; j = vertical coordinate
 				}
 			}
-		}
-
-
-		for (int k=0; k<vX.size(); k++){
-			int angle;
-			double a;
-			if (vX.get(k) != 0){
-				a =Math.atan(vY.get(k) / vX.get(k));
-			} else {
-				a = MAX_ANGLE_VALUE;
-			}
-			/**
-			 * Calculate angle value in [|0;num_dir - 1|]
-			 */
-			angle = (int) Math.ceil(((a / Math.PI) * num_dir)-0.5 % num_dir);
-			/**
-			 * Add point indexes(k), which is on an edge of direction k, into direction hashmap.
-			 */
-			if (!direction.containsKey(angle)){
-				direction.put(angle, new Vector<Point>());
-			}
-			direction.get(angle).addElement(indexes.get(k));
 		}
 
 		/**
 		 * Initialize final segment map
 		 */
-		this.finalSegmentMap = new HashMap<Integer, Vector<Segment>>(num_dir);
+		this.finalSegmentMap = new HashMap<Integer, List<Segment>>(num_dir);
 		for (int key=0; key<num_dir; key++){
-			this.finalSegmentMap.put(key, new Vector<Segment>());
+			this.finalSegmentMap.put(key, new LinkedList<Segment>());
 		}
 
 		/**
 		 * Compute relevant information for each direction in [|0, num_dir-1|]
 		 */
-		for (int k=0; k<num_dir; k++){
-
-			/**
-			 * Calculate number of points in direction k
-			 */
-			int num_ind = 0;
-			if (direction.containsKey(k)){
-				num_ind = num_ind + direction.get(k).size();
-			}
-
-			Vector<Point> ind = new Vector<Point>(num_ind);
-			int[][] dir_im=new int[this.baseImage.getHeight()][this.baseImage.getWidth()];
+		for (int k=0; k<num_dir; k++) {
+			int[][] dir_im = new int[this.baseImage.getHeight()][this.baseImage.getWidth()];
 
 			/**
 			 * For direction k, find points on k-oriented edges
 			 * Put 1 in matrix dir_im where a point is on a k-oriented edge
 			 */
-			int count = 0;
-			if (direction.containsKey(k)){
-				for (int i=0; i<direction.get(k).size(); i++){
-					ind.add(i+count, direction.get(k).get(i));
-					dir_im[direction.get(k).get(i).getY()][direction.get(k).get(i).getX()] = 1;
-				}
-				count = count + direction.get(k).size();
+			for (Point p : direction[k]) {
+				dir_im[p.getY()][p.getX()] = 1;
 			}
 
 			/**
 			 * Find 8-connected components in matrix dir_im
 			 */
 			ConnectedObjects c = LabelImage.labelImage(dir_im,num_dir); // Get the connected points
-
+			
 			/**
-			 * Initialize classified segments hashmap
+			 * Initialize classified segments array
 			 */
-			HashMap<Integer, Segment> classifiedSegments = new HashMap<Integer, Segment>(c.getNum_labels());
-			for (int id=0; id<c.getNum_labels(); id++){
-				classifiedSegments.put(id, new Segment());
+			Segment[] classifiedSegments = new Segment[c.getNum_labels()];
+			for (int id=0; id<classifiedSegments.length; id++){
+				classifiedSegments[id] = new Segment();
 			}
 			/**
 			 * Get the number of pixels in each edge
 			 */
-			for (int i=0; i<ind.size(); i++){
-				int id = c.getMatrix(ind.get(i).getY(), ind.get(i).getX());
-				classifiedSegments.get(id).addPoint(ind.get(i));
+			for (Point p : direction[k]) {
+				int id = c.getMatrix(p.getY(), p.getX());
+				classifiedSegments[id].addPoint(p);
 			}
-
+			
 			/**
-			 * Remove too small edges
-			 * Process remaining edges
+			 * Add eligible edges to finalSegmentMap
 			 */
-			for (int id=0; id<c.getNum_labels(); id++){
-				if (classifiedSegments.get(id).getPoints().size() < minLength){
-					classifiedSegments.remove(id);
-				} else {
-					double conf = classifiedSegments.get(id).computeStartEndPoints();
-					if (conf < 400){
-						classifiedSegments.remove(id);
-					}
+			for (int id = 0; id < classifiedSegments.length; id++) {
+				if (classifiedSegments[id].getPoints().size() >= minLength
+						&& classifiedSegments[id].computeStartEndPoints() >= 400) {
+					this.finalSegmentMap.get(k).add(classifiedSegments[id]);
 				}
 			}
-
-			/**
-			 * Update finalSegmentMap
-			 */
-			for (Iterator<Map.Entry<Integer, Segment>> iter = classifiedSegments.entrySet().iterator(); iter.hasNext();){
-				Map.Entry<Integer, Segment> ent = (Map.Entry<Integer, Segment>) iter.next();
-				this.finalSegmentMap.get(k).add(ent.getValue());
-			}
-
 		}
 
 	}
@@ -259,18 +217,12 @@ public class ImageSegment {
 	public Image getBaseImage() {
 		return baseImage;
 	}
-	/**
-	 * Get MAX_WITDH value
-	 * @return	int this.MAX_WIDTH
-	 */
-	public int getMAX_WIDTH() {
-		return MAX_WIDTH;
-	}
+	
 	/**
 	 * Get finalSegmentMap value
 	 * @return	HashMap<Integer,Vector<Segment>> this.finalSegmentMap
 	 */
-	public HashMap<Integer, Vector<Segment>> getFinalSegmentMap() {
+	public Map<Integer, List<Segment>> getFinalSegmentMap() {
 		return finalSegmentMap;
 	}
 

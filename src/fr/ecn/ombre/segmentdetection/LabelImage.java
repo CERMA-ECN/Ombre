@@ -87,7 +87,7 @@ public class LabelImage {
 					}
 				}
 			}
-			lab++ ;
+			lab++;
 		}
 		return new ConnectedObjects(label, lab) ;
 	}

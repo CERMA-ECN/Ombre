@@ -1,27 +1,14 @@
 package fr.irstv.kmeans;
 
-//import java.io.BufferedReader;
-//import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
-
-//import org.w3c.dom.Document;
-//import org.w3c.dom.NamedNodeMap;
-//import org.w3c.dom.Node;
-//import org.w3c.dom.NodeList;
-//import org.xml.sax.InputSource;
 
 import pg.data.Group;
 import pg.data.SegmentPG;
 import fr.ecn.ombre.segmentdetection.ImageSegment;
-
-//import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-
 import fr.irstv.dataModel.DataPoint;
 import fr.irstv.dataModel.MkDataPoint;
 import fr.irstv.dataModel.Segment;
@@ -86,11 +73,11 @@ public class DataMk extends DataCorpus {
 	}
 
 	public DataMk(
-			Map<Integer, Vector<fr.ecn.ombre.segmentdetection.Segment>> segmentsList) {
+			Map<Integer, List<fr.ecn.ombre.segmentdetection.Segment>> segmentsList) {
 		super();
 		MkCorpus = new LinkedList<MkDataPoint>();
 		
-		for (Map.Entry<Integer, Vector<fr.ecn.ombre.segmentdetection.Segment>> ent : segmentsList.entrySet()){
+		for (Map.Entry<Integer, List<fr.ecn.ombre.segmentdetection.Segment>> ent : segmentsList.entrySet()){
 			for (int i=0; i<ent.getValue().size(); i++){
 				DataPoint dp1 = new DataPoint(2);
 				DataPoint dp2 = new DataPoint(2);
@@ -163,7 +150,7 @@ public class DataMk extends DataCorpus {
 	 */
 	public void readImageSegment(String path){
 
-		HashMap<Integer, Vector<fr.ecn.ombre.segmentdetection.Segment>>  segments;
+		Map<Integer, List<fr.ecn.ombre.segmentdetection.Segment>>  segments;
 
 		ImageSegment image=new ImageSegment(path);
 		image.getLargeConnectedEdges(false,8);
@@ -172,8 +159,8 @@ public class DataMk extends DataCorpus {
 
 
 
-		for (Iterator<Map.Entry<Integer, Vector<fr.ecn.ombre.segmentdetection.Segment>>> iter = segments.entrySet().iterator(); iter.hasNext();){
-			Map.Entry<Integer, Vector<fr.ecn.ombre.segmentdetection.Segment>> ent = (Map.Entry<Integer, Vector<fr.ecn.ombre.segmentdetection.Segment>>) iter.next();
+		for (Iterator<Map.Entry<Integer, List<fr.ecn.ombre.segmentdetection.Segment>>> iter = segments.entrySet().iterator(); iter.hasNext();){
+			Map.Entry<Integer, List<fr.ecn.ombre.segmentdetection.Segment>> ent = (Map.Entry<Integer, List<fr.ecn.ombre.segmentdetection.Segment>>) iter.next();
 			for (int i=0; i<ent.getValue().size(); i++){
 				DataPoint dp1 = new DataPoint(2);
 				DataPoint dp2 = new DataPoint(2);
