@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import jjil.android.RgbImageAndroid;
 import jjil.core.Gray8Image;
@@ -87,13 +88,25 @@ public class ImageSegment {
 		/**
 		 *  Calculate the image X and Y gradients.
 		 */
+		Log.i("Ombre", "Starting gradients computation");
+		long time = System.nanoTime();
+		
 		ByteImage[] gradients = Utils.getGradients(imageProcessed);
+		
+		Log.i("Ombre", "Gradients computation done in " + (System.nanoTime() - time));
 
 		/**
 		 *  Calculate the Canny Deriche filtered image
 		 */
 		float alpha = (float) 0.5;
+		
+		Log.i("Ombre", "Starting cannyDeriche computation");
+		time = System.nanoTime();
+		
 		FloatImage imageCanny = CannyDericheFilter.processDeriche(this.baseImage, alpha);
+		
+		Log.i("Ombre", "CannyDeriche computation done in " + (System.nanoTime() - time));
+		
 		int wCanny = imageCanny.getWidth();
 		int hCanny = imageCanny.getHeight();
 		/**
@@ -154,6 +167,10 @@ public class ImageSegment {
 				}
 			}
 		}
+		
+		//We have no longer uses of gradients so let's let the gc collect them, same for cannyDeriche.
+		gradients  = null;
+		imageCanny = null;
 
 		/**
 		 * Initialize final segment map

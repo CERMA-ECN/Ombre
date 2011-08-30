@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import jjil.android.RgbImageAndroid;
@@ -54,12 +55,20 @@ public class VanishingPointsController {
 	}
 	
 	protected void computeSegments(Image image) {
+		Log.i("Ombre", "Starting segments computation");
+		long time = System.nanoTime();
+		
 		ImageSegment is = new ImageSegment(image);
 		is.getLargeConnectedEdges(false, 8);
 		this.segments = is.getFinalSegmentMap();
+		
+		Log.i("Ombre", "Segments computation done in " + (System.nanoTime() - time));
 	}
 	
 	protected void computeGroups() {
+		Log.i("Ombre", "Starting groups computation");
+		long time = System.nanoTime();
+		
 		CircleKDistance fd = new CircleKDistance();
 
 		DataMk dataSet = new DataMk(this.segments);
@@ -74,6 +83,8 @@ public class VanishingPointsController {
 		
 		//Cleaning the groups
 		this.groups = new CleaningDataGroups().clean(r.getGroups());
+		
+		Log.i("Ombre", "Groups computation done in " + (System.nanoTime() - time));
 	}
 
 	public void reComputeGroups() {
