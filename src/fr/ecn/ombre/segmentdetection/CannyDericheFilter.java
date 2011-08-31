@@ -9,28 +9,22 @@ import jjil.core.Gray8Image;
  *@author   thomas.boudier@snv.jussieu.fr
  *@created	26 aout 2003
  */
-public class CannyDericheFilter{
+public class CannyDericheFilter {
 	
-	protected static double[] norm_deriche;
-	protected static double[] angle_deriche;
-	protected static Gray8Image suppRes;
-
+	protected double[] norm_deriche;
+	protected double[] angle_deriche;
 
 	/**
-	 *  Main processing method
-	 *
-	 *@param  	imp  	image
-	 *@param	alphaD	
-	 *@return			Gray8Image
+	 * Main processing method
+	 * 
+	 * @param imp
+	 * @param alphaD
+	 * @return
 	 */
-	public static FloatImage processDeriche(Gray8Image imp, float alphaD) {
+	public FloatImage processDeriche(Gray8Image imp, float alphaD) {
 		deriche(imp, alphaD);
-		
-		FloatImage res_norm = new FloatImage(imp.getWidth(), imp.getHeight(), norm_deriche);
-		
-		FloatImage res_angle = new FloatImage(imp.getWidth(), imp.getHeight(), angle_deriche);
 
-		return nonMaximalSuppression(res_norm, res_angle);
+		return nonMaximalSuppression(imp.getWidth(), imp.getHeight());
 	}
 
 
@@ -40,7 +34,7 @@ public class CannyDericheFilter{
 	 *@param  ip      image
 	 *@param  alphaD  alpha coefficient
 	 */
-	private static void deriche(Gray8Image ip, float alphaD) {
+	private void deriche(Gray8Image ip, float alphaD) {
 		norm_deriche = null;
 		angle_deriche = null;
 
@@ -294,36 +288,33 @@ public class CannyDericheFilter{
 	 *@param  ang   the angle gradient image
 	 *@return       the image with non local-maxima suppressed
 	 */
-	static FloatImage nonMaximalSuppression(FloatImage grad, FloatImage ang) {
-		FloatImage res = new FloatImage(grad.getWidth(), grad.getHeight());
+	FloatImage nonMaximalSuppression(int la, int ha) {
+		FloatImage res = new FloatImage(la, ha);
 
-		int la = grad.getWidth();
-		int ha = grad.getHeight();
-
-		float ag;
-		float pix1 = 0;
-		float pix2 = 0;
-		float pix;
+		double ag;
+		double pix1 = 0;
+		double pix2 = 0;
+		double pix;
 
 		for (int x = 1; x < la - 1; x++) {
 			for (int y = 1; y < ha - 1; y++) {
-				ag = ang.getPixel(x, y);
+				ag = this.angle_deriche[y*la + x];
 				if ((ag > -22.5) && (ag <= 22.5)) {
-					pix1 = grad.getPixel(x + 1, y);
-					pix2 = grad.getPixel(x - 1, y);
+					pix1 = this.norm_deriche[y*la + (x+1)];
+					pix2 = this.norm_deriche[y*la + (x-1)];
 				} else if ((ag > 22.5) && (ag <= 67.5)) {
-					pix1 = grad.getPixel(x + 1, y - 1);
-					pix2 = grad.getPixel(x - 1, y + 1);
+					pix1 = this.norm_deriche[(y-1)*la + (x+1)];
+					pix2 = this.norm_deriche[(y+1)*la + (x-1)];
 				} else if (((ag > 67.5) && (ag <= 90)) || ((ag < -67.5) && (ag >= -90))) {
-					pix1 = grad.getPixel(x, y - 1);
-					pix2 = grad.getPixel(x, y + 1);
+					pix1 = this.norm_deriche[(y-1)*la + x];
+					pix2 = this.norm_deriche[(y+1)*la + x];
 				} else if ((ag < -22.5) && (ag >= -67.5)) {
-					pix1 = grad.getPixel(x + 1, y + 1);
-					pix2 = grad.getPixel(x - 1, y - 1);
+					pix1 = this.norm_deriche[(y+1)*la + (x+1)];
+					pix2 = this.norm_deriche[(y-1)*la + (x-1)];
 				}
-				pix = grad.getPixel(x, y);
+				pix = this.norm_deriche[y*la + x];
 				if ((pix >= pix1) && (pix >= pix2)) {
-					res.setPixel(x, y, pix);
+					res.setPixel(x, y, (float) pix);
 				}
 			}
 		}
@@ -338,7 +329,7 @@ public class CannyDericheFilter{
 	 *@param  dy  derivative in y
 	 *@return     norm of gradient
 	 */
-	public static double modul(float dx, float dy) {
+	public double modul(float dx, float dy) {
 		return (Math.sqrt(dx * dx + dy * dy));
 	}
 
@@ -350,7 +341,7 @@ public class CannyDericheFilter{
 	 *@param  dy  derivative in y
 	 *@return     angle of gradient
 	 */
-	public static double angle(float dx, float dy) {
+	public double angle(float dx, float dy) {
 		return (-Math.toDegrees(Math.atan(dy / dx)));
 	}
 

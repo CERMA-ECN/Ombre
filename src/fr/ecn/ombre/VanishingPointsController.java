@@ -36,7 +36,7 @@ public class VanishingPointsController {
 	protected ImageView imageView;
 
 	public VanishingPointsController(ImageInfos imageInfos) {
-		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(imageInfos.getPath()), 750, 750);
+		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(imageInfos.getPath()), 800, 800);
 		
 		Image image = ImageUtils.toGray8(RgbImageAndroid.toRgbImage(bitmap));
 		

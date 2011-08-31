@@ -103,7 +103,7 @@ public class ImageSegment {
 		Log.i("Ombre", "Starting cannyDeriche computation");
 		time = System.nanoTime();
 		
-		FloatImage imageCanny = CannyDericheFilter.processDeriche(this.baseImage, alpha);
+		FloatImage imageCanny = new CannyDericheFilter().processDeriche(this.baseImage, alpha);
 		
 		Log.i("Ombre", "CannyDeriche computation done in " + (System.nanoTime() - time));
 		
