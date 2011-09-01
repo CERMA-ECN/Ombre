@@ -28,11 +28,22 @@ public class VanishingPointsController {
 	
 	protected Map<Integer, List<Segment>> segments;
 	protected DataGroup[] groups;
+	
+	protected boolean[] selectedGroups;
 
 	public VanishingPointsController(ImageInfos imageInfos) {
+		//TODO : Remove this !!!
+		System.gc();
+		System.runFinalization();
+		System.gc();
+		
 		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 800);
 		
 		Image image = ImageUtils.toGray8(RgbImageAndroid.toRgbImage(bitmap));
+		
+		//We don't need the bitmap anymore
+		bitmap.recycle();
+		bitmap = null;
 		
 		this.computeSegments(image);
 		
@@ -71,6 +82,12 @@ public class VanishingPointsController {
 		//Cleaning the groups
 		this.groups = new CleaningDataGroups().clean(r.getGroups());
 		
+		//Create the selectedGroups array
+		this.selectedGroups = new boolean[this.groups.length];
+		for (int i=0; i< this.selectedGroups.length; i++) {
+			this.selectedGroups[i] = true;
+		}
+		
 		Log.i("Ombre", "Groups computation done in " + (System.nanoTime() - time));
 	}
 
@@ -86,6 +103,14 @@ public class VanishingPointsController {
 	 */
 	public DataGroup[] getGroups() {
 		return groups;
+	}
+	
+	public void setGroupSelected(int groupId, boolean selected) {
+		this.selectedGroups[groupId] = selected;
+	}
+	
+	public boolean isGroupSelected(int groupId) {
+		return this.selectedGroups[groupId];
 	}
 
 }

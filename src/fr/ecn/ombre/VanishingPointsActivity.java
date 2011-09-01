@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import fr.ecn.ombre.model.ImageInfos;
 
@@ -70,9 +72,19 @@ public class VanishingPointsActivity extends Activity {
 		
 		selectLayout.removeAllViews();
 		for (int i=0; i<nbGroup; i++) {
+			final int id = i;
+			
 			CheckBox box = new CheckBox(this);
 			box.setText("Group " + i);
 			box.setTextColor(VanishingPointsDrawable.colorMap[i]);
+			box.setChecked(true);
+			
+			box.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					controller.setGroupSelected(id, isChecked);
+					findViewById(R.id.image).invalidate();
+				}
+			});
 			
 			selectLayout.addView(box);
 		}

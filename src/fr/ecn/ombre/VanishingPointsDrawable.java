@@ -37,6 +37,9 @@ public class VanishingPointsDrawable extends Drawable {
 	public void draw(Canvas canvas) {		
 		DataGroup[] groups = this.controller.getGroups();
 		for (int i=0; i<groups.length; i++) {
+			if (!this.controller.isGroupSelected(i))
+				continue;
+			
 			DataGroup group = groups[i];
 			
 			Paint paint = new Paint();
