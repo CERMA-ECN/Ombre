@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import fr.ecn.ombre.model.ImageInfos;
 
@@ -28,8 +29,6 @@ public class VanishingPointsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.vanishing_points);
 
-		ImageView image = (ImageView) findViewById(R.id.image);
-
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras
 				.getSerializable("ImageInfos");
@@ -41,7 +40,7 @@ public class VanishingPointsActivity extends Activity {
 		}
 
 		this.controller = controller;
-		controller.setUp(image);
+		controller.setUp(this);
 	}
 
 	/*

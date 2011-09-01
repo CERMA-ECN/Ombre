@@ -22,21 +22,16 @@ public class ConnectedObjects {
 	 * @param 	num		the number of connected objects in the matrix
 	 */
 	public ConnectedObjects(int[][] m, int num){
-		this.matrix = new int[m.length][m[0].length];
-		for (int x=0; x<m[0].length; x++){
-			for (int y=0; y<m.length; y++){
-				this.matrix[y][x] = m[y][x];
-			}
-		}
+		this.matrix = m;
 		this.num_labels = num;
 	}
 
 	public String toString(){
 		String s = new String();
-		s = "ConnectedObjects\n";
-		s = s + "Value of num_labels : " + num_labels + "\n";
-		s = s + "Value of matrix : " + matrix.toString() + "\n";
-		s = s + "Size of matrix : " + matrix.length + " x " + matrix[0].length;
+		s += "ConnectedObjects\n";
+		s += "Value of num_labels : " + num_labels + "\n";
+		s += "Value of matrix : " + matrix.toString() + "\n";
+		s += "Size of matrix : " + matrix.length + " x " + matrix[0].length;
 		return s;
 	}
 	

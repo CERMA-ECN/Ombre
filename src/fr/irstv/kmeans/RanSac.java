@@ -82,7 +82,7 @@ public class RanSac {
 		while(remainingPoints.size() > (double)n * stopThreshold && groupCount<groups.length) {
 			int possibleFitNumber = 1;
 			LinkedList<MkDataPoint> bestPossibleFit=null;
-			LinkedList<DataPoint> kBest = null;
+//			LinkedList<DataPoint> kBest = null;
 			
 			for (int s=0 ; s<maxSample ; s++) {
 				LinkedList<MkDataPoint> possibleFit = new LinkedList<MkDataPoint>();
@@ -113,14 +113,14 @@ public class RanSac {
 				if (possibleFit.size() > possibleFitNumber) {
 					possibleFitNumber = possibleFit.size();
 					bestPossibleFit = possibleFit;
-					kBest = k;
+//					kBest = k;
 				}
 			} // for (maxSample)
 			// we have a candidate best fit
 			if (bestPossibleFit.size() > 3) {
 				// we can fetch the best associated circle
-				fctDist.centroid(kBest);
-				fctDist.centroid(bestPossibleFit);
+//				fctDist.centroid(kBest);
+//				fctDist.centroid(bestPossibleFit);
 				for (MkDataPoint pointH:bestPossibleFit) {
 					groups[groupCount].add(pointH);
 					remainingPoints.remove(pointH);

@@ -4,15 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import jjil.android.RgbImageAndroid;
 import jjil.core.Image;
+import fr.ecn.ombre.image.utils.ImageLoader;
 import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.segmentdetection.ImageSegment;
 import fr.ecn.ombre.segmentdetection.Segment;
@@ -36,7 +38,7 @@ public class VanishingPointsController {
 	protected ImageView imageView;
 
 	public VanishingPointsController(ImageInfos imageInfos) {
-		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(imageInfos.getPath()), 800, 800);
+		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 800);
 		
 		Image image = ImageUtils.toGray8(RgbImageAndroid.toRgbImage(bitmap));
 		
@@ -47,11 +49,23 @@ public class VanishingPointsController {
 		this.bitmap = ImageUtils.toBitmap(image);
 	}
 
-	public void setUp(ImageView imageView) {
+	public void setUp(VanishingPointsActivity activity) {
+		ImageView imageView = (ImageView) activity.findViewById(R.id.image);
+		LinearLayout selectLayout = (LinearLayout) activity.findViewById(R.id.selectLayout);
+		
 		this.imageView = imageView;
 		
 		Drawable[] drawables = {new BitmapDrawable(this.bitmap), new VanishingPointsDrawable(this)};
 		imageView.setImageDrawable(new LayerDrawable(drawables));
+		
+		selectLayout.removeAllViews();
+		for (int i=0; i<this.groups.length; i++) {
+			CheckBox box = new CheckBox(activity);
+			box.setText("Group " + i);
+			box.setTextColor(VanishingPointsDrawable.colorMap[i]);
+			
+			selectLayout.addView(box);
+		}
 	}
 	
 	protected void computeSegments(Image image) {
@@ -76,7 +90,7 @@ public class VanishingPointsController {
 		// here we launch the real job
 		RanSac r = new RanSac(6,dataSet,fd);
 		// param init
-		r.setMaxSample(10);
+		r.setMaxSample(25);
 		r.setSigma(20d);
 		r.setStopThreshold(0.05d);
 		r.go();

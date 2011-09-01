@@ -78,14 +78,14 @@ public class DataMk extends DataCorpus {
 		MkCorpus = new LinkedList<MkDataPoint>();
 		
 		for (Map.Entry<Integer, List<fr.ecn.ombre.segmentdetection.Segment>> ent : segmentsList.entrySet()){
-			for (int i=0; i<ent.getValue().size(); i++){
+			for (fr.ecn.ombre.segmentdetection.Segment segment : ent.getValue()) {
 				DataPoint dp1 = new DataPoint(2);
 				DataPoint dp2 = new DataPoint(2);
 
-				dp1.set(0, ent.getValue().get(i).getStartPoint().getX());
-				dp1.set(1, ent.getValue().get(i).getStartPoint().getY());
-				dp2.set(0, ent.getValue().get(i).getEndPoint().getX());
-				dp2.set(1, ent.getValue().get(i).getEndPoint().getY());
+				dp1.set(0, segment.getStartPoint().getX());
+				dp1.set(1, segment.getStartPoint().getY());
+				dp2.set(0, segment.getEndPoint().getX());
+				dp2.set(1, segment.getEndPoint().getY());
 				Segment s = new Segment(dp1,dp2,null);
 				MkDataPoint mkp = new MkDataPoint(s.getHPoint(),s);
 				corpus.add(mkp);

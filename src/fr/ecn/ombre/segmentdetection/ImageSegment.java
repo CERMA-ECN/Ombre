@@ -183,8 +183,9 @@ public class ImageSegment {
 		/**
 		 * Compute relevant information for each direction in [|0, num_dir-1|]
 		 */
+		int[][] dir_im;
 		for (int k=0; k<num_dir; k++) {
-			int[][] dir_im = new int[this.baseImage.getHeight()][this.baseImage.getWidth()];
+			dir_im = new int[this.baseImage.getHeight()][this.baseImage.getWidth()];
 
 			/**
 			 * For direction k, find points on k-oriented edges
@@ -219,7 +220,7 @@ public class ImageSegment {
 			 */
 			for (int id = 0; id < classifiedSegments.length; id++) {
 				if (classifiedSegments[id].getPoints().size() >= minLength
-						&& classifiedSegments[id].computeStartEndPoints() >= 400) {
+						&& classifiedSegments[id].computeStartEndPoints() >= 500) {
 					this.finalSegmentMap.get(k).add(classifiedSegments[id]);
 				}
 			}
