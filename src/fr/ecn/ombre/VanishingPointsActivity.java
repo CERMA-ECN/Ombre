@@ -33,27 +33,39 @@ public class VanishingPointsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.vanishing_points);
 
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras
 				.getSerializable("ImageInfos");
 
-		VanishingPointsController controller = (VanishingPointsController) this
+		this.controller = (VanishingPointsController) this
 				.getLastNonConfigurationInstance();
-		if (controller == null) {
-			controller = new VanishingPointsController(imageInfos);
-		}
-
-		this.controller = controller;
 		
-		this.setUp();
+		if (this.controller == null) {
+			this.setContentView(R.layout.computing);
+			
+			new Thread(new Runnable() {
+				public void run() {
+					controller = new VanishingPointsController(imageInfos);
+					
+					runOnUiThread(new Runnable() {
+						public void run() {
+							setUp();
+						}
+					});
+				}
+			}).start();
+		} else {
+			setUp();
+		}
 	}
 	
 	/**
 	 * set up views based on controller infos
 	 */
 	protected void setUp() {
+		this.setContentView(R.layout.vanishing_points);
+		
 		ImageView imageView = (ImageView) this.findViewById(R.id.image);
 		
 		Drawable[] drawables = {new BitmapDrawable(this.controller.getBitmap()), new VanishingPointsDrawable(this.controller)};
@@ -103,7 +115,7 @@ public class VanishingPointsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean result = super.onCreateOptionsMenu(menu);
-		menu.add(0, MENU_RECOMPUTE, 0, "Recompute");
+		menu.add(0, MENU_RECOMPUTE, 0, "Recompute groups");
 		return result;
 	}
 	
