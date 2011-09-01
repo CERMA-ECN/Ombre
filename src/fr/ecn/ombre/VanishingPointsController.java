@@ -4,13 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import jjil.android.RgbImageAndroid;
 import jjil.core.Image;
@@ -35,8 +29,6 @@ public class VanishingPointsController {
 	protected Map<Integer, List<Segment>> segments;
 	protected DataGroup[] groups;
 
-	protected ImageView imageView;
-
 	public VanishingPointsController(ImageInfos imageInfos) {
 		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 800);
 		
@@ -48,27 +40,8 @@ public class VanishingPointsController {
 		
 		this.bitmap = ImageUtils.toBitmap(image);
 	}
-
-	public void setUp(VanishingPointsActivity activity) {
-		ImageView imageView = (ImageView) activity.findViewById(R.id.image);
-		LinearLayout selectLayout = (LinearLayout) activity.findViewById(R.id.selectLayout);
-		
-		this.imageView = imageView;
-		
-		Drawable[] drawables = {new BitmapDrawable(this.bitmap), new VanishingPointsDrawable(this)};
-		imageView.setImageDrawable(new LayerDrawable(drawables));
-		
-		selectLayout.removeAllViews();
-		for (int i=0; i<this.groups.length; i++) {
-			CheckBox box = new CheckBox(activity);
-			box.setText("Group " + i);
-			box.setTextColor(VanishingPointsDrawable.colorMap[i]);
-			
-			selectLayout.addView(box);
-		}
-	}
 	
-	protected void computeSegments(Image image) {
+	public void computeSegments(Image image) {
 		Log.i("Ombre", "Starting segments computation");
 		long time = System.nanoTime();
 		
@@ -79,7 +52,7 @@ public class VanishingPointsController {
 		Log.i("Ombre", "Segments computation done in " + (System.nanoTime() - time));
 	}
 	
-	protected void computeGroups() {
+	public void computeGroups() {
 		Log.i("Ombre", "Starting groups computation");
 		long time = System.nanoTime();
 		
@@ -101,9 +74,11 @@ public class VanishingPointsController {
 		Log.i("Ombre", "Groups computation done in " + (System.nanoTime() - time));
 	}
 
-	public void reComputeGroups() {
-		this.computeGroups();
-		this.imageView.invalidate();
+	/**
+	 * @return the bitmap
+	 */
+	public Bitmap getBitmap() {
+		return bitmap;
 	}
 	
 	/**

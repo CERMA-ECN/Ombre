@@ -4,9 +4,13 @@
 package fr.ecn.ombre;
 
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -40,7 +44,38 @@ public class VanishingPointsActivity extends Activity {
 		}
 
 		this.controller = controller;
-		controller.setUp(this);
+		
+		this.setUp();
+	}
+	
+	/**
+	 * set up views based on controller infos
+	 */
+	protected void setUp() {
+		ImageView imageView = (ImageView) this.findViewById(R.id.image);
+		
+		Drawable[] drawables = {new BitmapDrawable(this.controller.getBitmap()), new VanishingPointsDrawable(this.controller)};
+		imageView.setImageDrawable(new LayerDrawable(drawables));
+		
+		this.createSelectList();
+	}
+	
+	/**
+	 * create the list of CheckBox for group selection
+	 */
+	protected void createSelectList() {
+		LinearLayout selectLayout = (LinearLayout) this.findViewById(R.id.selectLayout);
+		
+		int nbGroup = this.controller.getGroups().length;
+		
+		selectLayout.removeAllViews();
+		for (int i=0; i<nbGroup; i++) {
+			CheckBox box = new CheckBox(this);
+			box.setText("Group " + i);
+			box.setTextColor(VanishingPointsDrawable.colorMap[i]);
+			
+			selectLayout.addView(box);
+		}
 	}
 
 	/*
@@ -64,7 +99,9 @@ public class VanishingPointsActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_RECOMPUTE:
-			this.controller.reComputeGroups();
+			this.controller.computeGroups();
+			this.findViewById(R.id.image).invalidate();
+			this.createSelectList();
 			return true;
 		}
 		
