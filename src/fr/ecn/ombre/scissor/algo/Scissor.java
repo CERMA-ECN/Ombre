@@ -46,14 +46,14 @@ public class Scissor extends Dijkstra {
 		}
 		
 		{
-			ByteGradient grad=new ByteGradient((Gray8Image) tempIp.clone());
+			ByteGradient grad=new ByteGradient(tempIp);
 			arrGradN=grad.getGradN();
 			arrGradX=grad.getGradX();
 			arrGradY=grad.getGradY();
 			arrIntGradN=grad.inverNormalize(arrGradN, grad.getGradNMax());
 		}
 		
-		ByteLaplacien lapla=new ByteLaplacien((Gray8Image) tempIp.clone());
+		ByteLaplacien lapla=new ByteLaplacien(tempIp);
 		
 		try {
 			smooth.push(tempIp);
@@ -64,8 +64,9 @@ public class Scissor extends Dijkstra {
 			//This shouldn't happens
 		}
 		
-		ByteGradient tempGrad=new ByteGradient(tempIp);
-		Gray8Image tempBp=tempGrad.getIpN();
+		smooth = null;
+		
+		Gray8Image tempBp = new ByteGradient(tempIp).getIpN();
 		//tempBp.threshold(35);
 		
 		try {
@@ -91,7 +92,6 @@ public class Scissor extends Dijkstra {
 		//im2.show();
 		//im1.show();	
 		
-		tempGrad=null;
 		lapla=null;
 		System.gc();		
 

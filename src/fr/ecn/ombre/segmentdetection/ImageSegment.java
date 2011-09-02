@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import jjil.android.RgbImageAndroid;
@@ -14,6 +13,7 @@ import jjil.core.Gray8Image;
 import jjil.core.Image;
 import fr.ecn.ombre.image.ByteImage;
 import fr.ecn.ombre.image.FloatImage;
+import fr.ecn.ombre.image.utils.ImageLoader;
 import fr.ecn.ombre.utils.ImageUtils;
 
 /**
@@ -46,7 +46,7 @@ public class ImageSegment {
 	 * @param path the path to the image from which the segments will be extracted
 	 */
 	public ImageSegment(String pathToImage){
-		Bitmap bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(pathToImage), 500, 500);
+		Bitmap bitmap = ImageLoader.loadResized(pathToImage, 600);
 
 		Image image = RgbImageAndroid.toRgbImage(bitmap);
 

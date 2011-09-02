@@ -34,12 +34,7 @@ public class VanishingPointsController {
 	protected boolean[] selectedGroups;
 
 	public VanishingPointsController(ImageInfos imageInfos) {
-		//TODO : Remove this !!!
-		System.gc();
-		System.runFinalization();
-		System.gc();
-		
-		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 800);
+		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 		
 		Image image = ImageUtils.toGray8(RgbImageAndroid.toRgbImage(bitmap));
 		
@@ -120,7 +115,7 @@ public class VanishingPointsController {
 		
 		for (int i=0; i<this.selectedGroups.length; i++) {
 			if (this.selectedGroups[i]) {
-				list.add(new Point(this.groups[i].getCentroid().get(0), this.groups[i].getCentroid().get(1)));
+				list.add(new Point(this.groups[i].getCentroid().get(0)*2, this.groups[i].getCentroid().get(1)*2));
 			}
 		}
 		

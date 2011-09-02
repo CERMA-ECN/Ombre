@@ -1,14 +1,14 @@
 package fr.ecn.ombre.utils;
 
-import fr.ecn.ombre.image.filters.Gray8toRgb;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
+
 import jjil.algorithm.Gray8Hist;
 import jjil.algorithm.RgbAvgGray;
 import jjil.core.Error;
 import jjil.core.Gray8Image;
 import jjil.core.Image;
 import jjil.core.RgbImage;
+import fr.ecn.ombre.image.filters.Gray8toRgb;
 
 public class ImageUtils {
     public static int getAutoThreshold(Gray8Image image) {
@@ -105,21 +105,5 @@ public class ImageUtils {
 		System.out.println("Pixel : " + Integer.toHexString(b.getPixel(45, 0)));
 		
 		return b;
-	}
-	
-	public static Bitmap autoResize(Bitmap bitmap, int maxHeight, int maxWidth) {
-		int height = bitmap.getHeight();
-		int width  = bitmap.getWidth();
-		
-		if (height >= maxHeight || width >= maxWidth) {
-			float scale = Math.min((float)maxHeight / height, (float)maxWidth / width);
-			
-			Matrix matrix = new Matrix();
-			matrix.postScale(scale, scale);
-			
-			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-		}
-		
-		return bitmap;
 	}
 }

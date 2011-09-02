@@ -15,7 +15,8 @@ import fr.ecn.ombre.utils.ExifReader;
 public class OmbreActivity extends Activity {
 	private static final int ACTIVITY_LOAD = 0;
 	private static final int ACTIVITY_INFOS = 1;
-	private static final int ACTIVITY_FACES = 2;
+	private static final int ACTIVITY_VANISHING_POINTS = 2;
+	private static final int ACTIVITY_FACES = 3;
 	
     /** Called when the activity is first created. */
     @Override
@@ -34,6 +35,9 @@ public class OmbreActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		
+		ImageInfos imageInfos = null;
+		
 		switch (requestCode) {
 		case ACTIVITY_LOAD:
 			if (resultCode == Activity.RESULT_OK) {
@@ -43,30 +47,38 @@ public class OmbreActivity extends Activity {
 				int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
 				String absoluteFilePath = cursor.getString(idx);
 				
-				ImageInfos imageInfos = new ImageInfos(absoluteFilePath);
+				imageInfos = new ImageInfos(absoluteFilePath);
 				
 				//Read data from the exif
 				ExifReader.readExif(imageInfos);
 				
 				Log.i("Ombre", imageInfos.toString());
+			}
+			break;
+		default:
+			if (resultCode == Activity.RESULT_OK) {
+				Bundle extras = data.getExtras();
+				imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 				
+				Log.i("Ombre", imageInfos.toString());
+			}
+			break;
+		}
+		
+		if (imageInfos != null) {
+			if (imageInfos.getOrientation() == null) {
 				Intent i = new Intent(this, ImageInfosActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivityForResult(i, ACTIVITY_INFOS);
-			}
-			break;
-		case ACTIVITY_INFOS:
-			if (resultCode == Activity.RESULT_OK) {
-				Bundle extras = data.getExtras();
-				ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
-				
-				Log.i("Ombre", imageInfos.toString());
-				
+			} else if (imageInfos.getVanishingPoints() == null) {
 				Intent i = new Intent(this, VanishingPointsActivity.class);
+				i.putExtra("ImageInfos", imageInfos);
+				this.startActivityForResult(i, ACTIVITY_VANISHING_POINTS);
+			} else {
+				Intent i = new Intent(this, FacesActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivityForResult(i, ACTIVITY_FACES);
 			}
-			break;
 		}
 	}
 }	

@@ -1,45 +1,38 @@
 package fr.ecn.ombre.scissor;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import jjil.android.RgbImageAndroid;
-
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
+
+import jjil.android.RgbImageAndroid;
+import fr.ecn.ombre.image.utils.ImageLoader;
+import fr.ecn.ombre.model.Face;
 import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.scissor.algo.SCISSOR_STATE;
 import fr.ecn.ombre.scissor.algo.Scissor;
 import fr.ecn.ombre.scissor.algo.ScissorLine;
-import fr.ecn.ombre.utils.ImageUtils;
 
-public class ScissorController implements View.OnTouchListener {
-	
-	protected ImageView  imageView;
-	
+public class ScissorController {
+
 	protected Bitmap bitmap;
-	
+
 	protected Scissor scissor;
 	protected ScissorLine currentScissorLine;
 	protected List<ScissorLine> scissorLines = new ArrayList<ScissorLine>();
 	
-	protected Matrix matrix = null;
+	protected List<Face> faces = new LinkedList<Face>();
 
 	/**
 	 * @param imageInfos
 	 */
 	public ScissorController(ImageInfos imageInfos) {
 		super();
-		
-		this.bitmap = ImageUtils.autoResize(BitmapFactory.decodeFile(imageInfos.getPath()), 1000, 1000);
-		
+
+		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
+
 		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
 	}
 
@@ -63,54 +56,42 @@ public class ScissorController implements View.OnTouchListener {
 	public void resetCurrentLine() {
 		this.currentScissorLine.reset();
 		this.currentScissorLine.setActive();
-		this.imageView.invalidate();
 	}
 
-	public void setUp(ImageView imageView) {
-		this.imageView = imageView;
-		this.matrix = null;
-		
-		Drawable[] drawables = {new BitmapDrawable(bitmap), new ScissorDrawable(this)}; 
-		imageView.setImageDrawable(new LayerDrawable(drawables));
-		imageView.setOnTouchListener(this);
+	public boolean hasLine() {
+		return this.currentScissorLine != null;
 	}
 
-	public boolean onTouch(View v, MotionEvent event) {
-		if (this.currentScissorLine == null) {
-			return true;
-		}
-		
-		//System.out.println("Touch : " + event);
-		
-		float[] point = {event.getX(), event.getY()};
-		
-		//Converting the point in image coordinate system
-		this.getInvMatrix().mapPoints(point);
-		
-		//System.out.println(point[0] + " " + point[1]);
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			this.currentScissorLine.addNewKeyPoint((int) Math.round(point[0]), (int) Math.round(point[1]));
-		} else {
-			this.currentScissorLine.setMovePoint((int) Math.round(point[0]), (int) Math.round(point[1]));
-		}
-		
-		this.imageView.invalidate();
-		
-		return true;
-	}
-	
 	/**
-	 * Creates and return the transformation matrix from screen coordinates to image coordinates.
+	 * Tell current scissor line to add a new key point.
 	 * 
-	 * @return
+	 * @param x
+	 *            int x coordinate
+	 * @param y
+	 *            int y coordinate
 	 */
-	public Matrix getInvMatrix() {
-		if (this.matrix == null)  {
-			this.matrix = new Matrix();
-			this.imageView.getImageMatrix().invert(this.matrix);
-		}
-		
-		return this.matrix;
+	public void addNewKeyPoint(int x, int y) {
+		if (this.currentScissorLine != null)
+			this.currentScissorLine.addNewKeyPoint(x, y);
 	}
 
+	/**
+	 * Tell current scissor line that the cursor is moving to (x,y).
+	 * 
+	 * @param x
+	 *            int x coordinate
+	 * @param y
+	 *            int y coordinate
+	 */
+	public void setMovePoint(int x, int y) {
+		if (this.currentScissorLine != null)
+			this.currentScissorLine.setMovePoint(x, y);
+	}
+
+	/**
+	 * @return the bitmap
+	 */
+	public Bitmap getBitmap() {
+		return bitmap;
+	}
 }

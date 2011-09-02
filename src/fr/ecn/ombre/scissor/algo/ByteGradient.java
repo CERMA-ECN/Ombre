@@ -54,14 +54,14 @@ public class ByteGradient extends ByteEdge {
 	 */
 	public int[] getGradX()
 	{
-		return gradX.clone();
+		return gradX;
 	}
 	 /** 
 	 * @return An int array of the y component of gradient vector
 	 */
 	public int[] getGradY()
 	{
-		return gradY.clone();
+		return gradY;
 	}
 	/**
 	 * 
@@ -69,7 +69,7 @@ public class ByteGradient extends ByteEdge {
 	 */
 	public double[] getGradN()
 	{
-		return gradN.clone();
+		return gradN;
 	}
 	public double getGradNMax()
 	{

@@ -14,6 +14,11 @@ public class ImageLoader {
 	 * @return
 	 */
 	public static Bitmap loadResized(String path, int maxDim) {
+		//TODO : Remove this when we find a way to prevent memory leak
+		System.gc();
+		System.runFinalization();
+		System.gc();
+		
 		Bitmap bitmap = BitmapFactory.decodeFile(path);
 		
 		int height = bitmap.getHeight();
@@ -53,6 +58,9 @@ public class ImageLoader {
 
 		int scale = 1;
 
+		height /= 2;
+		width /= 2;
+		
 		while (height > maxDim || width > maxDim) {
 			scale *= 2;
 			height /= 2;
