@@ -1,6 +1,7 @@
 package fr.ecn.ombre.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ImageInfos implements Serializable {
 	/**
@@ -14,6 +15,8 @@ public class ImageInfos implements Serializable {
 	protected Coordinate longitude = null;
 	
 	protected Double orientation = null;
+	
+	protected List<Point> vanishingPoints = null;
 	
 	public ImageInfos(String path) {
 		super();
@@ -58,6 +61,20 @@ public class ImageInfos implements Serializable {
 	
 	public void setOrientation(Double orientation) {
 		this.orientation = orientation;
+	}
+
+	/**
+	 * @return the vanishingPoints
+	 */
+	public List<Point> getVanishingPoints() {
+		return vanishingPoints;
+	}
+
+	/**
+	 * @param vanishingPoints the vanishingPoints to set
+	 */
+	public void setVanishingPoints(List<Point> vanishingPoints) {
+		this.vanishingPoints = vanishingPoints;
 	}
 
 	@Override

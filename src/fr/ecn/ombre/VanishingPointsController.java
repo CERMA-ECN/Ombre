@@ -1,5 +1,6 @@
 package fr.ecn.ombre;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import jjil.android.RgbImageAndroid;
 import jjil.core.Image;
 import fr.ecn.ombre.image.utils.ImageLoader;
 import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.model.Point;
 import fr.ecn.ombre.segmentdetection.ImageSegment;
 import fr.ecn.ombre.segmentdetection.Segment;
 import fr.ecn.ombre.utils.ImageUtils;
@@ -111,6 +113,18 @@ public class VanishingPointsController {
 	
 	public boolean isGroupSelected(int groupId) {
 		return this.selectedGroups[groupId];
+	}
+
+	public List<Point> getSelectedPoints() {
+		List<Point> list = new ArrayList<Point>();
+		
+		for (int i=0; i<this.selectedGroups.length; i++) {
+			if (this.selectedGroups[i]) {
+				list.add(new Point(this.groups[i].getCentroid().get(0), this.groups[i].getCentroid().get(1)));
+			}
+		}
+		
+		return list;
 	}
 
 }

@@ -4,12 +4,16 @@
 package fr.ecn.ombre;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -27,6 +31,8 @@ import fr.ecn.ombre.model.ImageInfos;
 public class VanishingPointsActivity extends Activity {
 
 	private static final int MENU_RECOMPUTE   = Menu.FIRST;
+	
+	protected ImageInfos imageInfos;
 
 	protected VanishingPointsController controller;
 
@@ -37,6 +43,8 @@ public class VanishingPointsActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras
 				.getSerializable("ImageInfos");
+		
+		this.imageInfos = imageInfos;
 
 		this.controller = (VanishingPointsController) this
 				.getLastNonConfigurationInstance();
@@ -72,6 +80,18 @@ public class VanishingPointsActivity extends Activity {
 		imageView.setImageDrawable(new LayerDrawable(drawables));
 		
 		this.createSelectList();
+		
+		Button valid = (Button) this.findViewById(R.id.valid);
+		valid.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				imageInfos.setVanishingPoints(controller.getSelectedPoints());
+				
+				Intent i = new Intent();
+				i.putExtra("ImageInfos", imageInfos);
+				setResult(RESULT_OK, i);
+				finish();
+			}
+		});
 	}
 	
 	/**

@@ -43,8 +43,7 @@ public class CircleKDistance extends EuclidianDistance {
 			System.out.println("probably not enough points for B");
 		}
 		
-		SingularValueDecomposition svd = new SingularValueDecomposition(B);
-		Matrix V = svd.getV();
+		Matrix V = new SingularValueDecomposition(B).getV();
 
 		double a = V.get(0,3);
 		double b1 = V.get(1,3);
