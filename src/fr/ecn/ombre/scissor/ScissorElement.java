@@ -1,4 +1,4 @@
-package fr.ecn.ombre.scissor.algo;
+package fr.ecn.ombre.scissor;
 
 /**
  * ScissorElement class adds some parameters in ScissorLine in 

@@ -18,6 +18,8 @@ public class ImageInfos implements Serializable {
 	
 	protected List<Point> vanishingPoints = null;
 	
+	protected List<Face> faces = null;
+
 	public ImageInfos(String path) {
 		super();
 		this.path = path;
@@ -75,6 +77,20 @@ public class ImageInfos implements Serializable {
 	 */
 	public void setVanishingPoints(List<Point> vanishingPoints) {
 		this.vanishingPoints = vanishingPoints;
+	}
+	
+	/**
+	 * @return the faces
+	 */
+	public List<Face> getFaces() {
+		return faces;
+	}
+
+	/**
+	 * @param faces the faces to set
+	 */
+	public void setFaces(List<Face> faces) {
+		this.faces = faces;
 	}
 
 	@Override

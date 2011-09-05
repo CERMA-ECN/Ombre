@@ -1,4 +1,4 @@
-package fr.ecn.ombre.scissor.algo;
+package fr.ecn.ombre.scissor;
 
 import java.io.Serializable;
 

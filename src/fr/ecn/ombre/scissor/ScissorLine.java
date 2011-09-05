@@ -1,4 +1,4 @@
-package fr.ecn.ombre.scissor.algo;
+package fr.ecn.ombre.scissor;
 
 //import ij.IJ;
 //import ij.ImagePlus;
@@ -301,5 +301,12 @@ public class ScissorLine{
 	public void setCurrentLineColor(int c)
 	{
 		this.currentLineColor=c;
+	}
+	
+	/**
+	 * @return the scissorLine
+	 */
+	public ArrayList<ScissorPolygon> getScissorLine() {
+		return scissorLine;
 	}
 }

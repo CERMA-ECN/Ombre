@@ -1,4 +1,4 @@
-package fr.ecn.ombre.scissor.algo;
+package fr.ecn.ombre.scissor;
 
 import fr.ecn.ombre.image.filters.Gray83x3Average;
 import fr.ecn.ombre.utils.ImageUtils;

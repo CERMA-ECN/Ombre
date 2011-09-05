@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import fr.ecn.ombre.activities.faces.FacesActivity;
 import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.utils.ExifReader;
 

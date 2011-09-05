@@ -1,4 +1,4 @@
-package fr.ecn.ombre.scissor.algo;
+package fr.ecn.ombre.scissor;
 /**
  * Scissor tool state enum.
  * @author LIU Xinchang

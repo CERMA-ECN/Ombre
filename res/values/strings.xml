@@ -14,7 +14,8 @@
 	<string name="longitude_ref">Longitude Reference</string>
 	
 	<string name="menu_addface">Add face</string>
-	<string name="menu_removefaces">Remove all faces</string>
-	<string name="menu_resetface">Reset face</string>
 	<string name="menu_validate">Validate</string>
+	<string name="menu_validate_line">Validate line</string>
+	<string name="menu_reset_face">Reset face</string>
+	<string name="menu_validate_face">Validate face</string>
 </resources>
