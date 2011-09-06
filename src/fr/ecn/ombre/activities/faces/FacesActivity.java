@@ -46,6 +46,7 @@ public class FacesActivity extends Activity implements OnTouchListener {
 		Bundle extras = getIntent().getExtras();
 		final ImageInfos imageInfos = (ImageInfos) extras
 				.getSerializable("ImageInfos");
+		this.imageInfos = imageInfos;
 
 		this.controller = (FacesController) this
 				.getLastNonConfigurationInstance();
@@ -86,7 +87,7 @@ public class FacesActivity extends Activity implements OnTouchListener {
 
 	public boolean onTouch(View v, MotionEvent event) {
 		if (this.controller.getState() != FacesController.State.DRAWING) {
-			return true;
+			return false;
 		}
 		
 		if (this.matrix == null) {
