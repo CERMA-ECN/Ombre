@@ -63,6 +63,10 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 		if (this.controller.getPoints() == null) {
 			return false;
 		}
+		
+		if (event.getAction() != MotionEvent.ACTION_DOWN) {
+			return false;
+		}
 
 		if (this.matrix == null) {
 			this.matrix = new Matrix();
