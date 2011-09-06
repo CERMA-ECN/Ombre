@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import fr.ecn.ombre.activities.faces.FacesActivity;
 import fr.ecn.ombre.activities.facessimple.FacesSimpleActivity;
 import fr.ecn.ombre.model.ImageInfos;
 import fr.ecn.ombre.utils.ExifReader;
@@ -76,10 +75,14 @@ public class OmbreActivity extends Activity {
 				Intent i = new Intent(this, VanishingPointsActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivityForResult(i, ACTIVITY_VANISHING_POINTS);
-			} else {
+			} else if (imageInfos.getFaces() == null) {
 				Intent i = new Intent(this, FacesSimpleActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivityForResult(i, ACTIVITY_FACES);
+			} else {
+				Intent i = new Intent(this, DateActivity.class);
+				i.putExtra("ImageInfos", imageInfos);
+				this.startActivity(i);
 			}
 		}
 	}

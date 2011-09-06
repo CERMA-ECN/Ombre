@@ -17,5 +17,7 @@
 		<activity android:name="fr.ecn.ombre.activities.faces.FacesActivity"/>
 		<activity android:name=".VanishingPointsActivity"></activity>
 		<activity android:name="fr.ecn.ombre.activities.facessimple.FacesSimpleActivity"></activity>
+		<activity android:name="DateActivity"></activity>
+		<activity android:name="fr.ecn.ombre.activities.result.ResultActivity"></activity>
     </application>
 </manifest>
