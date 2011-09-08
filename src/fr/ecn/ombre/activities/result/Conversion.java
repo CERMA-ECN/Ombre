@@ -17,24 +17,17 @@ public class Conversion {
 	public int Y;
 	public double AzimutRelatif;
 
-	// Certains param�tres sont internes � l'appareil photo utilis�
+	// Certains param�tres sont internes � l'appareil photo utilisé
 
 	public double calculAzimutRelatif(double Azimut, double DirectionVue) {
-
-		double AzimutPositif;
-
 		// Il s'agire tout d'abord de convertir l'azimut
 		// en un angle pris dans le sens horaire par rapport
-		// � la direction du Nord, comme pour DirectionVue
-		AzimutPositif = Azimut + 180;
+		// à la direction du Nord, comme pour DirectionVue
+		double AzimutPositif = Azimut + 180;
 
 		// Calcul de l'azimut Relative: elle se calcule positivement dans le
-		// sens trigonom�trique
-		if (AzimutPositif <= DirectionVue) {
-			AzimutRelatif = -AzimutPositif + DirectionVue;
-		} else {
-			AzimutRelatif = 360 - (AzimutPositif - DirectionVue);
-		}
+		// sens trigonométrique
+		AzimutRelatif = (DirectionVue - AzimutPositif) % 360;
 		return AzimutRelatif;
 	}
 
@@ -43,7 +36,7 @@ public class Conversion {
 		// Nous calculons tout d'abord la position du Soleil en mm sur la photo:
 		double positionX;
 		double positionY;
-		// Les param�tres de la photo hauteur*largeur:
+		// Les paramètres de la photo hauteur*largeur:
 		double largeur = 0;
 		double hauteur = 0;
 
@@ -67,7 +60,7 @@ public class Conversion {
 		// direction du soleil et la direction de la vue
 		AzimutRelatif = calculAzimutRelatif(Azimut, DirectionVue);
 		System.out.println("AzimutRelative:" + AzimutRelatif);
-		// A priori, jusque l� le programme fonctionne bien!
+		// A priori, jusque la le programme fonctionne bien!
 
 		// On convertit en position X, Y sur une feuille 24*36...
 		positionX = focale * Math.tan(AzimutRelatif * Math.PI / 180);
@@ -76,8 +69,8 @@ public class Conversion {
 
 		// Si on suppose qu'on est en mode paysage
 
-		// On repositionne les deux coordonn�es: on place le point (0,0) en haut
-		// � gauche.
+		// On repositionne les deux coordonnées: on place le point (0,0) en haut
+		// à gauche.
 		positionX = -positionX + largeur / 2;
 		positionY = -positionY + hauteur / 2;
 		System.out.println("positionX:" + positionX);
