@@ -27,9 +27,10 @@ public class FacesSimpleDrawable extends Drawable {
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint();
 		paint.setColor(Color.YELLOW);
+		paint.setStyle(Paint.Style.STROKE);
 
 		for (Face face : this.controller.getFaces()) {
-			this.drawFace(face, canvas, paint);
+			face.draw(canvas, paint);
 		}
 
 		paint.setColor(Color.RED);
@@ -47,18 +48,6 @@ public class FacesSimpleDrawable extends Drawable {
 									.getX(), (int) points.get(i).getY(), paint);
 				}
 			}
-		}
-	}
-
-	public void drawFace(Face face, Canvas canvas, Paint paint) {
-		Point[] points = face.getPoints();
-
-		for (int i = 0; i < 4; i++) {
-			Point p1 = points[i];
-			Point p2 = points[(i + 1) % 4];
-
-			canvas.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(),
-					(int) p2.getY(), paint);
 		}
 	}
 

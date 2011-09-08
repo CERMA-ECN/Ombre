@@ -18,4 +18,6 @@
 	<string name="menu_validate_line">Validate line</string>
 	<string name="menu_reset_face">Reset face</string>
 	<string name="menu_validate_face">Validate face</string>
+	<string name="expandToStreet">Expand to street</string>
+	<string name="shadowsOnWalls">Shadows on walls</string>
 </resources>

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
+import fr.ecn.ombre.DateActivity;
 import fr.ecn.ombre.R;
 import fr.ecn.ombre.model.ImageInfos;
 
@@ -109,10 +110,11 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 			return true;
 		case MENU_VALIDATE:
 			this.imageInfos.setFaces(this.controller.getFaces());
-			Intent i = new Intent();
+			
+			Intent i = new Intent(this, DateActivity.class);
 			i.putExtra("ImageInfos", this.imageInfos);
-			setResult(RESULT_OK, i);
-			finish();
+			this.startActivity(i);
+			
 			return true;
 		}
 
