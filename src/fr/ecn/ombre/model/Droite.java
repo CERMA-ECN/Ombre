@@ -81,7 +81,7 @@ public class Droite {
 	/**
 	 * Methode de calcul du point d'intersection de deux droites ( cas ou 1
 	 * droite est verticale manquant, de plus: on suppose que les droites ne
-	 * sont pas parall�les)
+	 * sont pas parallèles)
 	 */
 	public Point intersection(Droite D2) {
 		double x = (D2.b - this.b) / (this.a - D2.a);
@@ -92,7 +92,7 @@ public class Droite {
 	/*
 	 * public void pointSurDroite(Point p){ if
 	 * (p.getX()*this.a+this.b==p.getY()){
-	 * System.out.println("le point appartient bien � la droite"); } else {
-	 * System.out.println("le point n'appartient pas � cette droite"); } }
+	 * System.out.println("le point appartient bien à la droite"); } else {
+	 * System.out.println("le point n'appartient pas à cette droite"); } }
 	 */
 }

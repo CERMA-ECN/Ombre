@@ -5,11 +5,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.shapes.Shape;
+
+import fr.ecn.ombre.core.image.Image;
 
 public class Face extends Shape implements Serializable {
 
@@ -178,7 +179,7 @@ public class Face extends Shape implements Serializable {
 	 * 
 	 * @return
 	 */
-	private boolean isLeft() {
+	public boolean isLeft() {
 		int i = this.getPlusProche();
 		if (this.couples[i].pointSol.x < this.couples[(i + 1) % 2].pointSol.x) {
 			return true;
@@ -189,7 +190,7 @@ public class Face extends Shape implements Serializable {
 	/**
 	 * Expand face in our direction...
 	 */
-	public Face expandToStreet(Bitmap image) {
+	public Face expandToStreet(Image image) {
 		int i = this.getPlusProche(); // avec deux couples de points par face,
 		// i=0 ou 1.
 		Droite dSol = this.getBottomLine();
@@ -229,7 +230,7 @@ public class Face extends Shape implements Serializable {
 		// Création du nouveau couple de points et création de la nouvelle face:
 		Couple newCouple = new Couple(newP, newPsol);
 		Face newFace = new Face(couples[i], newCouple, this.isBuilding);
-
+		
 		return newFace;
 	}
 
@@ -262,41 +263,6 @@ public class Face extends Shape implements Serializable {
 			return false;
 		}
 		// NOTE: un seul point suffit, on a pris arbitrairement this.GetPoint(0)
-	}
-
-	/**
-	 * Méthode de calcul de l'ombre de la face sur le sol.
-	 * 
-	 * @param coupleSoleil
-	 * @return
-	 */
-	public Face calculOmbreDirect(Couple coupleSoleil) {
-		// calcul des points de la face ( hors sol )
-		Couple[] couples = new Couple[2];
-		for (int i = 0; i < 2; i++) { // rayon
-			Droite rayon = new Droite(coupleSoleil.pointAir, this.couples[i].getPointAir());
-			// fuyante au sol
-			Droite fuyante = new Droite(coupleSoleil.pointSol, this.couples[i].getPointSol());
-			// on vérifie que la pente du rayon est plus grande que la pente de
-			// la fuyante! sinon, ça fait des choses bizarres...
-			if (this.isLeft()) {
-				if (rayon.a > fuyante.a) {
-					//throw new RuntimeException("Soleil trop bas! Essayez une autre heure...");
-				}
-			} else {
-				if (rayon.a < fuyante.a) {
-					//throw new RuntimeException("Soleil trop bas! Essayez une autre heure...");
-				}
-			}
-			// message d'erreur dans la classe CalculOmbre si testPente=false...
-
-			// intersection
-			Point pointOmbre = rayon.intersection(fuyante);
-			// ajout du point a la face de l'ombre, couplé avec le pt au sol
-			// initial correspondant
-			couples[i] = new Couple(pointOmbre, this.couples[i].getPointSol());
-		}
-		return new Face(couples[0], couples[1], false);
 	}
 
 	/**
