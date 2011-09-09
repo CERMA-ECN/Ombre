@@ -6,10 +6,10 @@ import java.util.List;
 import android.graphics.Bitmap;
 
 import jjil.android.RgbImageAndroid;
+import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.image.utils.ImageLoader;
-import fr.ecn.ombre.model.Face;
-import fr.ecn.ombre.model.ImageInfos;
-import fr.ecn.ombre.model.Point;
 import fr.ecn.ombre.scissor.Polygon;
 import fr.ecn.ombre.scissor.SCISSOR_STATE;
 import fr.ecn.ombre.scissor.Scissor;

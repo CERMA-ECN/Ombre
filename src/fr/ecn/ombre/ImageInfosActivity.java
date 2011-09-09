@@ -13,8 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import fr.ecn.ombre.model.Coordinate;
-import fr.ecn.ombre.model.ImageInfos;
+
+import fr.ecn.ombre.core.model.Coordinate;
+import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.utils.ValidationException;
 
 /**

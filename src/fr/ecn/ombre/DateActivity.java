@@ -18,7 +18,7 @@ import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
 import fr.ecn.ombre.activities.result.ResultActivity;
-import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
  * @author Jérôme Vasseur

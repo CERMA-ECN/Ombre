@@ -18,6 +18,6 @@
 		<activity android:name=".VanishingPointsActivity"></activity>
 		<activity android:name="fr.ecn.ombre.activities.facessimple.FacesSimpleActivity"></activity>
 		<activity android:name="DateActivity"></activity>
-		<activity android:name="fr.ecn.ombre.activities.result.ResultActivity"></activity>
+		<activity android:name=".activities.result.ResultActivity"></activity>
     </application>
 </manifest>

@@ -1,4 +1,4 @@
-package fr.ecn.ombre.model;
+package fr.ecn.ombre.core.model;
 
 import java.io.Serializable;
 import java.util.List;

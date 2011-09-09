@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
  * Activity used to compute and select segments groups and vanishing points

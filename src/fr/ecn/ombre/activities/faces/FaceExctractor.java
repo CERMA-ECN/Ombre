@@ -2,8 +2,8 @@ package fr.ecn.ombre.activities.faces;
 
 import java.util.List;
 
-import fr.ecn.ombre.model.Face;
-import fr.ecn.ombre.model.Point;
+import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.model.Point;
 
 public class FaceExctractor {
 	

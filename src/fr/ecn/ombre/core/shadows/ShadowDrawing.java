@@ -1,6 +1,6 @@
 package fr.ecn.ombre.core.shadows;
 
-import fr.ecn.ombre.model.Face;
+import fr.ecn.ombre.core.model.Face;
 
 public abstract class ShadowDrawing {
 

@@ -8,13 +8,13 @@ import android.graphics.Bitmap;
 
 import fr.ecn.ombre.android.image.BitmapImage;
 import fr.ecn.ombre.core.image.Image;
+import fr.ecn.ombre.core.model.Couple;
+import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;
 import fr.ecn.ombre.image.utils.ImageLoader;
-import fr.ecn.ombre.model.Couple;
-import fr.ecn.ombre.model.Face;
-import fr.ecn.ombre.model.ImageInfos;
-import fr.ecn.ombre.model.Point;
 
 public class ResultController {
 
@@ -23,7 +23,6 @@ public class ResultController {
 	protected Point sunPosition;
 	protected int yHorizon;
 	
-	protected List<Face> selectedFaces;
 	protected List<Face> shadows;
 
 	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) {
@@ -33,7 +32,6 @@ public class ResultController {
 	}
 
 	protected void calculOmbre(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) {
-		this.selectedFaces = new LinkedList<Face>();
 		this.shadows = new LinkedList<Face>();
 		
 		// test si la geometrie n'est pas vide:
@@ -67,7 +65,7 @@ public class ResultController {
 				continue;
 			}
 			
-			this.selectedFaces.add(f);
+			this.shadows.add(f);
 			
 			/**
 			 * On ne fait la suite que si la case "wall" est cochée, autrement
@@ -96,22 +94,14 @@ public class ResultController {
 		
 		//Expend shadows to street if requested
 		if (expendToStreet) {
-			List<Face> faces;
-			
-			faces = new LinkedList<Face>();
-			for (Face face : this.selectedFaces) {
-				faces.add(face.expandToStreet(image));
-			}
-			this.selectedFaces.addAll(faces);
-			
-			faces = new LinkedList<Face>();
+			List<Face> faces = new LinkedList<Face>();
 			for (Face face : this.shadows) {
 				faces.add(face.expandToStreet(image));
 			}
 			this.shadows.addAll(faces);
 		}
 	}
-
+	
 	/**
 	 * @return the bitmap
 	 */
@@ -124,13 +114,6 @@ public class ResultController {
 	 */
 	public Point getSunPosition() {
 		return sunPosition;
-	}
-
-	/**
-	 * @return the selectedFaces
-	 */
-	public List<Face> getSelectedFaces() {
-		return selectedFaces;
 	}
 
 	/**

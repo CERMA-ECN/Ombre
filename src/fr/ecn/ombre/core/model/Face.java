@@ -1,18 +1,13 @@
-package fr.ecn.ombre.model;
+package fr.ecn.ombre.core.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.drawable.shapes.Shape;
-
 import fr.ecn.ombre.core.image.Image;
 
-public class Face extends Shape implements Serializable {
+public class Face implements Serializable {
 
 	/**
 	 * 
@@ -134,22 +129,6 @@ public class Face extends Shape implements Serializable {
 	 */
 	public Droite getBottomLine() {
 		return new Droite(this.couples[0].pointSol, this.couples[1].pointSol);
-	}
-
-	@Override
-	public void draw(Canvas canvas, Paint paint) {
-		Point[] points = this.getPoints();
-		
-		Path path = new Path();
-		path.moveTo((float) points[points.length-1].getX(), (float) points[points.length-1].getY());
-
-		for (int i = 0; i < points.length; i++) {
-			Point p = points[i];
-			
-			path.lineTo((float) p.getX(), (float) p.getY());
-		}
-		
-		canvas.drawPath(path, paint);
 	}
 
 	/**

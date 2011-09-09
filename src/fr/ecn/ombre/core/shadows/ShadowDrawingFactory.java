@@ -8,10 +8,10 @@ import com.ei3info.gsun.PositionUtilisateur;
 import com.ei3info.gsun.Temps;
 
 import fr.ecn.ombre.core.image.Image;
-import fr.ecn.ombre.model.Couple;
-import fr.ecn.ombre.model.Face;
-import fr.ecn.ombre.model.ImageInfos;
-import fr.ecn.ombre.model.Point;
+import fr.ecn.ombre.core.model.Couple;
+import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.model.Point;
 
 /**
  * A class that generate a ShadowDrawing object based on the image infos and the date requested

@@ -8,8 +8,9 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
-import fr.ecn.ombre.model.Face;
-import fr.ecn.ombre.model.Point;
+import fr.ecn.ombre.android.Drawing;
+import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.model.Point;
 
 public class FacesSimpleDrawable extends Drawable {
 
@@ -30,7 +31,7 @@ public class FacesSimpleDrawable extends Drawable {
 		paint.setStyle(Paint.Style.STROKE);
 
 		for (Face face : this.controller.getFaces()) {
-			face.draw(canvas, paint);
+			Drawing.drawFace(face, canvas, paint);
 		}
 
 		paint.setColor(Color.RED);

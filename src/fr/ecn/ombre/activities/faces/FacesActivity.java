@@ -18,7 +18,7 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
 import fr.ecn.ombre.R;
-import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
  * @author jerome

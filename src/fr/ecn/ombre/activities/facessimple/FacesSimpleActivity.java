@@ -16,7 +16,7 @@ import android.widget.ImageView;
 
 import fr.ecn.ombre.DateActivity;
 import fr.ecn.ombre.R;
-import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.core.model.ImageInfos;
 
 public class FacesSimpleActivity extends Activity implements OnTouchListener {
 

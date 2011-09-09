@@ -9,9 +9,9 @@ import android.util.Log;
 
 import jjil.android.RgbImageAndroid;
 import jjil.core.Image;
+import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.image.utils.ImageLoader;
-import fr.ecn.ombre.model.ImageInfos;
-import fr.ecn.ombre.model.Point;
 import fr.ecn.ombre.segmentdetection.ImageSegment;
 import fr.ecn.ombre.segmentdetection.Segment;
 import fr.ecn.ombre.utils.ImageUtils;

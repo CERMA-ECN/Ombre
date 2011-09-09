@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import fr.ecn.ombre.activities.facessimple.FacesSimpleActivity;
-import fr.ecn.ombre.model.ImageInfos;
+import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.utils.ExifReader;
 
 public class OmbreActivity extends Activity {
