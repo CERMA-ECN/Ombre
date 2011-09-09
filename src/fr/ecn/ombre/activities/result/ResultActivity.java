@@ -3,6 +3,10 @@ package fr.ecn.ombre.activities.result;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -11,6 +15,7 @@ import android.widget.ImageView;
 
 import fr.ecn.ombre.R;
 import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 
 public class ResultActivity extends Activity {
 	
@@ -30,16 +35,34 @@ public class ResultActivity extends Activity {
 		
 		if (this.controller == null) {
 			this.setContentView(R.layout.computing);
+
+			final Context context = this;
 			
 			new Thread(new Runnable() {
 				public void run() {
-					createController();
-					
-					runOnUiThread(new Runnable() {
-						public void run() {
-							setUp();
-						}
-					});
+					try {
+						createController();
+						
+						runOnUiThread(new Runnable() {
+							public void run() {
+								setUp();
+							}
+						});
+					} catch (final ShadowDrawingException e) {
+						runOnUiThread(new Runnable() {
+							public void run() {
+								new AlertDialog.Builder(context)
+									.setTitle("Error")
+									.setMessage(e.getMessage())
+									.setNeutralButton("Close", new OnClickListener() {
+										public void onClick(DialogInterface dialog, int which) {
+											finish();
+										}
+									})
+									.show();
+							}
+						});
+					}
 				}
 			}).start();
 		} else {
@@ -55,7 +78,7 @@ public class ResultActivity extends Activity {
 		return this.controller;
 	}
 	
-	protected void createController() {
+	protected void createController() throws ShadowDrawingException {
 		Bundle extras = getIntent().getExtras();
 		ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		Calendar time = (Calendar) extras.getSerializable("Time");

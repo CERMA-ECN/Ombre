@@ -26,7 +26,7 @@ public class ShadowDrawingFactory {
 	protected Point sunPosition = null;
 	protected Couple coupleSoleil = null;
 
-	public ShadowDrawingFactory(Image image, ImageInfos imageInfos, Calendar time) {
+	public ShadowDrawingFactory(Image image, ImageInfos imageInfos, Calendar time) throws ShadowDrawingException {
 		// focale par défaut(en mm):
 		double focal = 37;
 		
@@ -55,7 +55,7 @@ public class ShadowDrawingFactory {
 		// Message d'erreur s'il n'y a pas de soleil a l'heure désirée:
 		if ((date.getHeure() < calcul.getHeureLever())
 				|| (date.getHeure() > calcul.getHeureCoucher())) {
-			throw new RuntimeException("Le soleil n'est pas levé à cette heure-ci !");
+			throw new ShadowDrawingException("Le soleil n'est pas levé à cette heure-ci !");
 		}
 		
 		//RelativeAzimuth computation
@@ -84,7 +84,7 @@ public class ShadowDrawingFactory {
 					|| ((this.sunPosition.getY() <= getLowest(imageInfos.getFaces())) && (this.sunPosition.getY() > yHorizon)))
 			// si le soleil est de dos et trop bas
 			{
-				throw new RuntimeException(
+				throw new ShadowDrawingException(
 						"Le soleil est trop bas à cette heure-ci pour la géométrie considérée.");
 			}
 			

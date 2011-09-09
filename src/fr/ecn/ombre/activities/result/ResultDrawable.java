@@ -24,8 +24,10 @@ public class ResultDrawable extends Drawable {
 	@Override
 	public void draw(Canvas canvas) {
 		// Drawing sun if he is in the image
-		if ((this.controller.getSunPosition().getX() > 0) && (this.controller.getSunPosition().getX() < this.controller.getBitmap().getWidth())
-				&& (this.controller.getSunPosition().getY() > 0) && (this.controller.getSunPosition().getY() < this.controller.yHorizon)) {
+		if (this.controller.getSunPosition() != null && this.controller.getSunPosition().getX() > 0
+				&& this.controller.getSunPosition().getX() < this.controller.getBitmap().getWidth()
+				&& this.controller.getSunPosition().getY() > 0
+				&& this.controller.getSunPosition().getY() < this.controller.yHorizon) {
 			Paint paint = new Paint();
 			paint.setColor(Color.YELLOW);
 			

@@ -35,11 +35,11 @@ public class ShadowDrawingFront extends ShadowDrawing {
 			// la fuyante! sinon, ça fait des choses bizarres...
 //			if (face.isLeft()) {
 //				if (rayon.a > fuyante.a) {
-//					throw new RuntimeException("Soleil trop bas! Essayez une autre heure...");
+//					throw new ShadowDrawingException("Soleil trop bas! Essayez une autre heure...");
 //				}
 //			} else {
 //				if (rayon.a < fuyante.a) {
-//					throw new RuntimeException("Soleil trop bas! Essayez une autre heure...");
+//					throw new ShadowDrawingException("Soleil trop bas! Essayez une autre heure...");
 //				}
 //			}
 

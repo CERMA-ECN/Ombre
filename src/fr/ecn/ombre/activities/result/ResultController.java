@@ -13,6 +13,7 @@ import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
+import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;
 import fr.ecn.ombre.image.utils.ImageLoader;
 
@@ -25,18 +26,18 @@ public class ResultController {
 	
 	protected List<Face> shadows;
 
-	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) {
+	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) throws ShadowDrawingException {
 		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 		
 		this.calculOmbre(imageInfos, time, shadowsOnWalls, expendToStreet);
 	}
 
-	protected void calculOmbre(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) {
+	protected void calculOmbre(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) throws ShadowDrawingException {
 		this.shadows = new LinkedList<Face>();
 		
 		// test si la geometrie n'est pas vide:
 		if (imageInfos.getFaces().isEmpty()) {
-			throw new RuntimeException("La géométrie est vide !");
+			throw new ShadowDrawingException("Vous devez rentrer au moins une face");
 		}
 
 		Image image = new BitmapImage(this.bitmap);
@@ -53,7 +54,6 @@ public class ResultController {
 		// =============================================================//
 		
 		// calcul proprement dit:
-		List<Face> ombre = this.shadows;
 		for (Face f : imageInfos.getFaces()) {
 
 			// premier calcul de l'ombre au sol, avec test si l'inclinaison du
@@ -80,15 +80,14 @@ public class ResultController {
 						// On calcule les points qui de l'ombre qui se
 						// retrouvent sur la face f2 de la géométrie, et
 						// on les met dans vectPointOmbreF2
-						List<Couple> vectPointOmbreF2 = new LinkedList<Couple>();
-						f.calculOmbreMur(vectPointOmbreF2, f2, faceOmbre);
-						f.determinationOmbreMur(vectPointOmbreF2, faceOmbre, f2, ombre,
+						Couple[] vectPointOmbreF2 = shadowDrawing.calculOmbreMur(f, faceOmbre, f2);
+						List<Face> ombre = shadowDrawing.determinationOmbreMur(f, faceOmbre, f2, vectPointOmbreF2,
 								sdf.getCoupleSoleil());
-
+						this.shadows.addAll(ombre);
 					}
 				} // fin boucle sur autres faces que f
 			} else { // si pas de "wall", on rajoute juste l'ombre si elle est
-				ombre.add(faceOmbre);
+				this.shadows.add(faceOmbre);
 			} // fin if "wall"
 		} // fin boucle de départ sur les faces.
 		

@@ -17,9 +17,6 @@ public class Couple implements Serializable {
 	// Attributs: deux points, le premier "en l'air", le deuxième au sol
 	protected Point pointAir;
 	protected Point pointSol;
-	protected int indice; // Il permettra d'établir une correspondance entre
-							// points sur mur et points des faces. Utilisation
-							// pour les points sur le mur!
 
 	// Getters et Setters:
 	public Point getPointAir() {
@@ -30,7 +27,7 @@ public class Couple implements Serializable {
 		this.pointAir = pointAir;
 	}
 
-	public void setPointAir(int x, int y) {
+	public void setPointAir(double x, double y) {
 		this.pointAir.setX(x);
 		this.pointSol.setY(y);
 	}
@@ -43,36 +40,25 @@ public class Couple implements Serializable {
 		this.pointSol = pointSol;
 	}
 
-	public void setPointSol(int x, int y) {
+	public void setPointSol(double x, double y) {
 		this.pointSol.setX(x);
 		this.pointSol.setY(y);
-	}
-
-	public int getIndice() {
-		return (this.indice);
-	}
-
-	public void setIndice(int i) {
-		this.indice = i;
 	}
 
 	// Constructeurs:
 	public Couple() {
 		this.pointAir = new Point(0, 0);
 		this.pointSol = new Point(0, 0);
-		this.indice = 0;
 	}
 
 	public Couple(Point pAir, Point pSol) {
 		this.pointAir = pAir;
 		this.pointSol = pSol;
-		this.indice = 0;
 	}
 
-	public Couple(int xAir, int yAir, int xSol, int ySol) {
+	public Couple(double xAir, double yAir, double xSol, double ySol) {
 		this.pointAir = new Point(xAir, yAir);
 		this.pointSol = new Point(xSol, ySol);
-		this.indice = 0;
 	}
 
 }
