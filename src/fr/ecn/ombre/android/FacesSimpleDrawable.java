@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.facessimple;
+package fr.ecn.ombre.android;
 
 import java.util.List;
 
@@ -8,18 +8,18 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
-import fr.ecn.ombre.android.Drawing;
+import fr.ecn.ombre.android.utils.Drawing;
 import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.Point;
 
 public class FacesSimpleDrawable extends Drawable {
 
-	protected FaceSimpleController controller;
+	protected FacesSimpleController controller;
 
 	/**
 	 * @param controller
 	 */
-	public FacesSimpleDrawable(FaceSimpleController controller) {
+	public FacesSimpleDrawable(FacesSimpleController controller) {
 		super();
 		this.controller = controller;
 	}

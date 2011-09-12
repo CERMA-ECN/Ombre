@@ -1,6 +1,6 @@
 package fr.ecn.ombre.image.filters;
 
-import fr.ecn.ombre.image.ByteImage;
+import fr.ecn.ombre.core.image.ByteImage;
 import jjil.algorithm.ErrorCodes;
 import jjil.core.Error;
 import jjil.core.Gray8Image;

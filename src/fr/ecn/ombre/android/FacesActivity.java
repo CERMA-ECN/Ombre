@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.ecn.ombre.activities.faces;
+package fr.ecn.ombre.android;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
-import fr.ecn.ombre.R;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 /**

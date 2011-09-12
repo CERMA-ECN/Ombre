@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.ecn.ombre;
+package fr.ecn.ombre.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,9 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import fr.ecn.ombre.android.utils.ValidationException;
 import fr.ecn.ombre.core.model.Coordinate;
 import fr.ecn.ombre.core.model.ImageInfos;
-import fr.ecn.ombre.utils.ValidationException;
 
 /**
  * @author Jérôme Vasseur

@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.result;
+package fr.ecn.ombre.android;
 
 import java.util.Calendar;
 import java.util.LinkedList;

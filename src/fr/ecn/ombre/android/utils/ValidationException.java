@@ -1,4 +1,4 @@
-package fr.ecn.ombre.utils;
+package fr.ecn.ombre.android.utils;
 
 public class ValidationException extends Exception {
 

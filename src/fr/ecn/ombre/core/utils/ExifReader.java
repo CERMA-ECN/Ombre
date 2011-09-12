@@ -1,8 +1,6 @@
-package fr.ecn.ombre.utils;
+package fr.ecn.ombre.core.utils;
 
 import java.io.File;
-
-import android.util.Log;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
@@ -159,18 +157,18 @@ public class ExifReader {
 				image.setLatitude(Coordinate.parseCoordinate(reader.getLatitudeDescription(), reader.getLatitudeRef()));
 			} catch (ExifReaderException e) {
 				// Latitude can't be read
-				Log.w("Ombre", e);
+				e.printStackTrace();
 			}
 			
 			try {
 				image.setLongitude(Coordinate.parseCoordinate(reader.getLongitudeDescription(), reader.getLongitudeRef()));
 			} catch (ExifReaderException e) {
 				// Logitude can't be read
-				Log.w("Ombre", e);
+				e.printStackTrace();
 			}
 		} catch (JpegProcessingException e) {
 			//Exif can't be read so just log the exception
-			Log.w("Ombre", e);
+			e.printStackTrace();
 		}
 	}
 }

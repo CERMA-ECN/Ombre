@@ -1,4 +1,4 @@
-package fr.ecn.ombre.utils;
+package fr.ecn.ombre.core.utils;
 
 public class ExifReaderException extends Exception {
 

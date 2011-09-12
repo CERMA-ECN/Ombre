@@ -1,4 +1,4 @@
-package fr.ecn.ombre.android;
+package fr.ecn.ombre.android.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

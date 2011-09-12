@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.faces;
+package fr.ecn.ombre.core.utils;
 
 import java.util.List;
 

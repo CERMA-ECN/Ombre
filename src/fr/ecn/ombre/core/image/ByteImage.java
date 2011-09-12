@@ -1,6 +1,4 @@
-package fr.ecn.ombre.image;
-
-import jjil.core.Image;
+package fr.ecn.ombre.core.image;
 
 /**
  * @author jerome

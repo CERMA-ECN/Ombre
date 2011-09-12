@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.ecn.ombre;
+package fr.ecn.ombre.android;
 
 import android.app.Activity;
 import android.content.Intent;

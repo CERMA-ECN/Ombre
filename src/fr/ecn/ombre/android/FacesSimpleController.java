@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.facessimple;
+package fr.ecn.ombre.android;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.image.utils.ImageLoader;
 
-public class FaceSimpleController {
+public class FacesSimpleController {
 	
 	protected Bitmap bitmap;
 	
@@ -19,7 +19,7 @@ public class FaceSimpleController {
 	
 	protected List<Point> points = null;
 
-	public FaceSimpleController(ImageInfos imageInfos) {
+	public FacesSimpleController(ImageInfos imageInfos) {
 		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 	}
 	

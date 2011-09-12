@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.result;
+package fr.ecn.ombre.android;
 
 import java.util.Calendar;
 
@@ -13,7 +13,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import fr.ecn.ombre.R;
 import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 

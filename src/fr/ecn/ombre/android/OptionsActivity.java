@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.ecn.ombre;
+package fr.ecn.ombre.android;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -17,14 +17,13 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
-import fr.ecn.ombre.activities.result.ResultActivity;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
  * @author Jérôme Vasseur
  * 
  */
-public class DateActivity extends Activity {
+public class OptionsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class DateActivity extends Activity {
 		final ImageInfos imageInfos = (ImageInfos) extras
 				.getSerializable("ImageInfos");
 		
-		final DateActivity activity = this;
+		final OptionsActivity activity = this;
 
 		okButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {

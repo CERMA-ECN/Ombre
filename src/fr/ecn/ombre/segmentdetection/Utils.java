@@ -2,7 +2,7 @@ package fr.ecn.ombre.segmentdetection;
 
 import jjil.core.Error;
 import jjil.core.Gray8Image;
-import fr.ecn.ombre.image.ByteImage;
+import fr.ecn.ombre.core.image.ByteImage;
 import fr.ecn.ombre.image.filters.ByteConvolve;
 
 /**

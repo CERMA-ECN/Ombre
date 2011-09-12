@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.faces;
+package fr.ecn.ombre.android;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +9,7 @@ import jjil.android.RgbImageAndroid;
 import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.model.Point;
+import fr.ecn.ombre.core.utils.FaceExctractor;
 import fr.ecn.ombre.image.utils.ImageLoader;
 import fr.ecn.ombre.scissor.Polygon;
 import fr.ecn.ombre.scissor.SCISSOR_STATE;

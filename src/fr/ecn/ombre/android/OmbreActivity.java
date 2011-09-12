@@ -1,4 +1,4 @@
-package fr.ecn.ombre;
+package fr.ecn.ombre.android;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,9 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import fr.ecn.ombre.activities.facessimple.FacesSimpleActivity;
 import fr.ecn.ombre.core.model.ImageInfos;
-import fr.ecn.ombre.utils.ExifReader;
+import fr.ecn.ombre.core.utils.ExifReader;
 
 public class OmbreActivity extends Activity {
 	private static final int ACTIVITY_LOAD = 0;
@@ -80,7 +79,7 @@ public class OmbreActivity extends Activity {
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivityForResult(i, ACTIVITY_FACES);
 			} else {
-				Intent i = new Intent(this, DateActivity.class);
+				Intent i = new Intent(this, OptionsActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
 				this.startActivity(i);
 			}

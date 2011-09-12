@@ -1,6 +1,6 @@
 package fr.ecn.ombre.segmentdetection;
 
-import fr.ecn.ombre.image.FloatImage;
+import fr.ecn.ombre.core.image.FloatImage;
 import jjil.core.Gray8Image;
 
 /**

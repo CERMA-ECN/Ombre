@@ -11,8 +11,8 @@ import android.util.Log;
 import jjil.android.RgbImageAndroid;
 import jjil.core.Gray8Image;
 import jjil.core.Image;
-import fr.ecn.ombre.image.ByteImage;
-import fr.ecn.ombre.image.FloatImage;
+import fr.ecn.ombre.core.image.ByteImage;
+import fr.ecn.ombre.core.image.FloatImage;
 import fr.ecn.ombre.image.utils.ImageLoader;
 import fr.ecn.ombre.utils.ImageUtils;
 

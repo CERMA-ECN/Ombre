@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.result;
+package fr.ecn.ombre.android;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,7 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
-import fr.ecn.ombre.android.Drawing;
+import fr.ecn.ombre.android.utils.Drawing;
 import fr.ecn.ombre.core.model.Face;
 
 public class ResultDrawable extends Drawable {

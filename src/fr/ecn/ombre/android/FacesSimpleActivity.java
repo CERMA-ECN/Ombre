@@ -1,4 +1,4 @@
-package fr.ecn.ombre.activities.facessimple;
+package fr.ecn.ombre.android;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
-import fr.ecn.ombre.DateActivity;
-import fr.ecn.ombre.R;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 public class FacesSimpleActivity extends Activity implements OnTouchListener {
@@ -25,7 +23,7 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 
 	protected ImageInfos imageInfos;
 
-	protected FaceSimpleController controller;
+	protected FacesSimpleController controller;
 
 	protected Matrix matrix;
 
@@ -38,7 +36,7 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 				.getSerializable("ImageInfos");
 		this.imageInfos = imageInfos;
 
-		this.controller = new FaceSimpleController(imageInfos);
+		this.controller = new FacesSimpleController(imageInfos);
 
 		this.setUp();
 	}
@@ -111,7 +109,7 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 		case MENU_VALIDATE:
 			this.imageInfos.setFaces(this.controller.getFaces());
 			
-			Intent i = new Intent(this, DateActivity.class);
+			Intent i = new Intent(this, OptionsActivity.class);
 			i.putExtra("ImageInfos", this.imageInfos);
 			this.startActivity(i);
 			
