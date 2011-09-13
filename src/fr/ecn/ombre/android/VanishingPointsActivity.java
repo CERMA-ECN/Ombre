@@ -3,12 +3,21 @@
  */
 package fr.ecn.ombre.android;
 
+import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 
 /**
  * Activity used to compute and select segments groups and vanishing points
@@ -32,6 +42,8 @@ public class VanishingPointsActivity extends Activity {
 
 	private static final int MENU_RECOMPUTE   = Menu.FIRST;
 	
+	protected Future<VanishingPointsController> futureController;
+	
 	protected ImageInfos imageInfos;
 
 	protected VanishingPointsController controller;
@@ -41,31 +53,37 @@ public class VanishingPointsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		Bundle extras = getIntent().getExtras();
-		final ImageInfos imageInfos = (ImageInfos) extras
-				.getSerializable("ImageInfos");
+		ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
 		this.imageInfos = imageInfos;
-
-		this.controller = (VanishingPointsController) this
-				.getLastNonConfigurationInstance();
 		
-		if (this.controller == null) {
-			this.setContentView(R.layout.computing);
-			
-			new Thread(new Runnable() {
-				public void run() {
-					controller = new VanishingPointsController(imageInfos);
+		this.futureController = (Future<VanishingPointsController>) this.getLastNonConfigurationInstance();
+		
+		//We create a Callable that will create the VanishingPointsController
+		if (this.futureController == null) {
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+			this.futureController = executor.submit(new VanishingPointsController.VanishingPointsCallable(imageInfos));
+		}
+		
+		this.setContentView(R.layout.computing);
+		
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					controller = futureController.get();
 					
 					runOnUiThread(new Runnable() {
 						public void run() {
 							setUp();
 						}
 					});
+				} catch (InterruptedException e) {
+					Log.w("Ombre", e);
+				} catch (ExecutionException e) {
+					Log.w("Ombre", e);
 				}
-			}).start();
-		} else {
-			setUp();
-		}
+			}
+		}).start();
 	}
 	
 	/**
@@ -129,7 +147,7 @@ public class VanishingPointsActivity extends Activity {
 	 */
 	@Override
 	public Object onRetainNonConfigurationInstance() {
-		return this.controller;
+		return this.futureController;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package fr.ecn.ombre.android;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import android.graphics.Bitmap;
 
@@ -18,6 +19,40 @@ import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;
 import fr.ecn.ombre.image.utils.ImageLoader;
 
 public class ResultController {
+	
+	/**
+	 * A callable that create a ResultController Object
+	 * 
+	 * @author jerome
+	 *
+	 */
+	public static class ResultCallable implements Callable<ResultController> {
+		
+		protected ImageInfos imageInfos;
+		protected Calendar time;
+		protected boolean shadowsOnWalls;
+		protected boolean expendToStreet;
+		
+		/**
+		 * @param imageInfos
+		 * @param time
+		 * @param shadowsOnWalls
+		 * @param expendToStreet
+		 */
+		public ResultCallable(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls,
+				boolean expendToStreet) {
+			super();
+			this.imageInfos = imageInfos;
+			this.time = time;
+			this.shadowsOnWalls = shadowsOnWalls;
+			this.expendToStreet = expendToStreet;
+		}
+
+		public ResultController call() throws Exception {
+			return new ResultController(imageInfos, time, shadowsOnWalls, expendToStreet);
+		}
+		
+	}
 
 	protected Bitmap bitmap;
 	

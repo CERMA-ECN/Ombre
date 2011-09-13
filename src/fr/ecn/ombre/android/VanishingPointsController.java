@@ -3,6 +3,7 @@ package fr.ecn.ombre.android;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -22,6 +23,30 @@ import fr.irstv.kmeans.DataMk;
 import fr.irstv.kmeans.RanSac;
 
 public class VanishingPointsController {
+	
+	/**
+	 * A callable that create a VansishingPointsController Object
+	 * 
+	 * @author jerome
+	 *
+	 */
+	public static class VanishingPointsCallable implements Callable<VanishingPointsController> {
+		
+		protected ImageInfos imageInfos;
+		
+		/**
+		 * @param imageInfos
+		 */
+		public VanishingPointsCallable(ImageInfos imageInfos) {
+			super();
+			this.imageInfos = imageInfos;
+		}
+
+		public VanishingPointsController call() throws Exception {
+			return new VanishingPointsController(imageInfos);
+		}
+		
+	}
 	
 	/**
 	 * Bitmap version of the image (will be used for display)
