@@ -1,7 +1,7 @@
 package fr.ecn.ombre.scissor;
 
-import fr.ecn.ombre.image.filters.Gray83x3Average;
-import fr.ecn.ombre.utils.ImageUtils;
+import fr.ecn.ombre.android.utils.ImageUtils;
+import fr.ecn.ombre.core.image.filters.Gray83x3Average;
 import jjil.algorithm.Gray8Threshold;
 import jjil.core.Error;
 import jjil.core.Gray8Image;

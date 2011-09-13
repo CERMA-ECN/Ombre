@@ -51,7 +51,7 @@ public class Polygon implements Serializable {
 	protected Rect bounds;
 
 	/** A big number, but not so big it can't survive a few float operations */
-	private static final double BIG_VALUE = java.lang.Double.MAX_VALUE / 10.0;
+//	private static final double BIG_VALUE = java.lang.Double.MAX_VALUE / 10.0;
 
 	/**
 	 * Initializes an empty polygon.

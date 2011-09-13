@@ -1,4 +1,4 @@
-package fr.ecn.ombre.image.filters;
+package fr.ecn.ombre.core.image.filters;
 
 import fr.ecn.ombre.core.image.ByteImage;
 import jjil.algorithm.ErrorCodes;

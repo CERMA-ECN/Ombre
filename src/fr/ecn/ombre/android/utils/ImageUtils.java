@@ -1,4 +1,4 @@
-package fr.ecn.ombre.utils;
+package fr.ecn.ombre.android.utils;
 
 import android.graphics.Bitmap;
 
@@ -8,7 +8,7 @@ import jjil.core.Error;
 import jjil.core.Gray8Image;
 import jjil.core.Image;
 import jjil.core.RgbImage;
-import fr.ecn.ombre.image.filters.Gray8toRgb;
+import fr.ecn.ombre.core.image.filters.Gray8toRgb;
 
 public class ImageUtils {
     public static int getAutoThreshold(Gray8Image image) {

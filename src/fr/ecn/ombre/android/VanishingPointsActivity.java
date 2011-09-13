@@ -3,15 +3,12 @@
  */
 package fr.ecn.ombre.android;
 
-import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -30,7 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import fr.ecn.ombre.core.model.ImageInfos;
-import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 
 /**
  * Activity used to compute and select segments groups and vanishing points

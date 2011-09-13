@@ -16,6 +16,6 @@
 		<activity android:name="VanishingPointsActivity" />
 		<activity android:name="OptionsActivity"></activity>
 		<activity android:name="FacesSimpleActivity" />
-		<activity android:name="ResultActivity" />
+		<activity android:name=".ResultActivity" />
 	</application>
 </manifest>

@@ -1,4 +1,4 @@
-package fr.ecn.ombre.image.utils;
+package fr.ecn.ombre.android.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

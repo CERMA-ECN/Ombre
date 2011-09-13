@@ -3,7 +3,7 @@ package fr.ecn.ombre.segmentdetection;
 import jjil.core.Error;
 import jjil.core.Gray8Image;
 import fr.ecn.ombre.core.image.ByteImage;
-import fr.ecn.ombre.image.filters.ByteConvolve;
+import fr.ecn.ombre.core.image.filters.ByteConvolve;
 
 /**
  * Class implementing the useful tools for ImageSegment class.

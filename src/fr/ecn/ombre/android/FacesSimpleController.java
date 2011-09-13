@@ -6,10 +6,10 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
+import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.model.Point;
-import fr.ecn.ombre.image.utils.ImageLoader;
 
 public class FacesSimpleController {
 	

@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import android.graphics.Bitmap;
 
 import fr.ecn.ombre.android.image.BitmapImage;
+import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.image.Image;
 import fr.ecn.ombre.core.model.Couple;
 import fr.ecn.ombre.core.model.Face;
@@ -16,7 +17,6 @@ import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;
-import fr.ecn.ombre.image.utils.ImageLoader;
 
 public class ResultController {
 	
