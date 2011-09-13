@@ -79,6 +79,18 @@ public class ImageInfos implements Serializable {
 		this.vanishingPoints = vanishingPoints;
 	}
 	
+	public double getYHorizon() {
+		double y = 0;
+		
+		for (Point p : this.vanishingPoints) {
+			y += p.getY();
+		}
+		
+		y /= this.vanishingPoints.size();
+		
+		return y;
+	}
+	
 	/**
 	 * @return the faces
 	 */

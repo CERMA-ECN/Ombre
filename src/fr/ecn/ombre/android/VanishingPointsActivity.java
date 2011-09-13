@@ -107,7 +107,7 @@ public class VanishingPointsActivity extends Activity {
 			final int id = i;
 			
 			CheckBox box = new CheckBox(this);
-			box.setText("Group " + i);
+			box.setText("Groupe " + i);
 			box.setTextColor(VanishingPointsDrawable.colorMap[i]);
 			box.setChecked(true);
 			
@@ -135,7 +135,7 @@ public class VanishingPointsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean result = super.onCreateOptionsMenu(menu);
-		menu.add(0, MENU_RECOMPUTE, 0, "Recompute groups");
+		menu.add(0, MENU_RECOMPUTE, 0, R.string.recompute_groups);
 		return result;
 	}
 	

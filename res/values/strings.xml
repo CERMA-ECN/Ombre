@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, OmbreActivity!</string>
     <string name="app_name">Ombre</string>
     <string-array name="latitude_refs">
         <item>N</item>
@@ -10,14 +9,14 @@
         <item>E</item>
         <item>W</item>
     </string-array>
-	<string name="latitude_ref">Latitude Reference</string>
-	<string name="longitude_ref">Longitude Reference</string>
-	
-	<string name="menu_addface">Add face</string>
-	<string name="menu_validate">Validate</string>
-	<string name="menu_validate_line">Validate line</string>
-	<string name="menu_reset_face">Reset face</string>
+	<string name="latitude_ref">Reference Latitude</string>
+	<string name="longitude_ref">Reference Longitude</string>
+	<string name="menu_addface">Ajouter face</string>
+	<string name="menu_validate">Valider</string>
+	<string name="menu_validate_line">Valider ligne</string>
+	<string name="menu_reset_face">Remise a zéro face</string>
 	<string name="menu_validate_face">Validate face</string>
-	<string name="expandToStreet">Expand to street</string>
-	<string name="shadowsOnWalls">Shadows on walls</string>
+	<string name="recompute_groups">Recalculer groupes</string>
+	<string name="expandToStreet">Agrandir à la rue</string>
+	<string name="shadowsOnWalls">Ombre sur le mur</string>
 </resources>

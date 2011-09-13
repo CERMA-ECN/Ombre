@@ -55,6 +55,9 @@ public class OptionsActivity extends Activity {
 
 		okButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				//Dirty trick to let the timePicker widget update his hour value
+				datePicker.requestFocus();
+				
 				time.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
 				time.set(Calendar.MONTH, datePicker.getMonth());
 				time.set(Calendar.YEAR, datePicker.getYear());
