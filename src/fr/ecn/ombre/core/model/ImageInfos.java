@@ -18,13 +18,29 @@ public class ImageInfos implements Serializable {
 	
 	protected List<Point> vanishingPoints = null;
 	
+	protected Double yHorizon = null;
+	
 	protected List<Face> faces = null;
+	
+	/**
+	 * 
+	 */
+	public ImageInfos() {
+		super();
+	}
 
 	public ImageInfos(String path) {
 		super();
 		this.path = path;
 	}
-	
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -79,18 +95,20 @@ public class ImageInfos implements Serializable {
 		this.vanishingPoints = vanishingPoints;
 	}
 	
-	public double getYHorizon() {
-		double y = 0;
-		
-		for (Point p : this.vanishingPoints) {
-			y += p.getY();
-		}
-		
-		y /= this.vanishingPoints.size();
-		
-		return y;
+	/**
+	 * @return the yHorizon
+	 */
+	public Double getYHorizon() {
+		return yHorizon;
 	}
-	
+
+	/**
+	 * @param yHorizon the yHorizon to set
+	 */
+	public void setYHorizon(Double yHorizon) {
+		this.yHorizon = yHorizon;
+	}
+
 	/**
 	 * @return the faces
 	 */

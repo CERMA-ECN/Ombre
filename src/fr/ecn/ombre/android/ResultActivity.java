@@ -51,8 +51,6 @@ public class ResultActivity extends Activity {
 		}
 		
 		this.setContentView(R.layout.computing);
-
-		final Context context = this;
 		
 		new Thread(new Runnable() {
 			public void run() {
@@ -72,7 +70,7 @@ public class ResultActivity extends Activity {
 						
 						runOnUiThread(new Runnable() {
 							public void run() {
-								new AlertDialog.Builder(context)
+								new AlertDialog.Builder(ResultActivity.this)
 									.setTitle("Erreur")
 									.setMessage(sde.getMessage())
 									.setNeutralButton("Fermer", new OnClickListener() {
@@ -100,7 +98,7 @@ public class ResultActivity extends Activity {
 	}
 	
 	protected void setUp() {
-		this.setContentView(R.layout.select_faces);
+		this.setContentView(R.layout.image);
 		
 		ImageView imageView = (ImageView) findViewById(R.id.image);
 		

@@ -1,22 +1,29 @@
 package fr.ecn.ombre.android;
 
+import java.io.File;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import fr.ecn.ombre.core.model.Coordinate;
 import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.utils.ExifReader;
 
 public class OmbreActivity extends Activity {
+	
 	private static final int ACTIVITY_LOAD = 0;
-	private static final int ACTIVITY_INFOS = 1;
-	private static final int ACTIVITY_VANISHING_POINTS = 2;
-	private static final int ACTIVITY_FACES = 3;
+	private static final int ACTIVITY_CAPTURE = 1;
 	
     /** Called when the activity is first created. */
     @Override
@@ -27,9 +34,19 @@ public class OmbreActivity extends Activity {
         Button loadButton = (Button) findViewById(R.id.load_image);
         loadButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), ACTIVITY_LOAD);
+            	Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+            	startActivityForResult(i, ACTIVITY_LOAD);
             }
         });
+        
+        Button takePictureButton = (Button) findViewById(R.id.take_picture);
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				i.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("/sdcard/tmp.jpg")));
+            	startActivityForResult(i, ACTIVITY_CAPTURE);
+			}
+		});
     }
 
 	@Override
@@ -51,8 +68,15 @@ public class OmbreActivity extends Activity {
 				
 				//Read data from the exif
 				ExifReader.readExif(imageInfos);
+			}
+			break;
+		case ACTIVITY_CAPTURE:
+			if (resultCode == Activity.RESULT_OK) {
+				File f = new File("/sdcard/tmp.jpg");
 				
-				Log.i("Ombre", imageInfos.toString());
+				imageInfos = new ImageInfos(f.getAbsolutePath());
+				
+				this.loadLocation(imageInfos);
 			}
 			break;
 		default:
@@ -66,23 +90,28 @@ public class OmbreActivity extends Activity {
 		}
 		
 		if (imageInfos != null) {
-			if (imageInfos.getOrientation() == null) {
-				Intent i = new Intent(this, ImageInfosActivity.class);
-				i.putExtra("ImageInfos", imageInfos);
-				this.startActivityForResult(i, ACTIVITY_INFOS);
-			} else if (imageInfos.getVanishingPoints() == null) {
-				Intent i = new Intent(this, VanishingPointsActivity.class);
-				i.putExtra("ImageInfos", imageInfos);
-				this.startActivityForResult(i, ACTIVITY_VANISHING_POINTS);
-			} else if (imageInfos.getFaces() == null) {
-				Intent i = new Intent(this, FacesSimpleActivity.class);
-				i.putExtra("ImageInfos", imageInfos);
-				this.startActivityForResult(i, ACTIVITY_FACES);
-			} else {
-				Intent i = new Intent(this, OptionsActivity.class);
-				i.putExtra("ImageInfos", imageInfos);
-				this.startActivity(i);
-			}
+			Log.i("Ombre", imageInfos.toString());
+			
+			Intent i = new Intent(this, ImageInfosActivity.class);
+			i.putExtra("ImageInfos", imageInfos);
+			this.startActivity(i);
 		}
+	}
+
+	protected void loadLocation(final ImageInfos imageInfos) {
+		LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+			public void onStatusChanged(String arg0, int arg1, Bundle arg2) {}
+			
+			public void onProviderEnabled(String arg0) {}
+			
+			public void onProviderDisabled(String arg0) {}
+			
+			public void onLocationChanged(Location location) {
+				imageInfos.setLatitude(Coordinate.fromDouble(location.getLatitude(), "N"));
+				imageInfos.setLongitude(Coordinate.fromDouble(location.getLongitude(), "E"));
+			}
+		});
 	}
 }	

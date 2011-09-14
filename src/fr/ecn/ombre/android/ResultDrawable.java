@@ -27,7 +27,7 @@ public class ResultDrawable extends Drawable {
 		if (this.controller.getSunPosition() != null && this.controller.getSunPosition().getX() > 0
 				&& this.controller.getSunPosition().getX() < this.controller.getBitmap().getWidth()
 				&& this.controller.getSunPosition().getY() > 0
-				&& this.controller.getSunPosition().getY() < this.controller.yHorizon) {
+				&& this.controller.getSunPosition().getY() < this.controller.getImageInfos().getYHorizon()) {
 			Paint paint = new Paint();
 			paint.setColor(Color.YELLOW);
 			

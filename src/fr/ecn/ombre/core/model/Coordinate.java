@@ -87,7 +87,7 @@ public class Coordinate implements Serializable {
 	 * @param reference the reference for this coordinate
 	 * @return the Coordinate object represented by this string
 	 */
-	public static Coordinate parseCoordinate(String coordinate, String reference) {
+	public static Coordinate fromString(String coordinate, String reference) {
 		String[] coordinateParts = coordinate.split("[°'\"]");
 		
 		int length = coordinateParts.length;
@@ -106,5 +106,19 @@ public class Coordinate implements Serializable {
 		default:
 			throw new IllegalArgumentException("Invalid coordinate String");
 		}
+	}
+	
+	public static Coordinate fromDouble(double coordinate, String reference) {
+		double degrees = (int) coordinate;
+		coordinate -= degrees;
+		
+		coordinate *= 60;
+		double minutes = (int) coordinate;
+		coordinate -= minutes;
+		
+		coordinate *= 60;
+		double seconds = coordinate;
+		
+		return new Coordinate(degrees, minutes, seconds, reference);
 	}
 }

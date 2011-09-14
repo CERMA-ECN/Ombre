@@ -74,7 +74,7 @@ public class ShadowDrawingFactory {
 			//We get the sun position
 			this.sunPosition = calculateSunPosition(relativeAzimuth, calcul.getHauteurSolaire(), image.getHeight(), image.getWidth(), focal);
 			
-			double yHorizon = (double)image.getHeight()/2;
+			double yHorizon = imageInfos.getYHorizon();
 			
 			// si le soleil est de face et plus bas qu'un point de la géométrie,
 			// ou de dos et plus haut qu'un pt de la geometrie,

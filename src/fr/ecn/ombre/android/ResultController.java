@@ -53,15 +53,18 @@ public class ResultController {
 		}
 		
 	}
+	
+	protected ImageInfos imageInfos;
 
 	protected Bitmap bitmap;
 	
 	protected Point sunPosition;
-	protected int yHorizon;
 	
 	protected List<Face> shadows;
 
 	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) throws ShadowDrawingException {
+		this.imageInfos = imageInfos;
+		
 		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 		
 		this.calculOmbre(imageInfos, time, shadowsOnWalls, expendToStreet);
@@ -82,7 +85,6 @@ public class ResultController {
 		ShadowDrawing shadowDrawing = sdf.getShadowDrawing();
 		
 		this.sunPosition = sdf.getSunPosition();
-		this.yHorizon = image.getHeight()/2;
 		
 		// =============================================================//
 		// CALCUL DE L'OMBRE //
@@ -136,6 +138,13 @@ public class ResultController {
 		}
 	}
 	
+	/**
+	 * @return the imageInfos
+	 */
+	public ImageInfos getImageInfos() {
+		return imageInfos;
+	}
+
 	/**
 	 * @return the bitmap
 	 */

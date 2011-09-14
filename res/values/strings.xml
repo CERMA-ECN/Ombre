@@ -12,6 +12,7 @@
 	<string name="latitude_ref">Reference Latitude</string>
 	<string name="longitude_ref">Reference Longitude</string>
 	<string name="menu_addface">Ajouter face</string>
+	<string name="menu_edit_horizon">Modifier la ligne d\'horizon</string>
 	<string name="menu_validate">Valider</string>
 	<string name="menu_validate_line">Valider ligne</string>
 	<string name="menu_reset_face">Remise a zéro face</string>

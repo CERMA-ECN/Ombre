@@ -66,6 +66,8 @@ public class ImageInfosActivity extends Activity {
 	    	}
 	    }
 		
+		final ImageInfosActivity activity = this;
+	    
 		okButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
@@ -74,10 +76,10 @@ public class ImageInfosActivity extends Activity {
 					imageInfos.setLongitude(this.validateLongitude(editLong.getText().toString(), (String) longitudeRefSpinner.getSelectedItem()));
 					imageInfos.setOrientation(this.validateOrientation(editOrient.getText().toString()));
 					
-					Intent i = new Intent();
+					Intent i = new Intent(activity, VanishingPointsActivity.class);
 					i.putExtra("ImageInfos", imageInfos);
-					setResult(RESULT_OK, i);
-					finish();
+					startActivity(i);
+					
 				} catch (ValidationException e) {
 					alertBox(e.getMessage());
 				}
@@ -88,7 +90,7 @@ public class ImageInfosActivity extends Activity {
 					throw new ValidationException("Latitude must be set");
 				}
 				try {
-					return Coordinate.parseCoordinate(coordinate, ref);
+					return Coordinate.fromString(coordinate, ref);
 				} catch (IllegalArgumentException e) {
 					throw new ValidationException("Invalid latitude", e);
 				}
@@ -99,7 +101,7 @@ public class ImageInfosActivity extends Activity {
 					throw new ValidationException("Longitude must be set");
 				}
 				try {
-					return Coordinate.parseCoordinate(coordinate, ref);
+					return Coordinate.fromString(coordinate, ref);
 				} catch (IllegalArgumentException e) {
 					throw new ValidationException("Invalid longitude", e);
 				}

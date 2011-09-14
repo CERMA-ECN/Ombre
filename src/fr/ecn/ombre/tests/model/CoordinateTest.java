@@ -29,12 +29,12 @@ public class CoordinateTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testParseCoordinateWithToMuchNumber() {
-		Coordinate.parseCoordinate("14°45'64\"58", "N");
+		Coordinate.fromString("14°45'64\"58", "N");
 	}
 	
 	@Test(expected=NumberFormatException.class)
 	public void testParseCoordinateWithInvalidNumber() {
-		Coordinate.parseCoordinate("14°4f5'64\"", "N");
+		Coordinate.fromString("14°4f5'64\"", "N");
 	}
 
 }

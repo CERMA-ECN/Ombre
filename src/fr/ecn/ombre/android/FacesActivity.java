@@ -73,7 +73,7 @@ public class FacesActivity extends Activity implements OnTouchListener {
 	 * set up views based on controller infos
 	 */
 	protected void setUp() {
-		this.setContentView(R.layout.select_faces);
+		this.setContentView(R.layout.image);
 		
 		ImageView imageView = (ImageView) findViewById(R.id.image);
 		

@@ -100,10 +100,9 @@ public class VanishingPointsActivity extends Activity {
 			public void onClick(View v) {
 				imageInfos.setVanishingPoints(controller.getSelectedPoints());
 				
-				Intent i = new Intent();
+				Intent i = new Intent(VanishingPointsActivity.this, HorizonActivity.class);
 				i.putExtra("ImageInfos", imageInfos);
-				setResult(RESULT_OK, i);
-				finish();
+				startActivity(i);
 			}
 		});
 	}
