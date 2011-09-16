@@ -68,6 +68,10 @@ public class OmbreActivity extends Activity {
 				
 				//Read data from the exif
 				ExifReader.readExif(imageInfos);
+				
+				Intent i = new Intent(this, ImageInfosActivity.class);
+				i.putExtra("ImageInfos", imageInfos);
+				this.startActivity(i);
 			}
 			break;
 		case ACTIVITY_CAPTURE:
@@ -76,42 +80,11 @@ public class OmbreActivity extends Activity {
 				
 				imageInfos = new ImageInfos(f.getAbsolutePath());
 				
-				this.loadLocation(imageInfos);
-			}
-			break;
-		default:
-			if (resultCode == Activity.RESULT_OK) {
-				Bundle extras = data.getExtras();
-				imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
-				
-				Log.i("Ombre", imageInfos.toString());
+				Intent i = new Intent(this, SensorActivity.class);
+				i.putExtra("ImageInfos", imageInfos);
+				this.startActivity(i);
 			}
 			break;
 		}
-		
-		if (imageInfos != null) {
-			Log.i("Ombre", imageInfos.toString());
-			
-			Intent i = new Intent(this, ImageInfosActivity.class);
-			i.putExtra("ImageInfos", imageInfos);
-			this.startActivity(i);
-		}
-	}
-
-	protected void loadLocation(final ImageInfos imageInfos) {
-		LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
-			public void onStatusChanged(String arg0, int arg1, Bundle arg2) {}
-			
-			public void onProviderEnabled(String arg0) {}
-			
-			public void onProviderDisabled(String arg0) {}
-			
-			public void onLocationChanged(Location location) {
-				imageInfos.setLatitude(Coordinate.fromDouble(location.getLatitude(), "N"));
-				imageInfos.setLongitude(Coordinate.fromDouble(location.getLongitude(), "E"));
-			}
-		});
 	}
 }	

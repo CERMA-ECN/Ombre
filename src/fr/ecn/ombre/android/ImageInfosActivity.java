@@ -76,7 +76,7 @@ public class ImageInfosActivity extends Activity {
 					imageInfos.setLongitude(this.validateLongitude(editLong.getText().toString(), (String) longitudeRefSpinner.getSelectedItem()));
 					imageInfos.setOrientation(this.validateOrientation(editOrient.getText().toString()));
 					
-					Intent i = new Intent(activity, VanishingPointsActivity.class);
+					Intent i = new Intent(activity, HorizonChoiceActivity.class);
 					i.putExtra("ImageInfos", imageInfos);
 					startActivity(i);
 					

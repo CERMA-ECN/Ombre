@@ -19,5 +19,7 @@
 		<activity android:name="FacesSimpleActivity" />
 		<activity android:name=".ResultActivity" />
 		<activity android:name="HorizonActivity"></activity>
+		<activity android:name="SensorActivity" />
+		<activity android:name="HorizonChoiceActivity" />
 	</application>
 </manifest>
