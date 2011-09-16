@@ -1,5 +1,11 @@
 package fr.ecn.ombre.android.utils;
 
+/**
+ * An exception thrown when the validation of a input field failed
+ * 
+ * @author jerome
+ *
+ */
 public class ValidationException extends Exception {
 
 	/**

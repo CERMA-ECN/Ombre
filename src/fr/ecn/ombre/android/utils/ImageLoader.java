@@ -4,6 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 
+/**
+ * @author jerome
+ *
+ * A class that provide useful methods to load Android bitmaps
+ */
 public class ImageLoader {
 	
 	/**
@@ -40,9 +45,13 @@ public class ImageLoader {
 			return resizedBitmap;
 		}
 	}
-	
+
 	/**
 	 * Load an image and resize it if its height or width is greater than maxDim
+	 * 
+	 * This method will not try to resize the image to fit exactly into maxDim
+	 * but will instead resize it with the nearest factor that can be used to
+	 * directly load the resized image
 	 * 
 	 * @param path
 	 * @param maxDim

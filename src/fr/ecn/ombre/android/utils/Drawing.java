@@ -7,7 +7,20 @@ import android.graphics.Path;
 import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.Point;
 
+/**
+ * @author jerome
+ * 
+ * A class that provide methods to draw Objects into an android canvas
+ */
 public class Drawing {
+	
+	/**
+	 * Draw a given Face in a given Canvas using a given Paint
+	 * 
+	 * @param face the face to be drawn
+	 * @param canvas the canvas to draw into
+	 * @param paint the paint to use to draw
+	 */
 	public static void drawFace(Face face, Canvas canvas, Paint paint) {
 		Point[] points = face.getPoints();
 		

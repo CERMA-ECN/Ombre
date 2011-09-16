@@ -19,6 +19,8 @@ import fr.ecn.ombre.core.model.Coordinate;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
+ * An activity to check and edit the informations of the image
+ * 
  * @author Jérôme Vasseur
  *
  */

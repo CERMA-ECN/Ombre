@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
+ * An activity to select faces with intelligent scissors
+ * 
  * @author jerome
  *
  */

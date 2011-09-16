@@ -16,6 +16,12 @@ import android.widget.ImageView;
 
 import fr.ecn.ombre.core.model.ImageInfos;
 
+/**
+ * An activity to select faces with the user giving the 4 corners of the face
+ * 
+ * @author jerome
+ *
+ */
 public class FacesSimpleActivity extends Activity implements OnTouchListener {
 
 	private static final int MENU_START_FACE = Menu.FIRST;

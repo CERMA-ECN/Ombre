@@ -21,6 +21,8 @@ import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.model.Point;
 
 /**
+ * An activity to check and edit the position of the horizon line
+ * 
  * @author jerome
  *
  */

@@ -10,7 +10,19 @@ import jjil.core.Image;
 import jjil.core.RgbImage;
 import fr.ecn.ombre.core.image.filters.Gray8toRgb;
 
+/**
+ * @author jerome
+ *
+ */
 public class ImageUtils {
+
+	/**
+	 * Returns a pixel value (threshold) that can be used to divide the image
+	 * into objects and background.
+	 * 
+	 * @param image
+	 * @return
+	 */
     public static int getAutoThreshold(Gray8Image image) {
     	int[] histogram = Gray8Hist.computeHistogram(image);
         int level;
@@ -53,6 +65,12 @@ public class ImageUtils {
         return level;
     }
 
+	/**
+	 * Convert an image to a Gray8Image
+	 * 
+	 * @param image
+	 * @return
+	 */
 	public static Gray8Image toGray8(Image image) {
 		if (image instanceof Gray8Image) {
 			return (Gray8Image) image;
@@ -70,7 +88,13 @@ public class ImageUtils {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Convert an image to a RgbImage
+	 * 
+	 * @param image
+	 * @return
+	 */
 	public static RgbImage toRgb(Image image) {
 		if (image instanceof RgbImage) {
 			return (RgbImage) image;
@@ -89,20 +113,20 @@ public class ImageUtils {
 		}
 	}
 	
+	/**
+	 * Convert an image to a Bitmap
+	 * 
+	 * @param image
+	 * @return
+	 */
 	public static Bitmap toBitmap(Image image) {
 		RgbImage rgbImage = toRgb(image);
-		
-		int[] data = rgbImage.getData();
-		
-		System.out.println("Data : " + Integer.toHexString(data[45]));
 		
 		Bitmap b =  Bitmap.createBitmap(
 				rgbImage.getData(),
 				rgbImage.getWidth(),
 				rgbImage.getHeight(), 
                 Bitmap.Config.ARGB_8888);
-		
-		System.out.println("Pixel : " + Integer.toHexString(b.getPixel(45, 0)));
 		
 		return b;
 	}
