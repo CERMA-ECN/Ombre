@@ -157,7 +157,7 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 			this.locked = false;
 			return true;
 		case MENU_VALIDATE:
-			Intent i = new Intent(this, FacesSimpleActivity.class);
+			Intent i = new Intent(this, FacesChoiceActivity.class);
 			i.putExtra("ImageInfos", this.imageInfos);
 			this.startActivity(i);
 			return true;
