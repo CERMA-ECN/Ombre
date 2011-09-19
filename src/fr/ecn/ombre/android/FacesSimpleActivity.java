@@ -42,9 +42,21 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 				.getSerializable("ImageInfos");
 		this.imageInfos = imageInfos;
 
-		this.controller = new FacesSimpleController(imageInfos);
+		this.controller = (FacesSimpleController) this.getLastNonConfigurationInstance();
+		
+		if (this.controller == null) {
+			this.controller = new FacesSimpleController(imageInfos);
+		}
 
 		this.setUp();
+	}
+	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onRetainNonConfigurationInstance()
+	 */
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		return this.controller;
 	}
 
 	/**
