@@ -46,10 +46,6 @@ public class FacesDrawable extends Drawable {
 		if (this.controller.currentLine != null) {
 			this.controller.currentLine.draw(canvas);
 		}
-		
-		if (this.controller.currentFace != null) {
-			Drawing.drawFace(this.controller.currentFace, canvas, paint);
-		}
 	}
 
 	/* (non-Javadoc)

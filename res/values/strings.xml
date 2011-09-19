@@ -14,10 +14,10 @@
 	<string name="menu_addface">Ajouter face</string>
 	<string name="menu_edit_horizon">Modifier la ligne d\'horizon</string>
 	<string name="menu_validate">Valider</string>
-	<string name="menu_validate_line">Valider ligne</string>
-	<string name="menu_reset_face">Remise a zéro face</string>
-	<string name="menu_validate_face">Validate face</string>
 	<string name="recompute_groups">Recalculer groupes</string>
 	<string name="expandToStreet">Agrandir à la rue</string>
 	<string name="shadowsOnWalls">Ombre sur le mur</string>
+	<string name="remove_last_face">Enlever la dernière face</string>
+	<string name="cancel_face">Annuler la face</string>
+	<string name="end_face">Terminer la face</string>
 </resources>

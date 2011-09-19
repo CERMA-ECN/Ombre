@@ -22,16 +22,13 @@ public class FacesController {
 
 	protected Scissor scissor;
 	
-	protected List<Face> faces = new LinkedList<Face>();
-	
-	public static enum State {
-		IDLE, DRAWING, VALIDATION
-	}
-	
-	protected State state = State.IDLE;
+	// We explicitly need a LinkedList here because we need the capacity to
+	// remove the last element of the list
+	// In fact what we need is only something that implements the Deque and the
+	// List interfaces
+	protected LinkedList<Face> faces = new LinkedList<Face>();
 	
 	protected ScissorLine currentLine;
-	protected Face currentFace;
 
 	/**
 	 * @param imageInfos
@@ -43,18 +40,18 @@ public class FacesController {
 
 		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
 	}
-
+	
 	/**
-	 * @return the state
+	 * @return true if the controller isn't in face edition mode
 	 */
-	public State getState() {
-		return state;
+	public boolean isIdle() {
+		return this.currentLine == null;
 	}
 
 	/**
 	 * Tell this controller to generate a new scissor line.
 	 */
-	public void startLine() {
+	public void startFace() {
 		if (this.currentLine != null) {
 			if (this.currentLine.getState() != SCISSOR_STATE.HOLD) {
 				this.currentLine.endScissor();
@@ -70,42 +67,33 @@ public class FacesController {
 		this.currentLine = new ScissorLine(this.scissor);
 
 		this.currentLine.setActive();
-		
-		this.state = State.DRAWING;
-	}
-
-	public void resetLine() {
-		this.currentLine.reset();
-		this.currentLine.setActive();
 	}
 	
-	public void validateLine() {
+	/**
+	 * End the current face
+	 */
+	public void endFace() {
 		if (this.currentLine.getState() != SCISSOR_STATE.HOLD) {
 			this.currentLine.endScissor();
 		}
 		
-		this.currentFace = this.convertLineToFace(this.currentLine);
+		this.faces.add(this.convertLineToFace(this.currentLine));
 		
 		this.currentLine = null;
-		
-		this.state = State.VALIDATION;
 	}
 	
-	public void resetFace() {
-		this.currentFace = null;
-		
-		this.currentLine = new ScissorLine(this.scissor);
-		this.currentLine.setActive();
-		
-		this.state = State.DRAWING;
+	/**
+	 * Cancel the current face
+	 */
+	public void cancelFace() {
+		this.currentLine = null;
 	}
 	
-	public void validateFace() {
-		this.faces.add(this.currentFace);
-		
-		this.currentFace = null;
-		
-		this.state = State.IDLE;
+	/**
+	 * Remove the last face added
+	 */
+	public void removeLastFace() {
+		this.faces.removeLast();
 	}
 	
 	/**

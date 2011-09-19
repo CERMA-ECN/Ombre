@@ -27,12 +27,12 @@ import fr.ecn.ombre.core.model.ImageInfos;
  */
 public class FacesActivity extends Activity implements OnTouchListener {
 
-	private static final int MENU_START_FACE = Menu.FIRST;
-	private static final int MENU_VALIDATE = Menu.FIRST + 1;
-	private static final int MENU_RESET_LINE = Menu.FIRST + 2;
-	private static final int MENU_VALIDATE_LINE = Menu.FIRST + 3;
-	private static final int MENU_RESET_FACE = Menu.FIRST + 4;
-	private static final int MENU_VALIDATE_FACE = Menu.FIRST + 5;
+	private static final int MENU_ADD_FACE = Menu.FIRST;
+	private static final int MENU_REMOVE_LAST_FACE = Menu.FIRST + 1;
+	private static final int MENU_VALIDATE = Menu.FIRST + 2;
+	
+	private static final int MENU_END_FACE = Menu.FIRST + 3;
+	private static final int MENU_CANCEL_FACE = Menu.FIRST + 4;
 	
 	protected ImageInfos imageInfos;
 	
@@ -87,7 +87,7 @@ public class FacesActivity extends Activity implements OnTouchListener {
 	}
 
 	public boolean onTouch(View v, MotionEvent event) {
-		if (this.controller.getState() != FacesController.State.DRAWING) {
+		if (this.controller.isIdle()) {
 			return false;
 		}
 		
@@ -121,14 +121,6 @@ public class FacesActivity extends Activity implements OnTouchListener {
 	public Object onRetainNonConfigurationInstance() {
 		return this.controller;
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		boolean result = super.onCreateOptionsMenu(menu);
-		menu.add(0, MENU_START_FACE, 0, R.string.menu_addface);
-		menu.add(0, MENU_VALIDATE, 0, R.string.menu_validate);
-		return result;
-	}
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
@@ -136,19 +128,17 @@ public class FacesActivity extends Activity implements OnTouchListener {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		switch (this.controller.getState()) {
-		case IDLE:
-			menu.add(0, MENU_START_FACE, 0, R.string.menu_addface);
-			menu.add(0, MENU_VALIDATE, 0, R.string.menu_validate);
-			break;
-		case DRAWING:
-			menu.add(0, MENU_RESET_LINE, 0, R.string.menu_reset_face);
-			menu.add(0, MENU_VALIDATE_LINE, 0, R.string.menu_validate_line);
-			break;
-		case VALIDATION:
-			menu.add(0, MENU_RESET_FACE, 0, R.string.menu_reset_face);
-			menu.add(0, MENU_VALIDATE_FACE, 0, R.string.menu_validate_face);
-			break;
+		
+		if (this.controller.isIdle()) {
+			// If the controller has at least one face stored
+			boolean hasFaces = this.controller.getFaces().size() > 0;
+
+			menu.add(0, MENU_ADD_FACE, 0, R.string.menu_addface);
+			menu.add(0, MENU_REMOVE_LAST_FACE, 0, R.string.remove_last_face).setEnabled(hasFaces);
+			menu.add(0, MENU_VALIDATE, 0, R.string.menu_validate).setEnabled(hasFaces);
+		} else {
+			menu.add(0, MENU_END_FACE, 0, R.string.end_face);
+			menu.add(0, MENU_CANCEL_FACE, 0, R.string.cancel_face);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -156,32 +146,36 @@ public class FacesActivity extends Activity implements OnTouchListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case MENU_START_FACE:
-			this.controller.startLine();
+		case MENU_ADD_FACE:
+			this.controller.startFace();
+			
+			return true;
+		case MENU_REMOVE_LAST_FACE:
+			this.controller.removeLastFace();
+			
 			this.findViewById(R.id.image).invalidate();
+			
 			return true;
 		case MENU_VALIDATE:
 			this.imageInfos.setFaces(this.controller.getFaces());
-			Intent i = new Intent();
+			
+			Intent i = new Intent(this, OptionsActivity.class);
 			i.putExtra("ImageInfos", this.imageInfos);
-			setResult(RESULT_OK, i);
-			finish();
+			this.startActivity(i);
+			
 			return true;
-		case MENU_RESET_LINE:
-			this.controller.resetLine();
+			
+		case MENU_END_FACE:
+			this.controller.endFace();
+			
 			this.findViewById(R.id.image).invalidate();
+			
 			return true;
-		case MENU_VALIDATE_LINE:
-			this.controller.validateLine();
+		case MENU_CANCEL_FACE:
+			this.controller.cancelFace();
+			
 			this.findViewById(R.id.image).invalidate();
-			return true;
-		case MENU_RESET_FACE:
-			this.controller.resetFace();
-			this.findViewById(R.id.image).invalidate();
-			return true;
-		case MENU_VALIDATE_FACE:
-			this.controller.validateFace();
-			this.findViewById(R.id.image).invalidate();
+			
 			return true;
 		}
 		
