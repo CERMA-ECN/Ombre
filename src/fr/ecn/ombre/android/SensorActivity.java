@@ -14,7 +14,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import fr.ecn.ombre.core.model.Coordinate;
 import fr.ecn.ombre.core.model.ImageInfos;
@@ -41,7 +42,7 @@ public class SensorActivity extends Activity implements LocationListener, Sensor
 		Bundle extras = getIntent().getExtras();
 		this.imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
-		this.setContentView(R.layout.computing);
+		this.setContentView(R.layout.sensor);
 		
 		LocationManager lm = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -49,15 +50,39 @@ public class SensorActivity extends Activity implements LocationListener, Sensor
 		SensorManager sm = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 		sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_NORMAL);
 		
+		Button skip = (Button) this.findViewById(R.id.skip);
+		skip.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View view) {
+				startNextActivity();
+			}
+			
+		});
+		
 		super.onCreate(savedInstanceState);
 	}
 	
 	protected void checkInformations() {
 		if (this.hasLocation && this.hasAzimuth) {
-			Intent i = new Intent(this, ImageInfosActivity.class);
-			i.putExtra("ImageInfos", this.imageInfos);
-			this.startActivity(i);
+			this.startNextActivity();
 		}
+	}
+	
+	protected void startNextActivity() {
+		//Remove Listeners if not already removed
+		if (!this.hasLocation) {
+			LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+			lm.removeUpdates(this);
+		}
+		
+		if (!this.hasAzimuth) {
+			SensorManager sm = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+			sm.unregisterListener(this);
+		}
+		
+		Intent i = new Intent(this, ImageInfosActivity.class);
+		i.putExtra("ImageInfos", this.imageInfos);
+		this.startActivity(i);
 	}
 	
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {}
@@ -67,8 +92,6 @@ public class SensorActivity extends Activity implements LocationListener, Sensor
 	public void onProviderDisabled(String arg0) {}
 	
 	public void onLocationChanged(Location location) {
-		Log.i("Ombre", "Location");
-		
 		this.imageInfos.setLatitude(Coordinate.fromDouble(location.getLatitude(), "N"));
 		this.imageInfos.setLongitude(Coordinate.fromDouble(location.getLongitude(), "E"));
 		
@@ -83,8 +106,6 @@ public class SensorActivity extends Activity implements LocationListener, Sensor
 	public void onAccuracyChanged(Sensor arg0, int arg1) {}
 
 	public void onSensorChanged(SensorEvent event) {
-		Log.i("Ombre", "Sensor : Azimuth = " + event.values[0]);
-		
 		this.imageInfos.setOrientation((double) event.values[0]);
 		
 		this.hasAzimuth = true;
