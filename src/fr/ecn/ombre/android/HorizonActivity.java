@@ -38,7 +38,7 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 	 */
 	protected Matrix matrix = null;
 	
-	protected boolean locked;
+	protected boolean locked = true;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -56,6 +56,8 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 		
 		ImageInfos imageInfos = this.imageInfos;
 		
+		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
+		
 		//We get yHorizon from the vanishing points if possible
 		if (imageInfos.getYHorizon() == null) {
 			List<Point> vanishingPoints = imageInfos.getVanishingPoints();
@@ -70,17 +72,21 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 				y /= vanishingPoints.size();
 				
 				imageInfos.setYHorizon(y);
+			} else {
+				// If we don't have informations on the vanishing points we just set
+				// the horizon line in the middle of the image.
+				imageInfos.setYHorizon((double)bitmap.getHeight()/2);
+
+				// If the horizon line was set by default we directly start in
+				// edition mode
+				this.locked = false;
 			}
 		}
-		
-		this.locked = (imageInfos.getYHorizon() != null);
 		
 		//Setting layout
 		this.setContentView(R.layout.image);
 		
 		ImageView image = (ImageView) this.findViewById(R.id.image);
-		
-		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 		
 		image.setImageDrawable(new HorizonDrawable(bitmap, imageInfos));
 		image.setOnTouchListener(this);
