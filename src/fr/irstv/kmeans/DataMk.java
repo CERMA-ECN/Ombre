@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import pg.data.Group;
-import pg.data.SegmentPG;
 import fr.ecn.ombre.segmentdetection.ImageSegment;
 import fr.irstv.dataModel.DataPoint;
 import fr.irstv.dataModel.MkDataPoint;
@@ -32,31 +30,7 @@ public class DataMk extends DataCorpus {
 	 */
 
 	protected LinkedList<MkDataPoint> MkCorpus;
-
-	public DataMk(Group g){
-		MkCorpus = new LinkedList<MkDataPoint>();
-		readDataFromSegments(g);
-	}
-
-	private void readDataFromSegments(Group g) {
-
-		List<SegmentPG> segments=g.getSeg();
-
-		for(int i=0;i<segments.size();i++){
-			DataPoint dp1 = new DataPoint(2);
-			DataPoint dp2 = new DataPoint(2);
-
-			dp1.set(0, segments.get(i).getP1().getX());
-			dp1.set(1, segments.get(i).getP1().getY());
-			dp2.set(0,segments.get(i).getP2().getX());
-			dp2.set(1,segments.get(i).getP2().getY());
-			Segment s = new Segment(dp1,dp2,null);
-			MkDataPoint mkp = new MkDataPoint(s.getHPoint(),s);
-			corpus.add(mkp);
-			MkCorpus.add(mkp);
-		}
-	}
-
+	
 	public LinkedList<MkDataPoint> getMkCorpus() {
 		return MkCorpus;
 	}
