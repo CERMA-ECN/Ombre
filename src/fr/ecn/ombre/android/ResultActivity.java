@@ -7,10 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -18,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import fr.ecn.common.android.Dialog;
 import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 
@@ -32,6 +29,7 @@ public class ResultActivity extends Activity {
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,25 +62,21 @@ public class ResultActivity extends Activity {
 					});
 				} catch (InterruptedException e) {
 					Log.w("Ombre", e);
-				} catch (ExecutionException e) {
+				} catch (final ExecutionException e) {
 					if (e.getCause() instanceof ShadowDrawingException) {
-						final ShadowDrawingException sde = (ShadowDrawingException) e.getCause();
-						
 						runOnUiThread(new Runnable() {
 							public void run() {
-								new AlertDialog.Builder(ResultActivity.this)
-									.setTitle("Erreur")
-									.setMessage(sde.getMessage())
-									.setNeutralButton("Fermer", new OnClickListener() {
-										public void onClick(DialogInterface dialog, int which) {
-											finish();
-										}
-									})
-									.show();
+								Dialog.errorDialog(ResultActivity.this, e.getCause().getMessage());
 							}
 						});
 					} else {
 						Log.w("Ombre", e);
+						
+						runOnUiThread(new Runnable() {
+							public void run() {
+								Dialog.errorDialog(ResultActivity.this, "Une erreur c'est produite lors du calcul du résultat");
+							}
+						});
 					}
 				}
 			}
