@@ -5,7 +5,9 @@ package fr.ecn.ombre.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import fr.ecn.ombre.android.utils.ImageInfosDb;
 import fr.ecn.ombre.android.utils.ValidationException;
 import fr.ecn.ombre.core.model.Coordinate;
 import fr.ecn.ombre.core.model.ImageInfos;
@@ -53,6 +56,13 @@ public class ImageInfosActivity extends Activity {
 		final ImageInfos imageInfos = (ImageInfos) extras.getSerializable("ImageInfos");
 		
 	    if (imageInfos != null) {
+			Cursor cursor = new ImageInfosDb(ImageInfosActivity.this).getReadableDatabase().query(
+					"infos", new String[] { "orientation" }, "path = ?", new String[] {imageInfos.getPath()},
+					null, null, null);
+			if (cursor != null && cursor.moveToFirst()) { 
+				imageInfos.setOrientation(cursor.getDouble(0));
+			}
+	    	
 			if (imageInfos.getLatitude() != null) {
 				editLat.setText(imageInfos.getLatitude().getDMSString());
 				latitudeRefSpinner.setSelection(latitudeAdapter.getPosition(imageInfos.getLatitude().getRef()));
@@ -77,6 +87,11 @@ public class ImageInfosActivity extends Activity {
 					imageInfos.setLatitude(this.validateLatitude(editLat.getText().toString(), (String) latitudeRefSpinner.getSelectedItem()));
 					imageInfos.setLongitude(this.validateLongitude(editLong.getText().toString(), (String) longitudeRefSpinner.getSelectedItem()));
 					imageInfos.setOrientation(this.validateOrientation(editOrient.getText().toString()));
+					
+					ContentValues cv = new ContentValues();
+					cv.put("path", imageInfos.getPath());
+					cv.put("orientation", imageInfos.getOrientation());
+					new ImageInfosDb(ImageInfosActivity.this).getWritableDatabase().insert("infos", null, cv);
 					
 					Intent i = new Intent(activity, HorizonChoiceActivity.class);
 					i.putExtra("ImageInfos", imageInfos);
