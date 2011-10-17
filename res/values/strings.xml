@@ -20,4 +20,6 @@
 	<string name="remove_last_face">Enlever la dernière face</string>
 	<string name="cancel_face">Annuler la face</string>
 	<string name="end_face">Terminer la face</string>
+	<string name="save_image">Sauvegarder l\'image</string>
+	<string name="return_home">Retour a l\'acceuil</string>
 </resources>

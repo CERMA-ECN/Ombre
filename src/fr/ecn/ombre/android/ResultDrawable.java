@@ -62,4 +62,20 @@ public class ResultDrawable extends Drawable {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see android.graphics.drawable.Drawable#getIntrinsicHeight()
+	 */
+	@Override
+	public int getIntrinsicHeight() {
+		return this.controller.getBitmap().getHeight();
+	}
+
+	/* (non-Javadoc)
+	 * @see android.graphics.drawable.Drawable#getIntrinsicWidth()
+	 */
+	@Override
+	public int getIntrinsicWidth() {
+		return this.controller.getBitmap().getWidth();
+	}
+
 }
