@@ -1,5 +1,7 @@
 package fr.ecn.ombre.android;
 
+import java.text.SimpleDateFormat;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -42,6 +44,12 @@ public class ResultDrawable extends Drawable {
 		for (Face fOmbre : this.controller.getShadows()) {
 			Drawing.drawFace(fOmbre, canvas, paint);
 		}
+		
+		//Draw the time of the simulation
+		paint = new Paint();
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(24);
+		canvas.drawText(new SimpleDateFormat("MM/dd/yyyy H:m").format(this.controller.getTime().getTime()), 5, 29, paint);
 	}
 
 	@Override

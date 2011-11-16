@@ -55,6 +55,7 @@ public class ResultController {
 	}
 	
 	protected ImageInfos imageInfos;
+	protected Calendar time;
 
 	protected Bitmap bitmap;
 	
@@ -64,6 +65,7 @@ public class ResultController {
 
 	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) throws ShadowDrawingException {
 		this.imageInfos = imageInfos;
+		this.time = time;
 		
 		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 		
@@ -143,6 +145,13 @@ public class ResultController {
 	 */
 	public ImageInfos getImageInfos() {
 		return imageInfos;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public Calendar getTime() {
+		return time;
 	}
 
 	/**
