@@ -7,8 +7,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,6 +28,8 @@ import fr.ecn.ombre.core.model.ImageInfos;
  * 
  */
 public class OptionsActivity extends Activity {
+
+	private static final int MENU_SPECIAL_DATE = Menu.FIRST;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,5 +76,41 @@ public class OptionsActivity extends Activity {
 				startActivity(i);
 			}
 		});
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		boolean result = super.onCreateOptionsMenu(menu);
+		menu.add(0, MENU_SPECIAL_DATE, 0, R.string.special_dates);
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onMenuItemSelected(int, android.view.MenuItem)
+	 */
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_SPECIAL_DATE:
+			final CharSequence[] items = {"Solstice d'été", "Solstice d'hiver", "Équinoxe de mars", "Équinoxe de sept."};
+			final int[] monthOfYear = {5, 11, 2, 8};
+			final int[] dayOfMonth = {21, 21, 20, 22};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Jour");
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
+			    	datePicker.updateDate(datePicker.getYear(), monthOfYear[item], dayOfMonth[item]);
+				}
+			});
+			builder.create().show();
+					
+			return true;
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 }
