@@ -49,7 +49,7 @@ public class ResultDrawable extends Drawable {
 		paint = new Paint();
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(24);
-		canvas.drawText(new SimpleDateFormat("MM/dd/yyyy H:m").format(this.controller.getTime().getTime()), 5, 29, paint);
+		canvas.drawText(new SimpleDateFormat("MM/dd/yyyy HH:mm").format(this.controller.getTime().getTime()), 5, 29, paint);
 	}
 
 	@Override
