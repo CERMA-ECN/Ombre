@@ -23,4 +23,11 @@
 	<string name="save_image">Sauvegarder l\'image</string>
 	<string name="return_home">Retour à l\'accueil</string>
 	<string name="special_dates">Dates spéciales</string>
+	<string name="time_evolution">Évolution au fil du temps</string>
+    <string-array name="time_step_type">
+        <item>Heures</item>
+        <item>Jours</item>
+        <item>Mois</item>
+    </string-array>
+	
 </resources>

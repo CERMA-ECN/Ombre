@@ -4,6 +4,9 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import android.graphics.Bitmap;
 
@@ -18,71 +21,48 @@ import fr.ecn.ombre.core.shadows.ShadowDrawing;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;
 
-public class ResultController {
+public class ResultController implements Callable<Void> {
 	
-	/**
-	 * A callable that create a ResultController Object
-	 * 
-	 * @author jerome
-	 *
-	 */
-	public static class ResultCallable implements Callable<ResultController> {
-		
-		protected ImageInfos imageInfos;
-		protected Calendar time;
-		protected boolean shadowsOnWalls;
-		protected boolean expendToStreet;
-		
-		/**
-		 * @param imageInfos
-		 * @param time
-		 * @param shadowsOnWalls
-		 * @param expendToStreet
-		 */
-		public ResultCallable(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls,
-				boolean expendToStreet) {
-			super();
-			this.imageInfos = imageInfos;
-			this.time = time;
-			this.shadowsOnWalls = shadowsOnWalls;
-			this.expendToStreet = expendToStreet;
-		}
-
-		public ResultController call() throws Exception {
-			return new ResultController(imageInfos, time, shadowsOnWalls, expendToStreet);
-		}
-		
-	}
-	
+	//Params
 	protected ImageInfos imageInfos;
 	protected Calendar time;
+	protected boolean shadowsOnWalls;
+	protected boolean expendToStreet;
 
+	protected boolean evolution = false;
+	protected int time_step_field;
+	protected int time_step_value;
+	
 	protected Bitmap bitmap;
 	
+	//Results
 	protected Point sunPosition;
-	
 	protected List<Face> shadows;
+	
+	private Future<Void> future;
 
-	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) throws ShadowDrawingException {
+	public ResultController(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) {
 		this.imageInfos = imageInfos;
 		this.time = time;
+		this.shadowsOnWalls = shadowsOnWalls;
+		this.expendToStreet = expendToStreet;
 		
 		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 		
-		this.calculOmbre(imageInfos, time, shadowsOnWalls, expendToStreet);
+		this.startComputation();
 	}
 
-	protected void calculOmbre(ImageInfos imageInfos, Calendar time, boolean shadowsOnWalls, boolean expendToStreet) throws ShadowDrawingException {
+	public Void call() throws ShadowDrawingException {
 		this.shadows = new LinkedList<Face>();
 		
 		// test si la geometrie n'est pas vide:
-		if (imageInfos.getFaces().isEmpty()) {
+		if (this.imageInfos.getFaces().isEmpty()) {
 			throw new ShadowDrawingException("Vous devez rentrer au moins une face");
 		}
 
 		Image image = new BitmapImage(this.bitmap);
 		
-		ShadowDrawingFactory sdf = new ShadowDrawingFactory(image, imageInfos, time);
+		ShadowDrawingFactory sdf = new ShadowDrawingFactory(image, this.imageInfos, time);
 
 		ShadowDrawing shadowDrawing = sdf.getShadowDrawing();
 		
@@ -138,6 +118,41 @@ public class ResultController {
 			}
 			this.shadows.addAll(faces);
 		}
+		
+		return null;
+	}
+	
+	public void startComputation() {
+		this.future = Executors.newSingleThreadExecutor().submit(this);
+	}
+	
+	public void waitComputation() throws ExecutionException {
+		try {
+			this.future.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean isEvolution() {
+		return this.evolution;
+	}
+	
+	public void setTimeStep(int time_step_field, int time_step_value) {
+		this.time_step_field = time_step_field;
+		this.time_step_value = time_step_value;
+		this.evolution = true;
+	}
+	
+	public void stepForward() {
+		this.time.add(time_step_field, time_step_value);
+		this.startComputation();
+	}
+	
+	public void stepBackward() {
+		this.time.add(time_step_field, -time_step_value);
+		this.startComputation();
 	}
 	
 	/**
