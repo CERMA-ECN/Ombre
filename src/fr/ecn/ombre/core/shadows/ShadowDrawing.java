@@ -3,10 +3,10 @@ package fr.ecn.ombre.core.shadows;
 import java.util.LinkedList;
 import java.util.List;
 
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.core.model.Couple;
 import fr.ecn.ombre.core.model.Droite;
 import fr.ecn.ombre.core.model.Face;
-import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.core.model.Segment;
 
 public abstract class ShadowDrawing {

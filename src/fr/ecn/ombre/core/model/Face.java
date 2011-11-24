@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.core.image.Image;
 
 public class Face implements Serializable {
@@ -160,7 +161,7 @@ public class Face implements Serializable {
 	 */
 	public boolean isLeft() {
 		int i = this.getPlusProche();
-		if (this.couples[i].pointSol.x < this.couples[(i + 1) % 2].pointSol.x) {
+		if (this.couples[i].pointSol.getX() < this.couples[(i + 1) % 2].pointSol.getX()) {
 			return true;
 		} else
 			return false;
@@ -356,7 +357,7 @@ public class Face implements Serializable {
 			j = f2.getPlusProche();
 		}
 
-		Point dernierPointMur = ligneOmbreMur.calculY(f2.getCouples()[j].pointAir.x);
+		Point dernierPointMur = ligneOmbreMur.calculY(f2.getCouples()[j].pointAir.getX());
 		// On doit à présent calculer son équivalent sur F:
 		// On calcule le rayon du Soleil pour ce point:
 		Droite rayonDernierPoint = new Droite(coupleSoleil.getPointAir(), dernierPointMur);
@@ -396,9 +397,9 @@ public class Face implements Serializable {
 			Segment droiteSolHaute = new Segment(faceOmbre.couples[(i + 1) % 2].pointAir,
 					faceOmbre.couples[(i + 1) % 2].pointSol);
 			Point intersection1 = droiteSolHaute
-					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.x);
+					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
 
-			if ((intersection1.x > droiteSolHaute.xmin) && (intersection1.x < droiteSolHaute.xmax)) {
+			if ((intersection1.getX() > droiteSolHaute.xmin) && (intersection1.getX() < droiteSolHaute.xmax)) {
 				// Alors on est dans le premier cas
 				faceSol2 = new Face(new Couple(intersection1,
 						this.couples[(this.getPlusProche() + 1) % 2].pointSol), new Couple(f2
@@ -406,7 +407,7 @@ public class Face implements Serializable {
 			} else {
 				Droite ombreSol = faceOmbre.getTopLine();
 				Point intersection2 = ombreSol
-						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.x);
+						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
 				// on calcule le point de d�part de cette ombre
 				Droite rayonIntersection = new Droite(coupleSoleil.pointSol, intersection2);
 				Point pointDepartIntersection = rayonIntersection.intersection(batimentFBas);
@@ -448,8 +449,8 @@ public class Face implements Serializable {
 		// On regarde maintenant si ces intersections ce situe bien dans le
 		// segment ombreSol
 		// Il suffit de ne tester qu'un point!
-		if ((pointOmbreHaut.y < f2Sol.calculY(pointOmbreHaut.x).y)
-				&& (pointOmbreBas.y < f2Sol.calculY(pointOmbreBas.x).y)) {
+		if ((pointOmbreHaut.getY() < f2Sol.calculY(pointOmbreHaut.getX()).getY())
+				&& (pointOmbreBas.getY() < f2Sol.calculY(pointOmbreBas.getX()).getY())) {
 			// Dans ce cas, on a bien l'ombre sur le batiment
 			// On calcule alors les points ayant leur ombre sur ce batiment!
 
@@ -470,15 +471,15 @@ public class Face implements Serializable {
 			Point departSolBas = fSol.intersection(rayonSolBas);
 
 			Droite fHaut = this.getTopLine();
-			Point departHaut = fHaut.calculY(departSolHaut.x);
-			Point departBas = fHaut.calculY(departSolBas.x);
+			Point departHaut = fHaut.calculY(departSolHaut.getX());
+			Point departBas = fHaut.calculY(departSolBas.getX());
 			
 			Droite rayonHaut = new Droite(departHaut, pointSolOmbreHaut);
 			Droite rayonBas = new Droite(departBas, pointSolOmbreBas);
 
 			Point pointF2MurHaut = rayonHaut
-					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.x);
-			Point pointF2MurBas = rayonBas.calculY(f2.couples[f2.getPlusProche()].pointSol.x);
+					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
+			Point pointF2MurBas = rayonBas.calculY(f2.couples[f2.getPlusProche()].pointSol.getX());
 
 			// On peut alors tracer les différentes faces
 			Face face1 = new Face(new Couple(pointF2SolHaut, departSolHaut), new Couple(pointF2SolBas, departSolBas), false);
@@ -497,9 +498,9 @@ public class Face implements Serializable {
 			Segment droiteSolHaute = new Segment(
 					this.couples[(this.getPlusProche() + 1) % 2].pointSol, pointOmbreHaut);
 			Point intersection1 = droiteSolHaute
-					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.x);
+					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
 
-			if ((intersection1.x > droiteSolHaute.xmin) && (intersection1.x < droiteSolHaute.xmax)) {
+			if ((intersection1.getX() > droiteSolHaute.xmin) && (intersection1.getX() < droiteSolHaute.xmax)) {
 				// Alors on est dans le premier cas
 				face4 = new Face(
 						new Couple(intersection1, this.couples[(this.getPlusProche() + 1) % 2].pointSol),
@@ -507,7 +508,7 @@ public class Face implements Serializable {
 						false);
 			} else {
 				Point intersection2 = ombreSol
-						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.x);
+						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
 				// on calcule le point de d�part de cette ombre
 				Droite rayonIntersection = new Droite(coupleSoleil.pointSol, intersection2);
 				Point pointDepartIntersection = rayonIntersection.intersection(fSol);

@@ -1,9 +1,9 @@
 package fr.ecn.ombre.core.shadows;
 
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.core.model.Couple;
 import fr.ecn.ombre.core.model.Droite;
 import fr.ecn.ombre.core.model.Face;
-import fr.ecn.ombre.core.model.Point;
 
 
 /**

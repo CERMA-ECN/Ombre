@@ -1,5 +1,7 @@
 package fr.ecn.ombre.core.model;
 
+import fr.ecn.common.core.geometry.Point;
+
 /**
  * 
  * @author Claire Cervera
@@ -27,8 +29,8 @@ public class Droite {
 	 * @param P2
 	 */
 	public Droite(Point P1, Point P2) {
-		this.a = (double) ((int) P1.getY() - (int) P2.getY()) / ((int) P1.getX() - (int) P2.getX());
-		this.b = (double) ((int) P1.getY() - this.a * (int) P1.getX());
+		this.a = (P1.getY() - P2.getY()) / (P1.getX() - P2.getX());
+		this.b = P1.getY() - this.a * P1.getX();
 	}
 
 	/**

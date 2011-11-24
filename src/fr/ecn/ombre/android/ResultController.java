@@ -10,13 +10,13 @@ import java.util.concurrent.Future;
 
 import android.graphics.Bitmap;
 
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.android.image.BitmapImage;
 import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.image.Image;
 import fr.ecn.ombre.core.model.Couple;
 import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
-import fr.ecn.ombre.core.model.Point;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import fr.ecn.common.android.image.BitmapConvertor;
 import fr.ecn.common.android.image.BitmapLoader;
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.geometry.Segment;
 import fr.ecn.common.core.image.Image;
 import fr.ecn.common.core.image.utils.ImageConvertor;
@@ -16,7 +17,6 @@ import fr.ecn.common.core.segmentdetection.EdgeDetection;
 import fr.ecn.common.core.segmentdetection.Edgel;
 import fr.ecn.common.core.segmentdetection.SegmentDetection;
 import fr.ecn.ombre.core.model.ImageInfos;
-import fr.ecn.ombre.core.model.Point;
 import fr.irstv.dataModel.CircleKDistance;
 import fr.irstv.kmeans.CleaningDataGroups;
 import fr.irstv.kmeans.DataGroup;

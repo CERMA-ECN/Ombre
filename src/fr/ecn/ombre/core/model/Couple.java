@@ -2,6 +2,8 @@ package fr.ecn.ombre.core.model;
 
 import java.io.Serializable;
 
+import fr.ecn.common.core.geometry.Point;
+
 /**
  * 
  * @author Claire Cervera

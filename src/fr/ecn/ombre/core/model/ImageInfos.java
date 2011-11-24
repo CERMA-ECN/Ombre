@@ -3,6 +3,8 @@ package fr.ecn.ombre.core.model;
 import java.io.Serializable;
 import java.util.List;
 
+import fr.ecn.common.core.geometry.Point;
+
 public class ImageInfos implements Serializable {
 	/**
 	 * 

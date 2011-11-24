@@ -1,5 +1,7 @@
 package fr.ecn.ombre.core.model;
 
+import fr.ecn.common.core.geometry.Point;
+
 /**
  * 
  * @author Claire Cervera

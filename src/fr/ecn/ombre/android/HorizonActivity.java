@@ -16,9 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.model.ImageInfos;
-import fr.ecn.ombre.core.model.Point;
 
 /**
  * An activity to check and edit the position of the horizon line

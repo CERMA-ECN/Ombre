@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.core.model.Face;
-import fr.ecn.ombre.core.model.Point;
 
 /**
  * @author jerome
