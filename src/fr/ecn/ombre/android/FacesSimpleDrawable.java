@@ -29,24 +29,30 @@ public class FacesSimpleDrawable extends Drawable {
 		Paint paint = new Paint();
 		paint.setColor(Color.YELLOW);
 		paint.setStyle(Paint.Style.STROKE);
+		
+		Paint currentPaint = new Paint();
+		currentPaint.setColor(Color.RED);
+		currentPaint.setStyle(Paint.Style.STROKE);
 
 		for (Face face : this.controller.getFaces()) {
-			Drawing.drawFace(face, canvas, paint);
+			if (face == this.controller.getFace()) {
+				Drawing.drawFace(face, canvas, currentPaint);
+			} else {
+				Drawing.drawFace(face, canvas, paint);
+			}
 		}
-
-		paint.setColor(Color.RED);
 		
 		List<Point> points = this.controller.getPoints();
 
 		if (points != null) {
 			if (points.size() == 1) {
 				canvas.drawPoint((int) points.get(0).getX(), (int) points
-						.get(0).getY(), paint);
+						.get(0).getY(), currentPaint);
 			} else {
 				for (int i = 1; i < points.size(); i++) {
 					canvas.drawLine((int) points.get(i - 1).getX(),
 							(int) points.get(i - 1).getY(), (int) points.get(i)
-									.getX(), (int) points.get(i).getY(), paint);
+									.getX(), (int) points.get(i).getY(), currentPaint);
 				}
 			}
 		}

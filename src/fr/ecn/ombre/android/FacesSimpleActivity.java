@@ -25,6 +25,7 @@ import fr.ecn.ombre.core.model.ImageInfos;
 public class FacesSimpleActivity extends Activity implements OnTouchListener {
 
 	private static final int MENU_ADD_FACE = Menu.FIRST;
+	private static final int MENU_EDIT_LAST_FACE = Menu.FIRST + 5;
 	private static final int MENU_REMOVE_LAST_FACE = Menu.FIRST + 1;
 	private static final int MENU_VALIDATE = Menu.FIRST + 2;
 	
@@ -84,10 +85,6 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 		if (this.controller.isIdle()) {
 			return false;
 		}
-		
-		if (event.getAction() != MotionEvent.ACTION_DOWN) {
-			return false;
-		}
 
 		if (this.matrix == null) {
 			this.matrix = new Matrix();
@@ -101,7 +98,22 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 		// Converting the point in image coordinate system
 		this.matrix.mapPoints(point);
 
-		this.controller.addPoint(point[0], point[1]);
+		if (this.controller.isCreate()) {
+			if (event.getAction() != MotionEvent.ACTION_DOWN) {
+				return false;
+			}
+			
+			this.controller.addPoint(point[0], point[1]);
+		} else {
+			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				this.controller.selectPoint(point[0], point[1]);
+			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				this.controller.deselectPoint();
+			} else {
+				this.controller.movePoint(point[0], point[1]);
+				System.out.println(event.getAction());
+			}
+		}
 
 		this.findViewById(R.id.image).invalidate();
 
@@ -116,11 +128,15 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 			boolean hasFaces = this.controller.getFaces().size() > 0;
 
 			menu.add(0, MENU_ADD_FACE, 0, R.string.menu_addface);
+			menu.add(0, MENU_EDIT_LAST_FACE, 0, R.string.edit_last_face).setEnabled(hasFaces);
 			menu.add(0, MENU_REMOVE_LAST_FACE, 0, R.string.remove_last_face).setEnabled(hasFaces);
 			menu.add(0, MENU_VALIDATE, 0, R.string.menu_validate).setEnabled(hasFaces);
-		} else {
+		} else if (this.controller.isCreate()){
 			menu.add(0, MENU_END_FACE, 0, R.string.end_face).setEnabled(false);
 			menu.add(0, MENU_CANCEL_FACE, 0, R.string.cancel_face);
+		} else {
+			menu.add(0, MENU_END_FACE, 0, R.string.end_face);
+			menu.add(0, MENU_CANCEL_FACE, 0, R.string.cancel_face).setEnabled(false);
 		}
 
 		return super.onPrepareOptionsMenu(menu);
@@ -131,6 +147,12 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 		switch (item.getItemId()) {
 		case MENU_ADD_FACE:
 			this.controller.startFace();
+			
+			return true;
+		case MENU_EDIT_LAST_FACE:
+			this.controller.editLastFace();
+
+			this.findViewById(R.id.image).invalidate();
 			
 			return true;
 		case MENU_REMOVE_LAST_FACE:
@@ -149,8 +171,9 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 			return true;
 			
 		case MENU_END_FACE:
-			// We can't end face in this mode, we just keep the button for
-			// consistency with the over mode
+			this.controller.endFace();
+
+			this.findViewById(R.id.image).invalidate();
 			
 			return true;
 		case MENU_CANCEL_FACE:

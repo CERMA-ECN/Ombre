@@ -22,18 +22,38 @@ public class FacesSimpleController {
 	protected LinkedList<Face> faces = new LinkedList<Face>();
 	
 	protected List<Point> points = null;
+	
+	protected Face face = null;
+	protected Point point = null;
 
 	public FacesSimpleController(ImageInfos imageInfos) {
 		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
 	}
 	
 	/**
-	 * @return true if the controller isn't in face edition mode
+	 * @return true if the controller isn't in face creation or edition mode
 	 */
 	public boolean isIdle() {
-		return this.points == null;
+		return this.points == null && this.face == null;
 	}
 	
+	/**
+	 * @return true if the controller is in face creation mode
+	 */
+	public boolean isCreate() {
+		return this.points != null;
+	}
+	
+	/**
+	 * @return true if the controller is in face edition mode
+	 */
+	public boolean isEdit() {
+		return this.face != null;
+	}
+	
+	/**
+	 * Start creation mode
+	 */
 	public void startFace() {
 		this.points = new ArrayList<Point>(4);
 	}
@@ -55,6 +75,44 @@ public class FacesSimpleController {
 	}
 	
 	/**
+	 * Start edition mode
+	 */
+	public void editLastFace() {
+		this.face = this.faces.getLast();
+	}
+	
+	/**
+	 * End the current Face
+	 */
+	public void endFace() {
+		this.face = null;
+		this.point = null;
+	}
+	
+	public void selectPoint(float x, float y) {
+		for (Point point : this.face.getPoints()) {
+			double delta = 25;
+			if (point.getX() < x + delta && point.getX() > x - delta
+					&& point.getY() < y + delta && point.getY() > y - delta) {
+				this.point = point;
+			}
+		}
+	}
+	
+	public void deselectPoint() {
+		this.point = null;
+	}
+	
+	public void movePoint(float x, float y) {
+		if (this.point == null) {
+			return;
+		}
+		
+		this.point.setX(x);
+		this.point.setY(y);
+	}
+	
+	/**
 	 * Remove the last face added
 	 */
 	public void removeLastFace() {
@@ -73,6 +131,13 @@ public class FacesSimpleController {
 	 */
 	public List<Face> getFaces() {
 		return faces;
+	}
+
+	/**
+	 * @return the face
+	 */
+	public Face getFace() {
+		return face;
 	}
 
 	/**

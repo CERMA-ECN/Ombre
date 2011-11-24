@@ -18,6 +18,7 @@
 	<string name="expandToStreet">Agrandir à la rue</string>
 	<string name="shadowsOnWalls">Ombre sur le mur</string>
 	<string name="remove_last_face">Enlever la dernière face</string>
+	<string name="edit_last_face">Modifier la dernière face</string>
 	<string name="cancel_face">Annuler la face</string>
 	<string name="end_face">Terminer la face</string>
 	<string name="save_image">Sauvegarder l\'image</string>
