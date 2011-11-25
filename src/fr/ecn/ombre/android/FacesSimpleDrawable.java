@@ -40,7 +40,7 @@ public class FacesSimpleDrawable extends Drawable {
 		}
 		
 		if (this.controller.isCreate()) {
-			Drawing.drawFace(this.controller.getCurrentFace(), canvas, currentPaint);
+			Drawing.drawFace(this.controller.getCurrentFace(), canvas, currentPaint, true);
 		}
 	}
 

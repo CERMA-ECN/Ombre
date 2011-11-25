@@ -22,19 +22,28 @@ public class Drawing {
 	 * @param canvas the canvas to draw into
 	 * @param paint the paint to use to draw
 	 */
-	public static void drawFace(Face face, Canvas canvas, Paint paint) {
+	public static void drawFace(Face face, Canvas canvas, Paint paint, boolean partial) {
 		Point[] points = face.getPoints().toArray(new Point[0]);
 		
 		Path path = new Path();
-		path.moveTo((float) points[points.length-1].getX(), (float) points[points.length-1].getY());
+		
+		path.moveTo((float) points[0].getX(), (float) points[0].getY());
 
-		for (int i = 0; i < points.length; i++) {
+		for (int i = 1; i < points.length; i++) {
 			Point p = points[i];
 			
 			path.lineTo((float) p.getX(), (float) p.getY());
 		}
 		
+		if (!partial) {
+			path.lineTo((float) points[0].getX(), (float) points[0].getY());
+		}
+		
 		canvas.drawPath(path, paint);
+	}
+
+	public static void drawFace(Face face, Canvas canvas, Paint paint) {
+		drawFace(face, canvas, paint, face.isPartial());
 	}
 	
 	/**
