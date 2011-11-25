@@ -3,7 +3,7 @@ package fr.ecn.ombre.core.utils;
 import java.util.List;
 
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
+import fr.ecn.common.core.imageinfos.Face;
 
 public class FaceExctractor {
 	
@@ -13,7 +13,7 @@ public class FaceExctractor {
 	 * @param points
 	 * @return
 	 */
-	public ShadowDrawingFace exctractFace(List<Point> points) {
+	public Face exctractFace(List<Point> points) {
 		// inits
 		double distance;
 		double maxDis;
@@ -60,7 +60,12 @@ public class FaceExctractor {
 			}
 		}
 		
-		return new ShadowDrawingFace(p1, p2, p3, p4);
+		Face face = new Face();
+		face.getPoints().add(p1);
+		face.getPoints().add(p2);
+		face.getPoints().add(p3);
+		face.getPoints().add(p4);
+		return face;
 	}
 
 	private Point barycenter(List<Point> points) {

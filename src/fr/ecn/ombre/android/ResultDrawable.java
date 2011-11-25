@@ -41,7 +41,7 @@ public class ResultDrawable extends Drawable {
 		paint.setStyle(Paint.Style.FILL_AND_STROKE);
 		
 		for (ShadowDrawingFace fOmbre : this.controller.getShadows()) {
-			Drawing.drawFace(fOmbre, canvas, paint);
+			Drawing.drawShadow(fOmbre, canvas, paint);
 		}
 	}
 

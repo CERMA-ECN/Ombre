@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 import android.graphics.Bitmap;
 
 import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.ombre.android.image.BitmapImage;
 import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.image.Image;
@@ -59,10 +60,16 @@ public class ResultController implements Callable<Void> {
 		if (this.imageInfos.getFaces().isEmpty()) {
 			throw new ShadowDrawingException("Vous devez rentrer au moins une face");
 		}
+		
+		//Creating the list of ShadowDrawingFace
+		List<ShadowDrawingFace> faces = new LinkedList<ShadowDrawingFace>();
+		for (Face f : imageInfos.getFaces()) {
+			faces.add(new ShadowDrawingFace(f.getRealFace()));
+		}
 
 		Image image = new BitmapImage(this.bitmap);
 		
-		ShadowDrawingFactory sdf = new ShadowDrawingFactory(image, this.imageInfos, time);
+		ShadowDrawingFactory sdf = new ShadowDrawingFactory(image, this.imageInfos, faces, time);
 
 		ShadowDrawing shadowDrawing = sdf.getShadowDrawing();
 		
@@ -73,7 +80,7 @@ public class ResultController implements Callable<Void> {
 		// =============================================================//
 		
 		// calcul proprement dit:
-		for (ShadowDrawingFace f : imageInfos.getFaces()) {
+		for (ShadowDrawingFace f : faces) {
 
 			// premier calcul de l'ombre au sol, avec test si l'inclinaison du
 			// rayon n'est pas bonne.. ( pour cas limite ou pente rayon<pente
@@ -94,7 +101,7 @@ public class ResultController implements Callable<Void> {
 			 */
 			if (shadowsOnWalls && imageInfos.getFaces().size() > 1) {
 				// on boucle sur les faces autres que f :
-				for (ShadowDrawingFace f2 : imageInfos.getFaces()) {
+				for (ShadowDrawingFace f2 : faces) {
 					if (f2 != f) {
 						// On calcule les points qui de l'ombre qui se
 						// retrouvent sur la face f2 de la géométrie, et
@@ -112,11 +119,11 @@ public class ResultController implements Callable<Void> {
 		
 		//Expend shadows to street if requested
 		if (expendToStreet) {
-			List<ShadowDrawingFace> faces = new LinkedList<ShadowDrawingFace>();
+			List<ShadowDrawingFace> expendedFaces = new LinkedList<ShadowDrawingFace>();
 			for (ShadowDrawingFace face : this.shadows) {
-				faces.add(face.expandToStreet(image));
+				expendedFaces.add(face.expandToStreet(image));
 			}
-			this.shadows.addAll(faces);
+			this.shadows.addAll(expendedFaces);
 		}
 		
 		return null;

@@ -24,7 +24,7 @@ public class ShadowDrawingFactory {
 	protected Point sunPosition = null;
 	protected Couple coupleSoleil = null;
 
-	public ShadowDrawingFactory(Image image, ImageInfos imageInfos, Calendar time) throws ShadowDrawingException {
+	public ShadowDrawingFactory(Image image, ImageInfos imageInfos, List<ShadowDrawingFace> faces, Calendar time) throws ShadowDrawingException {
 		// focale par défaut(en mm):
 		double focal = 37;
 		
@@ -77,9 +77,9 @@ public class ShadowDrawingFactory {
 			// si le soleil est de face et plus bas qu'un point de la géométrie,
 			// ou de dos et plus haut qu'un pt de la geometrie,
 			// on envoie un message d'erreur:
-			if (((this.sunPosition.getY() >= getHighest(imageInfos.getFaces())) && (this.sunPosition.getY() < yHorizon))
+			if (((this.sunPosition.getY() >= getHighest(faces)) && (this.sunPosition.getY() < yHorizon))
 			// si le soleil est de face et trop bas
-					|| ((this.sunPosition.getY() <= getLowest(imageInfos.getFaces())) && (this.sunPosition.getY() > yHorizon)))
+					|| ((this.sunPosition.getY() <= getLowest(faces)) && (this.sunPosition.getY() > yHorizon)))
 			// si le soleil est de dos et trop bas
 			{
 				throw new ShadowDrawingException(

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.ombre.core.image.Image;
 import fr.ecn.ombre.core.model.Droite;
 import fr.ecn.ombre.core.model.Segment;
@@ -84,6 +85,15 @@ public class ShadowDrawingFace implements Serializable {
 				new Couple(topRightPoint, bottomRightPoint) };
 
 		this.couples = couples;
+	}
+
+	/**
+	 * Create a shadowDrawingFace from a Face object
+	 * 
+	 * @param face
+	 */
+	public ShadowDrawingFace(Face face) {
+		this(face.getPoints().get(0), face.getPoints().get(1), face.getPoints().get(2), face.getPoints().get(3));
 	}
 
 	/**

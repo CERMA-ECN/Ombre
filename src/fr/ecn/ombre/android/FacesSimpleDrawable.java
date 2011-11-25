@@ -1,16 +1,13 @@
 package fr.ecn.ombre.android;
 
-import java.util.List;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
-import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.ombre.android.utils.Drawing;
-import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 
 public class FacesSimpleDrawable extends Drawable {
 
@@ -34,27 +31,16 @@ public class FacesSimpleDrawable extends Drawable {
 		currentPaint.setColor(Color.RED);
 		currentPaint.setStyle(Paint.Style.STROKE);
 
-		for (ShadowDrawingFace face : this.controller.getFaces()) {
-			if (face == this.controller.getFace()) {
+		for (Face face : this.controller.getFaces()) {
+			if (face == this.controller.getCurrentFace()) {
 				Drawing.drawFace(face, canvas, currentPaint);
 			} else {
 				Drawing.drawFace(face, canvas, paint);
 			}
 		}
 		
-		List<Point> points = this.controller.getPoints();
-
-		if (points != null) {
-			if (points.size() == 1) {
-				canvas.drawPoint((int) points.get(0).getX(), (int) points
-						.get(0).getY(), currentPaint);
-			} else {
-				for (int i = 1; i < points.size(); i++) {
-					canvas.drawLine((int) points.get(i - 1).getX(),
-							(int) points.get(i - 1).getY(), (int) points.get(i)
-									.getX(), (int) points.get(i).getY(), currentPaint);
-				}
-			}
+		if (this.controller.isCreate()) {
+			Drawing.drawFace(this.controller.getCurrentFace(), canvas, currentPaint);
 		}
 	}
 

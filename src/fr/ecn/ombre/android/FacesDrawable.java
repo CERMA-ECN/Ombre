@@ -9,8 +9,8 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
+import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.ombre.android.utils.Drawing;
-import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 
 /**
  * @author jerome
@@ -37,7 +37,7 @@ public class FacesDrawable extends Drawable {
 		paint.setColor(Color.YELLOW);
 		paint.setStyle(Paint.Style.STROKE);
 		
-		for (ShadowDrawingFace face : this.controller.faces) {
+		for (Face face : this.controller.faces) {
 			Drawing.drawFace(face, canvas, paint);
 		}
 		

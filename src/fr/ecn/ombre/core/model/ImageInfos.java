@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
+import fr.ecn.common.core.imageinfos.Face;
 
 public class ImageInfos implements Serializable {
 	/**
@@ -23,7 +23,7 @@ public class ImageInfos implements Serializable {
 	
 	protected Double yHorizon = null;
 	
-	protected List<ShadowDrawingFace> faces = null;
+	protected List<Face> faces = null;
 	
 	/**
 	 * 
@@ -115,15 +115,15 @@ public class ImageInfos implements Serializable {
 	/**
 	 * @return the faces
 	 */
-	public List<ShadowDrawingFace> getFaces() {
+	public List<Face> getFaces() {
 		return faces;
 	}
 
 	/**
-	 * @param faces the faces to set
+	 * @param list the faces to set
 	 */
-	public void setFaces(List<ShadowDrawingFace> faces) {
-		this.faces = faces;
+	public void setFaces(List<Face> list) {
+		this.faces = list;
 	}
 
 	@Override

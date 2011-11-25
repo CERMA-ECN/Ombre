@@ -123,7 +123,8 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 		
-		if (this.controller.isIdle()) {
+		switch (this.controller.getMode()) {
+		case FacesSimpleController.MODE_IDLE:
 			// If the controller has at least one face stored
 			boolean hasFaces = this.controller.getFaces().size() > 0;
 
@@ -131,12 +132,15 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 			menu.add(0, MENU_EDIT_LAST_FACE, 0, R.string.edit_last_face).setEnabled(hasFaces);
 			menu.add(0, MENU_REMOVE_LAST_FACE, 0, R.string.remove_last_face).setEnabled(hasFaces);
 			menu.add(0, MENU_VALIDATE, 0, R.string.menu_validate).setEnabled(hasFaces);
-		} else if (this.controller.isCreate()){
+			break;
+		case FacesSimpleController.MODE_CREATE:
 			menu.add(0, MENU_END_FACE, 0, R.string.end_face).setEnabled(false);
 			menu.add(0, MENU_CANCEL_FACE, 0, R.string.cancel_face);
-		} else {
+			break;
+		case FacesSimpleController.MODE_EDIT:
 			menu.add(0, MENU_END_FACE, 0, R.string.end_face);
 			menu.add(0, MENU_CANCEL_FACE, 0, R.string.cancel_face).setEnabled(false);
+			break;
 		}
 
 		return super.onPrepareOptionsMenu(menu);
