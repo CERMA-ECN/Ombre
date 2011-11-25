@@ -1,7 +1,8 @@
 package fr.ecn.ombre.core.shadows;
 
+import fr.ecn.common.core.geometry.Geometry;
+import fr.ecn.common.core.geometry.Line;
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.model.Droite;
 
 
 /**
@@ -28,11 +29,11 @@ public class ShadowDrawingSide extends ShadowDrawing {
 		for (int i=0; i<2; i++) {
 			Point topPoint = face.getCouples()[i].getPointAir();
 			double b = topPoint.getY() - this.a * topPoint.getX();
-			Droite rayon = new Droite(this.a, b);
+			Line rayon = new Line(this.a, b);
 			
-			Droite horizontal = new Droite(0, face.getCouples()[i].getPointSol().getY());
+			Line horizontal = new Line(0, face.getCouples()[i].getPointSol().getY());
 			
-			Point shadowPoint = horizontal.intersection(rayon);
+			Point shadowPoint = Geometry.intersection(horizontal, rayon);
 			
 			couples[i] = new Couple(shadowPoint, face.getCouples()[i].getPointSol());
 		}

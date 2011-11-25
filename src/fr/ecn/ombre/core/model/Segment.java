@@ -1,12 +1,14 @@
 package fr.ecn.ombre.core.model;
 
+import fr.ecn.common.core.geometry.Geometry;
+import fr.ecn.common.core.geometry.Line;
 import fr.ecn.common.core.geometry.Point;
 
 /**
  * 
  * @author Claire Cervera
  */
-public class Segment extends Droite {
+public class Segment extends Line {
 
 	public double xmin;
 	public double xmax;
@@ -31,7 +33,7 @@ public class Segment extends Droite {
 	 */
 	public static Point intersection(Segment s1, Segment s2) {
 		// We get the intersection of the two lines
-		Point intersection = s1.intersection(s2);
+		Point intersection = Geometry.intersection(s1, s2);
 
 		// is the intersection of the two lines on the segment
 		double x = intersection.getX();

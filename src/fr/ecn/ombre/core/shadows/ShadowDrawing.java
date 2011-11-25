@@ -3,8 +3,8 @@ package fr.ecn.ombre.core.shadows;
 import java.util.LinkedList;
 import java.util.List;
 
+import fr.ecn.common.core.geometry.Line;
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.model.Droite;
 import fr.ecn.ombre.core.model.Segment;
 
 public abstract class ShadowDrawing {
@@ -50,7 +50,7 @@ public abstract class ShadowDrawing {
 				// modifie donc le point intersection au vecteur ombre
 				// On calcule alors le nouveau point correspondant sur le mur:
 				// projeté de l'ombre sur le bâtiment
-				Droite rayonSoleil = new Droite(pointOmbre, f1.getCouples()[i].getPointAir());
+				Line rayonSoleil = new Line(pointOmbre, f1.getCouples()[i].getPointAir());
 
 				Point projeteOmbre = rayonSoleil.calculY((int) intersectionSegments.getX());
 
@@ -97,7 +97,7 @@ public abstract class ShadowDrawing {
 			Point ombreSol = faceOmbre.getCouples()[i].getPointAir();
 			// On calcule également l'ordonné du point de la droite F2
 			// d'abscisse le point de l'ombre au sol
-			Droite droiteF2Sol = f2.getBottomLine();
+			Line droiteF2Sol = f2.getBottomLine();
 			double y = droiteF2Sol.calculY(ombreSol.getX()).getY();
 
 			if (ombreSol.getY() > y) {
