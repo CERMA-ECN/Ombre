@@ -18,7 +18,8 @@ import fr.ecn.common.core.imageinfos.ImageInfos;
 public class ImageInfosDb extends SQLiteOpenHelper {
 	
 	private static final String DATABASE_NAME = "ImageInfos";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
+	private static final String TABLE_NAME = "infos";
 
 	public ImageInfosDb(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +30,7 @@ public class ImageInfosDb extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE infos (_id integer primary key autoincrement, path TEXT UNIQUE, orientation REAL);");
+		db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id integer primary key autoincrement, path TEXT UNIQUE, orientation REAL, yHorizon REAL);");
 	}
 
 	/* (non-Javadoc)
@@ -37,19 +38,24 @@ public class ImageInfosDb extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+		onCreate(db);
 	}
 	
 	public void loadInfos(ImageInfos imageInfos) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		Cursor cursor = db.query(
-				"infos", new String[] { "orientation" }, "path = ?", new String[] {imageInfos.getPath()},
+				TABLE_NAME, new String[] { "orientation", "yHorizon" }, "path = ?", new String[] {imageInfos.getPath()},
 				null, null, null);
 		
 		if (cursor != null && cursor.moveToFirst()) { 
-			imageInfos.setOrientation(cursor.getDouble(0));
+			if (!cursor.isNull(0)) {
+				imageInfos.setOrientation(cursor.getDouble(0));
+			}
+			if (!cursor.isNull(1)) {
+				imageInfos.setYHorizon(cursor.getDouble(1));
+			}
 		}
 		
 		db.close();
@@ -61,7 +67,8 @@ public class ImageInfosDb extends SQLiteOpenHelper {
 		ContentValues cv = new ContentValues();
 		cv.put("path", imageInfos.getPath());
 		cv.put("orientation", imageInfos.getOrientation());
-		db.replace("infos", null, cv);
+		cv.put("yHorizon", imageInfos.getYHorizon());
+		db.replace(TABLE_NAME, null, cv);
 		
 		db.close();
 	}

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.ImageInfos;
+import fr.ecn.ombre.android.utils.ImageInfosDb;
 import fr.ecn.ombre.android.utils.ImageLoader;
 
 /**
@@ -157,6 +158,10 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 			this.locked = false;
 			return true;
 		case MENU_VALIDATE:
+			//Save horizon in db
+			ImageInfosDb imageInfosDb = new ImageInfosDb(this);
+			imageInfosDb.saveInfos(imageInfos);
+			
 			Intent i = new Intent(this, FacesChoiceActivity.class);
 			i.putExtra("ImageInfos", this.imageInfos);
 			this.startActivity(i);
