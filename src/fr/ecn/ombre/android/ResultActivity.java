@@ -32,7 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import fr.ecn.common.android.DialogHelper;
-import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 
 public class ResultActivity extends Activity {

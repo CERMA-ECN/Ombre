@@ -17,8 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.android.utils.ImageLoader;
-import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
  * An activity to check and edit the position of the horizon line

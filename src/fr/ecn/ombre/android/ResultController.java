@@ -12,10 +12,10 @@ import android.graphics.Bitmap;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.android.image.BitmapImage;
 import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.image.Image;
-import fr.ecn.ombre.core.model.ImageInfos;
 import fr.ecn.ombre.core.shadows.Couple;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;

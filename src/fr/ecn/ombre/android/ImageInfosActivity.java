@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import fr.ecn.common.core.imageinfos.Coordinate;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.android.utils.ImageInfosDb;
 import fr.ecn.ombre.android.utils.ValidationException;
-import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
  * An activity to check and edit the informations of the image

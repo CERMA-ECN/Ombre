@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.Button;
 
 import fr.ecn.common.core.imageinfos.Coordinate;
-import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 
 /**
  * Activity that request informations from the sensors (GPS Coordinates and

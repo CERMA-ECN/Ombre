@@ -7,8 +7,8 @@ import android.graphics.Bitmap;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.android.utils.ImageLoader;
-import fr.ecn.ombre.core.model.ImageInfos;
 
 public class FacesSimpleController {
 	

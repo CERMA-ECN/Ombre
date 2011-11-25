@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 
 /**
  * An activity to select faces with the user giving the 4 corners of the face

@@ -11,7 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
-import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 
 /**
  * @author jerome

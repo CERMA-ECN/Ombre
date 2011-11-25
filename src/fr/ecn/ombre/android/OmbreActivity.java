@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 
-import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.core.utils.ExifReader;
 
 public class OmbreActivity extends Activity {
