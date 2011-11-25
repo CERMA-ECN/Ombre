@@ -1,5 +1,6 @@
 package fr.ecn.ombre.android;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -44,6 +45,8 @@ public class ResultActivity extends Activity {
 	
 	protected ResultController controller;
 
+	protected final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -104,7 +107,7 @@ public class ResultActivity extends Activity {
 	
 	public void waitComputation() {
 		final TextView textView = (TextView) findViewById(R.id.date);
-		textView.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm").format(controller.getTime().getTime()));
+		textView.setText(dateFormat.format(controller.getTime().getTime()));
 		
 		final LinearLayout placeholder = (LinearLayout) this.findViewById(R.id.placeholder);
 		
@@ -198,7 +201,7 @@ public class ResultActivity extends Activity {
 			Paint paint = new Paint();
 			paint.setColor(Color.WHITE);
 			paint.setTextSize(24);
-			canvas.drawText(new SimpleDateFormat("MM/dd/yyyy HH:mm").format(this.controller.getTime().getTime()), 5, 29, paint);
+			canvas.drawText(dateFormat.format(this.controller.getTime().getTime()), 5, 29, paint);
 			
 			MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap, "Result", "Result");
 			return true;
