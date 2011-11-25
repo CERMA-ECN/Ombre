@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import fr.ecn.ombre.core.model.Coordinate;
+import fr.ecn.common.core.imageinfos.Coordinate;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 /**

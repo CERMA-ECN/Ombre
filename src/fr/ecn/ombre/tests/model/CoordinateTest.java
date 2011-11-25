@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ecn.ombre.core.model.Coordinate;
+import fr.ecn.common.core.imageinfos.Coordinate;
 
 public class CoordinateTest {
 	
