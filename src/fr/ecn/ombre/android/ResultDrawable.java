@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
 import fr.ecn.ombre.android.utils.Drawing;
-import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 
 public class ResultDrawable extends Drawable {
 
@@ -40,7 +40,7 @@ public class ResultDrawable extends Drawable {
 		paint.setColor(Color.argb(50, 0, 0, 255));
 		paint.setStyle(Paint.Style.FILL_AND_STROKE);
 		
-		for (Face fOmbre : this.controller.getShadows()) {
+		for (ShadowDrawingFace fOmbre : this.controller.getShadows()) {
 			Drawing.drawFace(fOmbre, canvas, paint);
 		}
 	}

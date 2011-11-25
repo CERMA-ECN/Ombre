@@ -9,8 +9,6 @@ import com.ei3info.gsun.Temps;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.core.image.Image;
-import fr.ecn.ombre.core.model.Couple;
-import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
 
 /**
@@ -143,9 +141,9 @@ public class ShadowDrawingFactory {
 	 * @param faces
 	 * @return
 	 */
-	protected double getHighest(List<Face> faces) {
+	protected double getHighest(List<ShadowDrawingFace> faces) {
 		double y = Float.MAX_VALUE;
-		for (Face face : faces) {
+		for (ShadowDrawingFace face : faces) {
 			for (Couple couple : face.getCouples()) {
 				if (couple.getPointAir().getY() < y) {
 					y = couple.getPointAir().getY();
@@ -163,9 +161,9 @@ public class ShadowDrawingFactory {
 	 * @param faces
 	 * @return
 	 */
-	protected double getLowest(List<Face> faces) {
+	protected double getLowest(List<ShadowDrawingFace> faces) {
 		double y = Float.MIN_VALUE;
-		for (Face face : faces) {
+		for (ShadowDrawingFace face : faces) {
 			for (Couple couple : face.getCouples()) {
 				if (couple.getPointSol().getY() > y) {
 					y = couple.getPointSol().getY();

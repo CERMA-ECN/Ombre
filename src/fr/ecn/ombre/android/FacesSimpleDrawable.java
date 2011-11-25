@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.android.utils.Drawing;
-import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 
 public class FacesSimpleDrawable extends Drawable {
 
@@ -34,7 +34,7 @@ public class FacesSimpleDrawable extends Drawable {
 		currentPaint.setColor(Color.RED);
 		currentPaint.setStyle(Paint.Style.STROKE);
 
-		for (Face face : this.controller.getFaces()) {
+		for (ShadowDrawingFace face : this.controller.getFaces()) {
 			if (face == this.controller.getFace()) {
 				Drawing.drawFace(face, canvas, currentPaint);
 			} else {

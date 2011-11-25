@@ -1,9 +1,7 @@
 package fr.ecn.ombre.core.shadows;
 
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.model.Couple;
 import fr.ecn.ombre.core.model.Droite;
-import fr.ecn.ombre.core.model.Face;
 
 
 /**
@@ -25,7 +23,7 @@ public class ShadowDrawingSide extends ShadowDrawing {
 	}
 
 	@Override
-	public Face drawShadow(Face face) {
+	public ShadowDrawingFace drawShadow(ShadowDrawingFace face) {
 		Couple[] couples = new Couple[2];
 		for (int i=0; i<2; i++) {
 			Point topPoint = face.getCouples()[i].getPointAir();
@@ -38,7 +36,7 @@ public class ShadowDrawingSide extends ShadowDrawing {
 			
 			couples[i] = new Couple(shadowPoint, face.getCouples()[i].getPointSol());
 		}
-		return new Face(couples[0], couples[1], false);
+		return new ShadowDrawingFace(couples[0], couples[1], false);
 	}
 
 }

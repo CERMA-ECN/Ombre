@@ -8,8 +8,8 @@ import android.graphics.Bitmap;
 import jjil.android.RgbImageAndroid;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.android.utils.ImageLoader;
-import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 import fr.ecn.ombre.core.utils.FaceExctractor;
 import fr.ecn.ombre.scissor.Polygon;
 import fr.ecn.ombre.scissor.SCISSOR_STATE;
@@ -26,7 +26,7 @@ public class FacesController {
 	// remove the last element of the list
 	// In fact what we need is only something that implements the Deque and the
 	// List interfaces
-	protected LinkedList<Face> faces = new LinkedList<Face>();
+	protected LinkedList<ShadowDrawingFace> faces = new LinkedList<ShadowDrawingFace>();
 	
 	protected ScissorLine currentLine;
 
@@ -57,7 +57,7 @@ public class FacesController {
 				this.currentLine.endScissor();
 			}
 			
-			Face face = this.convertLineToFace(this.currentLine);
+			ShadowDrawingFace face = this.convertLineToFace(this.currentLine);
 			
 			if (face != null) {
 				this.faces.add(face);
@@ -102,7 +102,7 @@ public class FacesController {
 	 * @param line
 	 * @return
 	 */
-	protected Face convertLineToFace(ScissorLine line) {
+	protected ShadowDrawingFace convertLineToFace(ScissorLine line) {
 		//Get all points from scissorLine
 		List<Point> points = new LinkedList<Point>();
 		for (Polygon polygon : line.getScissorLine()) {
@@ -155,7 +155,7 @@ public class FacesController {
 	/**
 	 * @return the faces
 	 */
-	public List<Face> getFaces() {
+	public List<ShadowDrawingFace> getFaces() {
 		return faces;
 	}
 }

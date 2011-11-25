@@ -1,4 +1,4 @@
-package fr.ecn.ombre.core.model;
+package fr.ecn.ombre.core.shadows;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -7,8 +7,16 @@ import java.util.List;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.core.image.Image;
+import fr.ecn.ombre.core.model.Droite;
+import fr.ecn.ombre.core.model.Segment;
 
-public class Face implements Serializable {
+/**
+ * A class that represent a Face for shadow drawing code
+ * 
+ * @author jerome
+ *
+ */
+public class ShadowDrawingFace implements Serializable {
 
 	/**
 	 * 
@@ -32,7 +40,7 @@ public class Face implements Serializable {
 	 * @param p3
 	 * @param p4
 	 */
-	public Face(Point p1, Point p2, Point p3, Point p4) {
+	public ShadowDrawingFace(Point p1, Point p2, Point p3, Point p4) {
 		Point[] points = { p1, p2, p3, p4 };
 		
 		//We sort the points by X coordinate
@@ -82,7 +90,7 @@ public class Face implements Serializable {
 	 * @param couples
 	 * @param isBuilding
 	 */
-	public Face(Couple couple1, Couple couple2, boolean isBuilding) {
+	public ShadowDrawingFace(Couple couple1, Couple couple2, boolean isBuilding) {
 		super();
 		Couple[] couples = { couple1, couple2 };
 		this.couples = couples;
@@ -121,7 +129,7 @@ public class Face implements Serializable {
 	 * @return the line that goes through the 2 top points of this face
 	 */
 	public Droite getTopLine() {
-		return new Droite(this.couples[0].pointAir, this.couples[1].pointAir);
+		return new Droite(this.couples[0].getPointAir(), this.couples[1].getPointAir());
 	}
 
 	
@@ -129,7 +137,7 @@ public class Face implements Serializable {
 	 * @return the line that goes through the 2 bottom points of this face
 	 */
 	public Droite getBottomLine() {
-		return new Droite(this.couples[0].pointSol, this.couples[1].pointSol);
+		return new Droite(this.couples[0].getPointSol(), this.couples[1].getPointSol());
 	}
 
 	/**
@@ -161,7 +169,7 @@ public class Face implements Serializable {
 	 */
 	public boolean isLeft() {
 		int i = this.getPlusProche();
-		if (this.couples[i].pointSol.getX() < this.couples[(i + 1) % 2].pointSol.getX()) {
+		if (this.couples[i].getPointSol().getX() < this.couples[(i + 1) % 2].getPointSol().getX()) {
 			return true;
 		} else
 			return false;
@@ -170,7 +178,7 @@ public class Face implements Serializable {
 	/**
 	 * Expand face in our direction...
 	 */
-	public Face expandToStreet(Image image) {
+	public ShadowDrawingFace expandToStreet(Image image) {
 		int i = this.getPlusProche(); // avec deux couples de points par face,
 		// i=0 ou 1.
 		Droite dSol = this.getBottomLine();
@@ -209,7 +217,7 @@ public class Face implements Serializable {
 
 		// Création du nouveau couple de points et création de la nouvelle face:
 		Couple newCouple = new Couple(newP, newPsol);
-		Face newFace = new Face(couples[i], newCouple, this.isBuilding);
+		ShadowDrawingFace newFace = new ShadowDrawingFace(couples[i], newCouple, this.isBuilding);
 		
 		return newFace;
 	}
@@ -230,8 +238,8 @@ public class Face implements Serializable {
 		Droite sol = this.getBottomLine();
 		// on prend les coordonnées du premier point d'intersection calculé
 		// (point projeté sur le sol)
-		double x = this.couples[0].pointAir.getX();
-		double y = this.couples[0].pointAir.getY();
+		double x = this.couples[0].getPointAir().getX();
+		double y = this.couples[0].getPointAir().getY();
 		// on calcule l'ordonnée du point se trouvant sur la droite sol et
 		// d'abscisse x
 		double yDroite = sol.calculY(x).getY();
@@ -253,8 +261,8 @@ public class Face implements Serializable {
 	 * modifie la géométrie de l'ombre en lui rajoutant les faces ainsi
 	 * calculées
 	 */
-	public void premierCas(Couple pointOmbreF2, int i, Face faceOmbre, Face f2,
-			List<Face> ombre, Couple coupleSoleil) {
+	public void premierCas(Couple pointOmbreF2, int i, ShadowDrawingFace faceOmbre, ShadowDrawingFace f2,
+			List<ShadowDrawingFace> ombre, Couple coupleSoleil) {
 		
 		// Définissons les points dont nous aurons besoin pour ce programme:
 		// Point vraieOmbreMur: coordonnées du point de l'ombre projeté sur le
@@ -293,15 +301,15 @@ public class Face implements Serializable {
 		Point pointEquivalentBas = batimentFBas.calculY((int) pointEquivalentHaut.getX());
 		// Dans ce cas, on peut créer et rentrer de nouvelles faces
 		// face de l'ombre sur le mur
-		ombre.add(new Face(new Couple(ombreMur, ombreMurSol), new Couple(dernierPointMur,
+		ombre.add(new ShadowDrawingFace(new Couple(ombreMur, ombreMurSol), new Couple(dernierPointMur,
 				dernierPointMur), true));
 
 		// face de l'ombre devant le mur
-		ombre.add(new Face(new Couple(ombreMurSol, departOmbreMurBas), new Couple(dernierPointMur,
+		ombre.add(new ShadowDrawingFace(new Couple(ombreMurSol, departOmbreMurBas), new Couple(dernierPointMur,
 				pointEquivalentBas), false));
 
 		// face de l'ombre sur le sol
-		ombre.add(new Face(new Couple(ombreSol, departOmbreSolBas), new Couple(dernierPointMur, pointEquivalentBas), false));
+		ombre.add(new ShadowDrawingFace(new Couple(ombreSol, departOmbreSolBas), new Couple(dernierPointMur, pointEquivalentBas), false));
 
 	}
 
@@ -314,8 +322,8 @@ public class Face implements Serializable {
 	 * l'ombre en lui rajoutant les faces ainsi calcul�es
 	 */
 
-	public void deuxiemeCas(Couple pointOmbreF2, int indice, Face faceOmbre, Face f2,
-			List<Face> ombre, Couple coupleSoleil) {
+	public void deuxiemeCas(Couple pointOmbreF2, int indice, ShadowDrawingFace faceOmbre, ShadowDrawingFace f2,
+			List<ShadowDrawingFace> ombre, Couple coupleSoleil) {
 
 		// On doit tout d'abord trouver le dernier point d'ombre sur le mur.
 		// pour cela, on calcule tout d'abord le projeté du point d'ombre au Sol
@@ -357,7 +365,7 @@ public class Face implements Serializable {
 			j = f2.getPlusProche();
 		}
 
-		Point dernierPointMur = ligneOmbreMur.calculY(f2.getCouples()[j].pointAir.getX());
+		Point dernierPointMur = ligneOmbreMur.calculY(f2.getCouples()[j].getPointAir().getX());
 		// On doit à présent calculer son équivalent sur F:
 		// On calcule le rayon du Soleil pour ce point:
 		Droite rayonDernierPoint = new Droite(coupleSoleil.getPointAir(), dernierPointMur);
@@ -369,21 +377,21 @@ public class Face implements Serializable {
 		// On peut alors rajouter la géométrie à l'ombre
 
 		// Face sur le sol devant le mur:
-		Face faceSol1 = new Face(new Couple(f2.getCouples()[j].getPointSol(),
+		ShadowDrawingFace faceSol1 = new ShadowDrawingFace(new Couple(f2.getCouples()[j].getPointSol(),
 				departBasDernierPointMur), new Couple(pointOmbreF2.getPointSol(), this
 				.getCouples()[i].getPointSol()), false);
 
 		// Face sur le mur:
-		Face ombreMur = new Face(
+		ShadowDrawingFace ombreMur = new ShadowDrawingFace(
 				new Couple(pointOmbreF2.getPointAir(), pointOmbreF2.getPointSol()), new Couple(
 						dernierPointMur, f2.getCouples()[j].getPointSol()), true);
 
 		// Face sur le sol plus loin que le mur:
 		// On ne l'affiche entière que si l'ombre est devant le batiment
 		// Sinon on n'en affiche qu'une partie
-		Face faceSol2;
+		ShadowDrawingFace faceSol2;
 		if (j == (f2.getPlusProche())) {
-			faceSol2 = new Face(new Couple(f2.getCouples()[j].getPointSol(),
+			faceSol2 = new ShadowDrawingFace(new Couple(f2.getCouples()[j].getPointSol(),
 					departBasDernierPointMur), new Couple(faceOmbre.getCouples()[(i + 1) % 2]
 					.getPointAir(), faceOmbre.getCouples()[(i + 1) % 2].getPointSol()), false);
 		} else {
@@ -394,31 +402,31 @@ public class Face implements Serializable {
 
 			// On calcule l'intersection entre le rayon au sol et le cot� du
 			// haut du batiment
-			Segment droiteSolHaute = new Segment(faceOmbre.couples[(i + 1) % 2].pointAir,
-					faceOmbre.couples[(i + 1) % 2].pointSol);
+			Segment droiteSolHaute = new Segment(faceOmbre.couples[(i + 1) % 2].getPointAir(),
+					faceOmbre.couples[(i + 1) % 2].getPointSol());
 			Point intersection1 = droiteSolHaute
-					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
+					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
 
 			if ((intersection1.getX() > droiteSolHaute.xmin) && (intersection1.getX() < droiteSolHaute.xmax)) {
 				// Alors on est dans le premier cas
-				faceSol2 = new Face(new Couple(intersection1,
-						this.couples[(this.getPlusProche() + 1) % 2].pointSol), new Couple(f2
+				faceSol2 = new ShadowDrawingFace(new Couple(intersection1,
+						this.couples[(this.getPlusProche() + 1) % 2].getPointSol()), new Couple(f2
 						.getCouples()[j].getPointSol(), departBasDernierPointMur), false);
 			} else {
 				Droite ombreSol = faceOmbre.getTopLine();
 				Point intersection2 = ombreSol
-						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
+						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
 				// on calcule le point de d�part de cette ombre
-				Droite rayonIntersection = new Droite(coupleSoleil.pointSol, intersection2);
+				Droite rayonIntersection = new Droite(coupleSoleil.getPointSol(), intersection2);
 				Point pointDepartIntersection = rayonIntersection.intersection(batimentFBas);
 				
-				faceSol2 = new Face(new Couple(faceOmbre.couples[(i + 1) % 2].pointAir,
-						faceOmbre.couples[(i + 1) % 2].pointSol), new Couple(intersection2,
+				faceSol2 = new ShadowDrawingFace(new Couple(faceOmbre.couples[(i + 1) % 2].getPointAir(),
+						faceOmbre.couples[(i + 1) % 2].getPointSol()), new Couple(intersection2,
 						pointDepartIntersection), false);
 				
 				Couple couple1 = new Couple(intersection2, pointDepartIntersection);
 				Couple couple2 = new Couple(f2.getCouples()[j].getPointSol(), departBasDernierPointMur);
-				ombre.add(new Face(couple1, couple2, false));
+				ombre.add(new ShadowDrawingFace(couple1, couple2, false));
 			}
 
 		}
@@ -435,12 +443,12 @@ public class Face implements Serializable {
 	 * l'ombre - coupleSoleil Cette méthode ne retourne rien à part une
 	 * modification de la géométrie de l'ombre
 	 */
-	public void zeroPoints(Face faceOmbre, Face f2,
-			List<Face> ombre, Couple coupleSoleil) {
+	public void zeroPoints(ShadowDrawingFace faceOmbre, ShadowDrawingFace f2,
+			List<ShadowDrawingFace> ombre, Couple coupleSoleil) {
 		// On renomme les points dont nous aurons besoin
-		Point pointOmbreHaut = faceOmbre.couples[(this.getPlusProche() + 1) % 2].pointAir;
+		Point pointOmbreHaut = faceOmbre.couples[(this.getPlusProche() + 1) % 2].getPointAir();
 
-		Point pointOmbreBas = faceOmbre.couples[this.getPlusProche()].pointAir;
+		Point pointOmbreBas = faceOmbre.couples[this.getPlusProche()].getPointAir();
 
 		Droite ombreSol = new Droite(pointOmbreHaut, pointOmbreBas);
 
@@ -454,17 +462,17 @@ public class Face implements Serializable {
 			// Dans ce cas, on a bien l'ombre sur le batiment
 			// On calcule alors les points ayant leur ombre sur ce batiment!
 
-			Droite rayonSolHaut = new Droite(coupleSoleil.pointSol,
-					f2.couples[(f2.getPlusProche() + 1) % 2].pointSol);
+			Droite rayonSolHaut = new Droite(coupleSoleil.getPointSol(),
+					f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol());
 			Point pointSolOmbreHaut = rayonSolHaut.intersection(ombreSol);
 
-			Droite rayonSolBas = new Droite(coupleSoleil.pointSol,
-					f2.couples[f2.getPlusProche()].pointSol);
+			Droite rayonSolBas = new Droite(coupleSoleil.getPointSol(),
+					f2.couples[f2.getPlusProche()].getPointSol());
 			Point pointSolOmbreBas = rayonSolBas.intersection(ombreSol);
 
 			// On calcule alors leur équivalent sur le batiment F2:
-			Point pointF2SolHaut = f2.couples[(f2.getPlusProche() + 1) % 2].pointSol;
-			Point pointF2SolBas = f2.couples[f2.getPlusProche()].pointSol;
+			Point pointF2SolHaut = f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol();
+			Point pointF2SolBas = f2.couples[f2.getPlusProche()].getPointSol();
 
 			Droite fSol = this.getBottomLine();
 			Point departSolHaut = fSol.intersection(rayonSolHaut);
@@ -478,46 +486,46 @@ public class Face implements Serializable {
 			Droite rayonBas = new Droite(departBas, pointSolOmbreBas);
 
 			Point pointF2MurHaut = rayonHaut
-					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
-			Point pointF2MurBas = rayonBas.calculY(f2.couples[f2.getPlusProche()].pointSol.getX());
+					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
+			Point pointF2MurBas = rayonBas.calculY(f2.couples[f2.getPlusProche()].getPointSol().getX());
 
 			// On peut alors tracer les différentes faces
-			Face face1 = new Face(new Couple(pointF2SolHaut, departSolHaut), new Couple(pointF2SolBas, departSolBas), false);
+			ShadowDrawingFace face1 = new ShadowDrawingFace(new Couple(pointF2SolHaut, departSolHaut), new Couple(pointF2SolBas, departSolBas), false);
 
-			Face face2 = new Face(new Couple(pointF2MurHaut, pointF2SolHaut), new Couple(pointF2MurBas, pointF2SolBas), true);
+			ShadowDrawingFace face2 = new ShadowDrawingFace(new Couple(pointF2MurHaut, pointF2SolHaut), new Couple(pointF2MurBas, pointF2SolBas), true);
 
-			Face face3 = new Face(new Couple(pointF2SolBas, departSolBas), new Couple(faceOmbre.couples[this.getPlusProche()].pointAir,
-					this.couples[this.getPlusProche()].pointSol), false);
+			ShadowDrawingFace face3 = new ShadowDrawingFace(new Couple(pointF2SolBas, departSolBas), new Couple(faceOmbre.couples[this.getPlusProche()].getPointAir(),
+					this.couples[this.getPlusProche()].getPointSol()), false);
 
-			Face face4;
+			ShadowDrawingFace face4;
 			// Il y a deux possibilités:
 			// soit la droite entre l'ombre au sol du haut et le coté de f le
 			// plus éloigné croise le coté de f2 le plus éloigné
 			// soit c'est la ligne d'ombre au sol qui le croise!
 
 			Segment droiteSolHaute = new Segment(
-					this.couples[(this.getPlusProche() + 1) % 2].pointSol, pointOmbreHaut);
+					this.couples[(this.getPlusProche() + 1) % 2].getPointSol(), pointOmbreHaut);
 			Point intersection1 = droiteSolHaute
-					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
+					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
 
 			if ((intersection1.getX() > droiteSolHaute.xmin) && (intersection1.getX() < droiteSolHaute.xmax)) {
 				// Alors on est dans le premier cas
-				face4 = new Face(
-						new Couple(intersection1, this.couples[(this.getPlusProche() + 1) % 2].pointSol),
+				face4 = new ShadowDrawingFace(
+						new Couple(intersection1, this.couples[(this.getPlusProche() + 1) % 2].getPointSol()),
 						new Couple(pointF2SolHaut, departSolHaut),
 						false);
 			} else {
 				Point intersection2 = ombreSol
-						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].pointSol.getX());
+						.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
 				// on calcule le point de d�part de cette ombre
-				Droite rayonIntersection = new Droite(coupleSoleil.pointSol, intersection2);
+				Droite rayonIntersection = new Droite(coupleSoleil.getPointSol(), intersection2);
 				Point pointDepartIntersection = rayonIntersection.intersection(fSol);
-				face4 = new Face(
-						new Couple(pointOmbreHaut, this.couples[(this.getPlusProche() + 1) % 2].pointSol),
+				face4 = new ShadowDrawingFace(
+						new Couple(pointOmbreHaut, this.couples[(this.getPlusProche() + 1) % 2].getPointSol()),
 						new Couple(intersection2, pointDepartIntersection),
 						false);
 
-				ombre.add(new Face(
+				ombre.add(new ShadowDrawingFace(
 						new Couple(intersection2, pointDepartIntersection),
 						new Couple(pointF2SolHaut, departSolHaut),
 						false));

@@ -1,4 +1,4 @@
-package fr.ecn.ombre.core.model;
+package fr.ecn.ombre.core.shadows;
 
 import java.io.Serializable;
 

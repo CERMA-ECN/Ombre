@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.model.Face;
+import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 
 /**
  * @author jerome
@@ -21,7 +21,7 @@ public class Drawing {
 	 * @param canvas the canvas to draw into
 	 * @param paint the paint to use to draw
 	 */
-	public static void drawFace(Face face, Canvas canvas, Paint paint) {
+	public static void drawFace(ShadowDrawingFace face, Canvas canvas, Paint paint) {
 		Point[] points = face.getPoints();
 		
 		Path path = new Path();

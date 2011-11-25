@@ -4,9 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.model.Couple;
 import fr.ecn.ombre.core.model.Droite;
-import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.Segment;
 
 public abstract class ShadowDrawing {
@@ -17,7 +15,7 @@ public abstract class ShadowDrawing {
 	 * @param face
 	 * @return
 	 */
-	public abstract Face drawShadow(Face face);
+	public abstract ShadowDrawingFace drawShadow(ShadowDrawingFace face);
 	
 	/**
 	 * Méthode calculOmbreMur Cette méthode détermine les points ayant leur
@@ -25,7 +23,7 @@ public abstract class ShadowDrawing {
 	 * est tirée l'ombre - la face des ombres de la face f initialement - la
 	 * face f2
 	 */
-	public Couple[] calculOmbreMur(Face f1, Face faceOmbre, Face f2) {
+	public Couple[] calculOmbreMur(ShadowDrawingFace f1, ShadowDrawingFace faceOmbre, ShadowDrawingFace f2) {
 		Couple[] vectPointOmbreF2 = new Couple[2];
 
 		for (int i = 0; i < 2; i++) {
@@ -76,9 +74,9 @@ public abstract class ShadowDrawing {
 	 * dessus! Elle ne retourne rien si ce n'est une modification de la
 	 * géométrie de l'ombre
 	 */
-	public List<Face> determinationOmbreMur(Face f1, Face faceOmbre, Face f2,
+	public List<ShadowDrawingFace> determinationOmbreMur(ShadowDrawingFace f1, ShadowDrawingFace faceOmbre, ShadowDrawingFace f2,
 			Couple[] vectPointOmbreF2, Couple coupleSoleil) {
-		List<Face> ombre = new LinkedList<Face>();
+		List<ShadowDrawingFace> ombre = new LinkedList<ShadowDrawingFace>();
 		
 		//number of couples
 		int taille = 0;
@@ -127,17 +125,17 @@ public abstract class ShadowDrawing {
 	 * de l'ombre Elle ne retourne rien mais modifie la géométrie de l'ombre
 	 * @return 
 	 */
-	protected List<Face> deuxPointsMur(Face f1, Couple[] vectPointOmbreF2) {
-		List<Face> ombre = new LinkedList<Face>();
+	protected List<ShadowDrawingFace> deuxPointsMur(ShadowDrawingFace f1, Couple[] vectPointOmbreF2) {
+		List<ShadowDrawingFace> ombre = new LinkedList<ShadowDrawingFace>();
 		// On rentre les faces correspondantes à la géométrie de l'ombre
 
 		// Ombre sur le mur:
-		ombre.add(new Face(vectPointOmbreF2[0], vectPointOmbreF2[1], true));
+		ombre.add(new ShadowDrawingFace(vectPointOmbreF2[0], vectPointOmbreF2[1], true));
 
 		// Ombre sur le sol:
 		Couple couple1 = new Couple(vectPointOmbreF2[0].getPointSol(), f1.getCouples()[0].getPointSol());
 		Couple couple2 = new Couple(vectPointOmbreF2[1].getPointSol(), f1.getCouples()[1].getPointSol());
-		ombre.add(new Face(couple1, couple2, false));
+		ombre.add(new ShadowDrawingFace(couple1, couple2, false));
 		
 		return ombre;
 	}

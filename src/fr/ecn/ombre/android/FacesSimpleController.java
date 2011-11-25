@@ -8,8 +8,8 @@ import android.graphics.Bitmap;
 
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.android.utils.ImageLoader;
-import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 
 public class FacesSimpleController {
 	
@@ -19,11 +19,11 @@ public class FacesSimpleController {
 	// remove the last element of the list
 	// In fact what we need is only something that implements the Deque and the
 	// List interfaces
-	protected LinkedList<Face> faces = new LinkedList<Face>();
+	protected LinkedList<ShadowDrawingFace> faces = new LinkedList<ShadowDrawingFace>();
 	
 	protected List<Point> points = null;
 	
-	protected Face face = null;
+	protected ShadowDrawingFace face = null;
 	protected Point point = null;
 
 	public FacesSimpleController(ImageInfos imageInfos) {
@@ -62,7 +62,7 @@ public class FacesSimpleController {
 		this.points.add(new Point(x, y));
 		
 		if (this.points.size() == 4) {
-			this.faces.add(new Face(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3)));
+			this.faces.add(new ShadowDrawingFace(this.points.get(0), this.points.get(1), this.points.get(2), this.points.get(3)));
 			this.points = null;
 		}
 	}
@@ -129,14 +129,14 @@ public class FacesSimpleController {
 	/**
 	 * @return the faces
 	 */
-	public List<Face> getFaces() {
+	public List<ShadowDrawingFace> getFaces() {
 		return faces;
 	}
 
 	/**
 	 * @return the face
 	 */
-	public Face getFace() {
+	public ShadowDrawingFace getFace() {
 		return face;
 	}
 

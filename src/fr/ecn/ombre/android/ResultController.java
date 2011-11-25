@@ -14,9 +14,9 @@ import fr.ecn.common.core.geometry.Point;
 import fr.ecn.ombre.android.image.BitmapImage;
 import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.image.Image;
-import fr.ecn.ombre.core.model.Couple;
-import fr.ecn.ombre.core.model.Face;
 import fr.ecn.ombre.core.model.ImageInfos;
+import fr.ecn.ombre.core.shadows.Couple;
+import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
 import fr.ecn.ombre.core.shadows.ShadowDrawingException;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFactory;
@@ -37,7 +37,7 @@ public class ResultController implements Callable<Void> {
 	
 	//Results
 	protected Point sunPosition;
-	protected List<Face> shadows;
+	protected List<ShadowDrawingFace> shadows;
 	
 	private Future<Void> future;
 
@@ -53,7 +53,7 @@ public class ResultController implements Callable<Void> {
 	}
 
 	public Void call() throws ShadowDrawingException {
-		this.shadows = new LinkedList<Face>();
+		this.shadows = new LinkedList<ShadowDrawingFace>();
 		
 		// test si la geometrie n'est pas vide:
 		if (this.imageInfos.getFaces().isEmpty()) {
@@ -73,12 +73,12 @@ public class ResultController implements Callable<Void> {
 		// =============================================================//
 		
 		// calcul proprement dit:
-		for (Face f : imageInfos.getFaces()) {
+		for (ShadowDrawingFace f : imageInfos.getFaces()) {
 
 			// premier calcul de l'ombre au sol, avec test si l'inclinaison du
 			// rayon n'est pas bonne.. ( pour cas limite ou pente rayon<pente
 			// fuyante==>bug!)
-			Face faceOmbre = shadowDrawing.drawShadow(f);
+			ShadowDrawingFace faceOmbre = shadowDrawing.drawShadow(f);
 			// si l'ombre n'est pas dans le bon sens, on s'arrete la.
 			if (!faceOmbre.isOutside()) {
 				continue;
@@ -94,13 +94,13 @@ public class ResultController implements Callable<Void> {
 			 */
 			if (shadowsOnWalls && imageInfos.getFaces().size() > 1) {
 				// on boucle sur les faces autres que f :
-				for (Face f2 : imageInfos.getFaces()) {
+				for (ShadowDrawingFace f2 : imageInfos.getFaces()) {
 					if (f2 != f) {
 						// On calcule les points qui de l'ombre qui se
 						// retrouvent sur la face f2 de la géométrie, et
 						// on les met dans vectPointOmbreF2
 						Couple[] vectPointOmbreF2 = shadowDrawing.calculOmbreMur(f, faceOmbre, f2);
-						List<Face> ombre = shadowDrawing.determinationOmbreMur(f, faceOmbre, f2, vectPointOmbreF2,
+						List<ShadowDrawingFace> ombre = shadowDrawing.determinationOmbreMur(f, faceOmbre, f2, vectPointOmbreF2,
 								sdf.getCoupleSoleil());
 						this.shadows.addAll(ombre);
 					}
@@ -112,8 +112,8 @@ public class ResultController implements Callable<Void> {
 		
 		//Expend shadows to street if requested
 		if (expendToStreet) {
-			List<Face> faces = new LinkedList<Face>();
-			for (Face face : this.shadows) {
+			List<ShadowDrawingFace> faces = new LinkedList<ShadowDrawingFace>();
+			for (ShadowDrawingFace face : this.shadows) {
 				faces.add(face.expandToStreet(image));
 			}
 			this.shadows.addAll(faces);
@@ -186,7 +186,7 @@ public class ResultController implements Callable<Void> {
 	/**
 	 * @return the ombres
 	 */
-	public List<Face> getShadows() {
+	public List<ShadowDrawingFace> getShadows() {
 		return shadows;
 	}
 
