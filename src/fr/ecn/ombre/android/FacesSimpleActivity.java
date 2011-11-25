@@ -1,6 +1,7 @@
 package fr.ecn.ombre.android;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +13,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import fr.ecn.ombre.core.model.ImageInfos;
@@ -31,6 +34,8 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 	
 	private static final int MENU_END_FACE = Menu.FIRST + 3;
 	private static final int MENU_CANCEL_FACE = Menu.FIRST + 4;
+	
+	private static final int DIALOG_SELECT_FACE_TYPE = 0;
 
 	protected ImageInfos imageInfos;
 
@@ -111,7 +116,6 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 				this.controller.deselectPoint();
 			} else {
 				this.controller.movePoint(point[0], point[1]);
-				System.out.println(event.getAction());
 			}
 		}
 
@@ -150,7 +154,7 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_ADD_FACE:
-			this.controller.startFace();
+			this.showDialog(DIALOG_SELECT_FACE_TYPE);
 			
 			return true;
 		case MENU_EDIT_LAST_FACE:
@@ -189,6 +193,36 @@ public class FacesSimpleActivity extends Activity implements OnTouchListener {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateDialog(int)
+	 */
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch(id) {
+		case DIALOG_SELECT_FACE_TYPE:
+			final Dialog dialog = new Dialog(this);
+
+			dialog.setContentView(R.layout.select_face_type);
+			dialog.setTitle("Sélectionnez le type de face");
+			
+			final CheckBox partial = (CheckBox) dialog.findViewById(R.id.partial);			
+			final CheckBox notReal = (CheckBox) dialog.findViewById(R.id.notReal);
+
+			final Button button = (Button) dialog.findViewById(R.id.ok);
+			button.setOnClickListener(new View.OnClickListener() {
+				
+				public void onClick(View arg0) {
+					controller.startFace(partial.isChecked(), notReal.isChecked());
+					dialog.dismiss();
+				}
+			});
+			
+			return dialog;
+		}
+		
+		return super.onCreateDialog(id);
 	}
 
 }

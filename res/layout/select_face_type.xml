@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+	<CheckBox android:text="Face partielle" android:id="@+id/partial"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+	<CheckBox android:text="Face non existante" android:id="@+id/notReal"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+	<Button android:text="@android:string/ok" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/ok" android:layout_gravity="center"></Button>
+</LinearLayout>

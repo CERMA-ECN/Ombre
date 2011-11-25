@@ -64,9 +64,9 @@ public class FacesSimpleController {
 	/**
 	 * Start creation mode
 	 */
-	public void startFace() {
+	public void startFace(boolean partial, boolean notReal) {
 		this.mode = MODE_CREATE;
-		this.currentFace = new Face();
+		this.currentFace = new Face(partial, notReal);
 	}
 	
 	/**
@@ -109,8 +109,9 @@ public class FacesSimpleController {
 	public void addPoint(float x, float y) {
 		this.currentFace.getPoints().add(new Point(x, y));
 		
-		//Auto-end face if it as 4 points
-		if (this.currentFace.getPoints().size() == 4) {
+		//Auto-end face if it as 4 points or 5 points if the face is a partial one
+		if (this.currentFace.getPoints().size() == 4 && !this.currentFace.isPartial()
+				|| this.currentFace.getPoints().size() == 5 && this.currentFace.isPartial()) {
 			this.endFace();
 		}
 	}
