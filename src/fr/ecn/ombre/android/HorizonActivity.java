@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.android.utils.ImageInfosDb;
@@ -57,7 +58,7 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 		
 		ImageInfos imageInfos = this.imageInfos;
 		
-		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
+		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
 		
 		//We get yHorizon from the vanishing points if possible
 		if (imageInfos.getYHorizon() == null) {

@@ -6,6 +6,7 @@ import java.util.List;
 import android.graphics.Bitmap;
 
 import jjil.android.RgbImageAndroid;
+import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
@@ -36,7 +37,7 @@ public class FacesController {
 	public FacesController(ImageInfos imageInfos) {
 		super();
 
-		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
+		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
 
 		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
 	}

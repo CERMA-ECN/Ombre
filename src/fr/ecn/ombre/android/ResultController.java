@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 
 import android.graphics.Bitmap;
 
+import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
@@ -48,7 +49,7 @@ public class ResultController implements Callable<Void> {
 		this.shadowsOnWalls = shadowsOnWalls;
 		this.expendToStreet = expendToStreet;
 		
-		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
+		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
 		
 		this.startComputation();
 	}

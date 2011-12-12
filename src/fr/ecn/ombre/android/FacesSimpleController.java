@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
+import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
@@ -30,7 +31,7 @@ public class FacesSimpleController {
 	public static final int MODE_CREATE = 2;
 
 	public FacesSimpleController(ImageInfos imageInfos) {
-		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), 600);
+		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
 	}
 	
 	/**
