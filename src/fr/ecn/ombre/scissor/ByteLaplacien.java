@@ -1,6 +1,6 @@
 package fr.ecn.ombre.scissor;
 
-import jjil.core.Gray8Image;
+import fr.ecn.common.core.image.ByteImage;
 
 /**
  * Calculate the gradient of a 8 bit gray graph, using Laplacian kernel<br>
@@ -16,7 +16,7 @@ import jjil.core.Gray8Image;
 public class ByteLaplacien extends ByteEdge {
 
 	private int[] lapla;
-	public ByteLaplacien(Gray8Image ip) {
+	public ByteLaplacien(ByteImage ip) {
 		super(ip);
 		int maskChoice=2;
 		if (maskChoice==0)

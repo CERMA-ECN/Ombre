@@ -1,7 +1,7 @@
 
 package fr.ecn.ombre.scissor;
 
-import jjil.core.Gray8Image;
+import fr.ecn.common.core.image.ByteImage;
 
 /**
  * Class ByteEdge provides some basic 8-bit graphic operations like convolution operation, absolute value of a graph array and so on.
@@ -19,7 +19,7 @@ public class ByteEdge{
     protected int width,height;
     protected byte[] pixels;
     
-    public ByteEdge(Gray8Image ip){
+    public ByteEdge(ByteImage ip){
     	width=ip.getWidth();
     	height=ip.getHeight();
     	pixels = ip.getData();
@@ -158,9 +158,9 @@ public class ByteEdge{
      * @param arr int pixels array
      * @return	Gray8Image with pixels value from input array 
      */
-    public Gray8Image showArrayInGraph(int[] arr)
+    public ByteImage showArrayInGraph(int[] arr)
     {
-    	Gray8Image bp=new Gray8Image(this.width,this.height);
+    	ByteImage bp = new ByteImage(this.width,this.height);
     	byte[] imageData = bp.getData();
     	for (int i=0;i<arr.length;i++)
     		if (arr[i]<-255)
@@ -179,12 +179,12 @@ public class ByteEdge{
      * @param arr int pixels array
      * @return	Gray8Image with pixels value from input array 
      */
-    public Gray8Image showArrayInGraph2(int[] arr)
+    public ByteImage showArrayInGraph2(int[] arr)
     {
     	int max=0;
     	for (int i=0;i<arr.length;i++)
     		max=Math.max(max, arr[i]);
-    	Gray8Image bp=new Gray8Image(this.width,this.height);
+    	ByteImage bp = new ByteImage(this.width,this.height);
     	byte[] imageData = bp.getData();
     	for (int i=0;i<arr.length;i++)
     		imageData[i] = (byte) (255*arr[i]/max);
@@ -195,12 +195,12 @@ public class ByteEdge{
      * @param arr double pixels array
      * @return	Gray8Image with pixels value from input array 
      */
-	public Gray8Image showArrayInGraph2(double[] arr)
+	public ByteImage showArrayInGraph2(double[] arr)
     {
     	double max=0;
     	for (int i=0;i<arr.length;i++)
     		max=Math.max(max, arr[i]);
-    	Gray8Image bp=new Gray8Image(this.width,this.height);
+    	ByteImage bp = new ByteImage(this.width,this.height);
     	byte[] imageData = bp.getData();
     	for (int i=0;i<arr.length;i++)
     		imageData[i] = (byte) (255*arr[i]/max);

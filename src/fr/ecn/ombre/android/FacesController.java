@@ -5,12 +5,11 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
-import jjil.android.RgbImageAndroid;
+import fr.ecn.common.android.image.BitmapConvertor;
 import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
-import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.utils.FaceExctractor;
 import fr.ecn.ombre.scissor.Polygon;
 import fr.ecn.ombre.scissor.SCISSOR_STATE;
@@ -37,9 +36,9 @@ public class FacesController {
 	public FacesController(ImageInfos imageInfos) {
 		super();
 
-		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
+		this.bitmap = BitmapLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim).bitmap;
 
-		this.scissor = new Scissor(RgbImageAndroid.toRgbImage(bitmap));
+		this.scissor = new Scissor(BitmapConvertor.bitmapToImage(this.bitmap));
 	}
 	
 	/**

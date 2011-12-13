@@ -1,11 +1,11 @@
 package fr.ecn.ombre.scissor;
 
-import fr.ecn.ombre.android.utils.ImageUtils;
-import fr.ecn.ombre.core.image.filters.Gray83x3Average;
-import jjil.algorithm.Gray8Threshold;
-import jjil.core.Error;
-import jjil.core.Gray8Image;
-import jjil.core.Image;
+import fr.ecn.common.core.image.ByteImage;
+import fr.ecn.common.core.image.Image;
+import fr.ecn.common.core.image.filters.ByteAutoThreshold;
+import fr.ecn.common.core.image.filters.ByteAverage;
+import fr.ecn.common.core.image.utils.ImageConvertor;
+
 /**
  * Scissor algorithm using Dijkstra algorithm to calculate the lowest cost path. 
  * The weight of each pixel is obtained by Laplacian and Gradient value of the graph.
@@ -15,7 +15,7 @@ import jjil.core.Image;
  */
 public class Scissor extends Dijkstra {
 
-	private Gray8Image ip;
+	private ByteImage ip;
 	int length; //length of pixels array of imported graph
 	int[] arrLapla;
 	double[] arrGradN;
@@ -27,23 +27,16 @@ public class Scissor extends Dijkstra {
 	 * Constructor of Scissor
 	 * @param ip A 8-bit graph
 	 */
-	public Scissor(Gray8Image ip) {
+	public Scissor(ByteImage ip) {
 		super();
 		this.ip=ip;
 		length=ip.getWidth()*ip.getHeight();
 		
-		Gray83x3Average smooth = new Gray83x3Average();
+		ByteAverage smooth = new ByteAverage();
 		
 		//Calculation of Laplacian and gradient of the graph
 		//ByteGradient grad=new ByteGradient(ip.duplicate());
-		Gray8Image tempIp = null;
-		
-		try {
-			smooth.push(ip);
-			tempIp = (Gray8Image) smooth.getFront();
-		} catch (Error e) {
-			//This shouldn't happens
-		}
+		ByteImage tempIp = smooth.average(ip);
 		
 		{
 			ByteGradient grad=new ByteGradient(tempIp);
@@ -55,27 +48,18 @@ public class Scissor extends Dijkstra {
 		
 		ByteLaplacien lapla=new ByteLaplacien(tempIp);
 		
-		try {
-			smooth.push(tempIp);
-			smooth.push(smooth.getFront());
-			smooth.push(smooth.getFront());
-			tempIp = (Gray8Image) smooth.getFront();
-		} catch (Error e) {
-			//This shouldn't happens
-		}
+		tempIp = smooth.average(tempIp);
+		tempIp = smooth.average(tempIp);
+		tempIp = smooth.average(tempIp);
 		
+		//We don't need the filter anymore
 		smooth = null;
 		
-		Gray8Image tempBp = new ByteGradient(tempIp).getIpN();
+		ByteImage tempBp = new ByteGradient(tempIp).getIpN();
 		//tempBp.threshold(35);
 		
-		try {
-			Gray8Threshold thresholder = new Gray8Threshold(ImageUtils.getAutoThreshold(tempBp), false);
-			thresholder.push(tempBp);
-			tempBp = (Gray8Image) thresholder.getFront();
-		} catch (Error e) {
-			//This shouldn't happens
-		}
+		ByteAutoThreshold thresholder = new ByteAutoThreshold(false);
+		tempBp = thresholder.threshold(tempBp);
 		
 		//Get the result
 		arrLapla=lapla.getLaplaZeroCro((byte[])tempBp.getData());
@@ -100,7 +84,7 @@ public class Scissor extends Dijkstra {
 	}
 	
 	public Scissor(Image image) {
-		this(ImageUtils.toGray8(image));
+		this(ImageConvertor.toByte(image));
 	}
 	/**
 	 * Define weight and start point coordinates
@@ -145,7 +129,7 @@ public class Scissor extends Dijkstra {
 	 * Return current Image
 	 * @return	Return current Image
 	 */
-	public Gray8Image getIp()
+	public ByteImage getIp()
 	{
 		return ip;
 	}

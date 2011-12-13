@@ -1,7 +1,7 @@
-
 package fr.ecn.ombre.scissor;
 
-import jjil.core.Gray8Image;
+import fr.ecn.common.core.image.ByteImage;
+
 /**
  * Calculate the gradient of a 8 bit gray graph, using Sobel kernel<br>
  * |-1 0 1|&emsp&emsp&nbsp |-1 -2 -1|<br>
@@ -24,7 +24,7 @@ public class ByteGradient extends ByteEdge {
 	 * Tangent of gradient vector  
 	 */
 	//private int[] gradAng;
-	public ByteGradient(Gray8Image ip) {
+	public ByteGradient(ByteImage ip) {
 		super(ip);
 		//Take the mask
 		maskSys=9;
@@ -102,7 +102,7 @@ public class ByteGradient extends ByteEdge {
      * @return A 8 bit graph with the value of the norm of gradient vector
      */
    
-	public Gray8Image getIpN(){
+	public ByteImage getIpN(){
 		return showArrayInGraph2(gradN);
 	}
 }
