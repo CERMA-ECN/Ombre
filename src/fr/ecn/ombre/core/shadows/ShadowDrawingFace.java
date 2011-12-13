@@ -8,8 +8,8 @@ import java.util.List;
 import fr.ecn.common.core.geometry.Geometry;
 import fr.ecn.common.core.geometry.Line;
 import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.image.Image;
 import fr.ecn.common.core.imageinfos.Face;
-import fr.ecn.ombre.core.image.Image;
 import fr.ecn.ombre.core.model.Segment;
 
 /**

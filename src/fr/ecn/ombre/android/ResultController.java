@@ -10,13 +10,13 @@ import java.util.concurrent.Future;
 
 import android.graphics.Bitmap;
 
+import fr.ecn.common.android.image.BitmapConvertor;
 import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.image.Image;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
-import fr.ecn.ombre.android.image.BitmapImage;
 import fr.ecn.ombre.android.utils.ImageLoader;
-import fr.ecn.ombre.core.image.Image;
 import fr.ecn.ombre.core.shadows.Couple;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
@@ -68,7 +68,7 @@ public class ResultController implements Callable<Void> {
 			faces.add(new ShadowDrawingFace(f.getRealFace()));
 		}
 
-		Image image = new BitmapImage(this.bitmap);
+		Image image = BitmapConvertor.bitmapToImage(this.bitmap);
 		
 		ShadowDrawingFactory sdf = new ShadowDrawingFactory(image, this.imageInfos, faces, time);
 
