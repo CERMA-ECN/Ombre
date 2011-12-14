@@ -16,7 +16,6 @@ import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.image.Image;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
-import fr.ecn.ombre.android.utils.ImageLoader;
 import fr.ecn.ombre.core.shadows.Couple;
 import fr.ecn.ombre.core.shadows.ShadowDrawingFace;
 import fr.ecn.ombre.core.shadows.ShadowDrawing;
@@ -49,7 +48,7 @@ public class ResultController implements Callable<Void> {
 		this.shadowsOnWalls = shadowsOnWalls;
 		this.expendToStreet = expendToStreet;
 		
-		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
+		this.bitmap = BitmapLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim).bitmap;
 		
 		this.startComputation();
 	}

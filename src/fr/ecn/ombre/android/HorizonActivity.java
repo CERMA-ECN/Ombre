@@ -20,7 +20,6 @@ import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.ImageInfos;
 import fr.ecn.ombre.android.utils.ImageInfosDb;
-import fr.ecn.ombre.android.utils.ImageLoader;
 
 /**
  * An activity to check and edit the position of the horizon line
@@ -58,7 +57,7 @@ public class HorizonActivity extends Activity implements View.OnTouchListener {
 		
 		ImageInfos imageInfos = this.imageInfos;
 		
-		Bitmap bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
+		Bitmap bitmap = BitmapLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim).bitmap;
 		
 		//We get yHorizon from the vanishing points if possible
 		if (imageInfos.getYHorizon() == null) {

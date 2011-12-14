@@ -9,7 +9,6 @@ import fr.ecn.common.android.image.BitmapLoader;
 import fr.ecn.common.core.geometry.Point;
 import fr.ecn.common.core.imageinfos.Face;
 import fr.ecn.common.core.imageinfos.ImageInfos;
-import fr.ecn.ombre.android.utils.ImageLoader;
 
 public class FacesSimpleController {
 	
@@ -31,7 +30,7 @@ public class FacesSimpleController {
 	public static final int MODE_CREATE = 2;
 
 	public FacesSimpleController(ImageInfos imageInfos) {
-		this.bitmap = ImageLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim);
+		this.bitmap = BitmapLoader.loadResized(imageInfos.getPath(), BitmapLoader.maxDim).bitmap;
 	}
 	
 	/**
