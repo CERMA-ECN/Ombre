@@ -8,9 +8,9 @@ import java.util.List;
 import fr.ecn.common.core.geometry.Geometry;
 import fr.ecn.common.core.geometry.Line;
 import fr.ecn.common.core.geometry.Point;
+import fr.ecn.common.core.geometry.Segment;
 import fr.ecn.common.core.image.Image;
 import fr.ecn.common.core.imageinfos.Face;
-import fr.ecn.ombre.core.model.Segment;
 
 /**
  * A class that represent a Face for shadow drawing code
@@ -204,12 +204,12 @@ public class ShadowDrawingFace implements Serializable {
 			// Test sur les pentes des droites:
 			boolean test;
 			if (this.isLeft()) {
-				if (dSol.a < d.a) {
+				if (dSol.getA() < d.getA()) {
 					test = true;
 				} else
 					test = false;
 			} else {
-				if (dSol.a > d.a) {
+				if (dSol.getA() > d.getA()) {
 					test = true;
 				} else
 					test = false;
@@ -415,10 +415,10 @@ public class ShadowDrawingFace implements Serializable {
 			// haut du batiment
 			Segment droiteSolHaute = new Segment(faceOmbre.couples[(i + 1) % 2].getPointAir(),
 					faceOmbre.couples[(i + 1) % 2].getPointSol());
-			Point intersection1 = droiteSolHaute
+			Point intersection1 = droiteSolHaute.getLine()
 					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
 
-			if ((intersection1.getX() > droiteSolHaute.xmin) && (intersection1.getX() < droiteSolHaute.xmax)) {
+			if ((intersection1.getX() > droiteSolHaute.getXMin()) && (intersection1.getX() < droiteSolHaute.getXMax())) {
 				// Alors on est dans le premier cas
 				faceSol2 = new ShadowDrawingFace(new Couple(intersection1,
 						this.couples[(this.getPlusProche() + 1) % 2].getPointSol()), new Couple(f2
@@ -516,10 +516,10 @@ public class ShadowDrawingFace implements Serializable {
 
 			Segment droiteSolHaute = new Segment(
 					this.couples[(this.getPlusProche() + 1) % 2].getPointSol(), pointOmbreHaut);
-			Point intersection1 = droiteSolHaute
+			Point intersection1 = droiteSolHaute.getLine()
 					.calculY(f2.couples[(f2.getPlusProche() + 1) % 2].getPointSol().getX());
 
-			if ((intersection1.getX() > droiteSolHaute.xmin) && (intersection1.getX() < droiteSolHaute.xmax)) {
+			if ((intersection1.getX() > droiteSolHaute.getXMin()) && (intersection1.getX() < droiteSolHaute.getXMax())) {
 				// Alors on est dans le premier cas
 				face4 = new ShadowDrawingFace(
 						new Couple(intersection1, this.couples[(this.getPlusProche() + 1) % 2].getPointSol()),

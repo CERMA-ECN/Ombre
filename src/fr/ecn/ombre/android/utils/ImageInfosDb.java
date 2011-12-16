@@ -42,6 +42,11 @@ public class ImageInfosDb extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
+	/**
+	 * Load infos about this image from DB
+	 * 
+	 * @param imageInfos
+	 */
 	public void loadInfos(ImageInfos imageInfos) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -61,6 +66,11 @@ public class ImageInfosDb extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+	/**
+	 * Save infos avout this image into DB
+	 * 
+	 * @param imageInfos
+	 */
 	public void saveInfos(ImageInfos imageInfos) {
 		SQLiteDatabase db = this.getWritableDatabase();
 

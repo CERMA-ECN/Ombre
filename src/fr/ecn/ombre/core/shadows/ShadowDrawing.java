@@ -3,9 +3,10 @@ package fr.ecn.ombre.core.shadows;
 import java.util.LinkedList;
 import java.util.List;
 
+import fr.ecn.common.core.geometry.Geometry;
 import fr.ecn.common.core.geometry.Line;
 import fr.ecn.common.core.geometry.Point;
-import fr.ecn.ombre.core.model.Segment;
+import fr.ecn.common.core.geometry.Segment;
 
 public abstract class ShadowDrawing {
 
@@ -42,7 +43,7 @@ public abstract class ShadowDrawing {
 					.getPointSol());
 
 			// On calcule l'intersection des deux segments
-			Point intersectionSegments = Segment.intersection(s1, s2);
+			Point intersectionSegments = Geometry.intersection(s1, s2);
 
 			// On regarde si ce point d'intersection existe
 			if (intersectionSegments != null) {

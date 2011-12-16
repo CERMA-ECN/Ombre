@@ -21,6 +21,7 @@ public class Drawing {
 	 * @param face the face to be drawn
 	 * @param canvas the canvas to draw into
 	 * @param paint the paint to use to draw
+	 * @param partial if the face is partial, a partial face doesn't have the first and last point linked
 	 */
 	public static void drawFace(Face face, Canvas canvas, Paint paint, boolean partial) {
 		Point[] points = face.getPoints().toArray(new Point[0]);
